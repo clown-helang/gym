@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import EditCoachForm from '../../../components/UserManage/CoachManage/EditCoachForm'
-
+import styles from './index.less';
 
 function EditCoach({ dispatch, editCoach, loading }) {
   const formProps = { dispatch, editCoach, loading:loading };
   return (
-    <EditCoachForm {...formProps}/>
+    <div className={styles.content}>
+      <EditCoachForm {...formProps}/>
+    </div>
   );
 }
 
 EditCoach.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  editCoach: PropTypes.object.editCoach
+  editCoach: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

@@ -4607,9 +4607,19 @@ mockjs@^1.0.1-beta3:
   dependencies:
     commander "*"
 
+moment-timezone@^0.5.14:
+  version "0.5.14"
+  resolved "http://r.cnpmjs.org/moment-timezone/download/moment-timezone-0.5.14.tgz#4eb38ff9538b80108ba467a458f3ed4268ccfcb1"
+  dependencies:
+    moment ">= 2.9.0"
+
 moment@2.x, moment@^2.19.3:
   version "2.19.4"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.4.tgz#17e5e2c6ead8819c8ecfad83a0acccb312e94682"
+
+"moment@>= 2.9.0":
+  version "2.22.0"
+  resolved "http://r.cnpmjs.org/moment/download/moment-2.22.0.tgz#7921ade01017dd45186e7fee5f424f0b8663a730"
 
 ms@2.0.0:
   version "2.0.0"

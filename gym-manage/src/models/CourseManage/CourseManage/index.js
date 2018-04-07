@@ -6,7 +6,18 @@ const init = {
   page_number: 1,
   page_size: 10,
   selectedRows: [],
-  data: {},
+  data: {
+    total: 1,
+    contents:[{
+      id: 1,
+      courseName: '腹肌塑型课',
+      coachName: '波波维奇',
+      state: 'effective',
+      courseType: 'personalClass',
+      classTime: '2018-05-01 ~ 2018-07-01',
+      coursePrice: '2000'
+    }]
+  },
 };
 
 export default {

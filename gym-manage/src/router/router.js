@@ -58,6 +58,15 @@ function RouterConfig({ history, app }) {
           },
         },
         {
+          path: '/userManage/coachManage/edit',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/UserManage/EditCoach'));
+              cb(null, require('../routes/UserManage/EditCoach'));
+            }, 'EditCoach');
+          },
+        },
+        {
           path: '/userManage/adminManage',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-timezone';
 import { injectIntl } from 'react-intl';
+import { routerRedux } from 'dva/router';
 import TableUI from '../../../DefaultUI/TableUI';
-import { Divider } from 'antd'
 import messages from './messages';
 
 function CoachManageTable({ dispatch, coachManage, loading, intl: { formatMessage } }) {
@@ -40,7 +39,7 @@ function CoachManageTable({ dispatch, coachManage, loading, intl: { formatMessag
     },
   ];
   const edit = (id) => {
-    //dispatch(routerRedux.push({pathname: '/basicInformation/operator_configuration/edit', query:{ id }}));
+    dispatch(routerRedux.push({pathname: '/userManage/coachManage/edit', query:{ id }}));
   };
 
   const rowKey = record => record.id;

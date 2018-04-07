@@ -78,10 +78,10 @@ function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMess
   const tableProps = {
     columns,
     data: memberManage.data,
-    page_size: memberManage.page_size,
     rowKey,
     tableOnChange,
     pageFunction,
+    page_size: memberManage.page_size,
     currenPageNumber: memberManage.page_number,
     loading,
   };
