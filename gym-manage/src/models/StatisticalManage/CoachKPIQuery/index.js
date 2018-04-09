@@ -6,7 +6,18 @@ const init = {
   page_number: 1,
   page_size: 10,
   selectedRows: [],
-  data: {},
+  data: {
+    total:1,
+    contents:[
+      {
+        id: 1,
+        account:'bobowq@qq.com',
+        name:'波波维奇',
+        durationOfClass: '200',
+        salesTotal: '5000'
+      }
+    ]
+  },
 };
 
 export default {

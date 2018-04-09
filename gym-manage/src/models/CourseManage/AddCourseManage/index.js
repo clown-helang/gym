@@ -6,7 +6,28 @@ const init = {
   page_number: 1,
   page_size: 10,
   selectedRows: [],
+  descriptionList:[
+    {
+      url:'',
+      description:''
+    }
+  ],
+  name:'',
+  courseBackground:'',
+  photo:'',
+  type:'groupClass',
+  classTime:'',
   data: {},
+
+  coachList:{
+    total:1,
+    contents:[{
+      id:1,
+      name:'波波维奇',
+      phone:'15596782345'
+    }]
+  },
+  visible:false
 };
 
 export default {
@@ -67,6 +88,9 @@ export default {
     },
     setSelectedRows(state,{ payload:{selectedRows} }){
       return {...state, selectedRows};
+    },
+    setVisible(state,{ payload:{ visible } }){
+      return {...state, visible}
     }
   },
   subscriptions : {

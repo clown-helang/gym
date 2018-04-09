@@ -6,7 +6,16 @@ const init = {
   page_number: 1,
   page_size: 10,
   selectedRows: [],
-  data: {},
+  data: {
+    total: 1,
+    contents:[{
+      id:1,
+      account:'hel@qq.com',
+      rechargeAmount:'100000',
+      adminAccount: 'admin@ji.com.cn',
+      rechargeTime: '2020-12-13 12:00'
+    }]
+  },
 };
 
 export default {

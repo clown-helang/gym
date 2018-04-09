@@ -5,6 +5,7 @@ import { injectIntl } from 'react-intl';
 import { Button } from 'antd';
 import { routerRedux } from 'dva/router';
 import RangePickerBar from '../../../components/DefaultUI/RangePickerBar';
+import CoachKPITable from '../../../components/StatisticalManage/CoachKPITable';
 import messages from './messages';
 import styles from './index.less';
 
@@ -28,6 +29,7 @@ function CoachKPIQuery({ dispatch, coachKPIQuery, loading, intl: { formatMessage
         />
         <Button type="primary" icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
       </div>
+      <CoachKPITable {...tableProps}/>
     </div>
   );
 }

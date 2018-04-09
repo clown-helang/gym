@@ -103,6 +103,7 @@ const userManage = {
 
   'userManage.coachManage':'教练管理',
   'userManage.coachManage.name':'教练姓名',
+  'userManage.coachManage.coachList':'教练列表',
   'userManage.coachManage.uploadPhoto':'上传头像',
   'userManage.coachManage.coachDescription':'教练介绍',
   'userManage.coachManage.addCoachDescription':'添加教练介绍',
@@ -122,6 +123,7 @@ const courseManage = {
   'courseManage.groupClass': '团课',
   'courseManage.personalClass': '私教',
   'courseManage.coursePrice': '课程单价（单位：元）',
+  'courseManage.coursePriceNotUnit': '课程单价',
   'courseManage.state': '状态',
   'courseManage.effective': '有效',
   'courseManage.invalid': '无效',

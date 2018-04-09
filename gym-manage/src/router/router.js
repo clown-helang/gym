@@ -85,6 +85,24 @@ function RouterConfig({ history, app }) {
           },
         },
         {
+          path: '/courseManage/add',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/CourseManage/AddCourseManage'));
+              cb(null, require('../routes/CourseManage/AddCourseManage'));
+            }, 'AddCourseManage');
+          },
+        },
+        {
+          path: '/courseManage/edit',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/CourseManage/AddCourseManage'));
+              cb(null, require('../routes/CourseManage/AddCourseManage'));
+            }, 'AddCourseManage');
+          },
+        },
+        {
           path: '/statisticalManage/rechargeRecordQuery',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
@@ -100,6 +118,15 @@ function RouterConfig({ history, app }) {
               registerModel(app, require('../models/StatisticalManage/CoachKPIQuery'));
               cb(null, require('../routes/StatisticalManage/CoachKPIQuery'));
             }, 'CoachKPIQuery');
+          },
+        },
+        {
+          path: '/statisticalManage/coachKPIQuery/detail',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/StatisticalManage/CoachKPIDetail'));
+              cb(null, require('../routes/StatisticalManage/CoachKPIDetail'));
+            }, 'CoachKPIDetail');
           },
         },
         {

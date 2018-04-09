@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
+import { routerRedux } from 'dva/router'
 import TableUI from '../../DefaultUI/TableUI';
 import { Modal } from 'antd'
 import messages from './messages';
@@ -65,7 +66,7 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
 
   const rowKey = record => record.id;
   const edit = (id) => {
-    console.log(id)
+    dispatch(routerRedux.push({ pathname: '/courseManage/edit'}))
   };
   const pageFunction = {
     onChange(page, pageSize) {

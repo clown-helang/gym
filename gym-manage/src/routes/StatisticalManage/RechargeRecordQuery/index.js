@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { injectIntl } from 'react-intl';
-import { Button } from 'antd';
 import { routerRedux } from 'dva/router';
-import NavBar from '../../../components/DefaultUI/NavBar';
+import RechargeRecordTable from '../../../components/StatisticalManage/RechargeRecordTable';
 import SearchBar from '../../../components/DefaultUI/SearchBar';
 import messages from './messages';
 import styles from './index.less';
@@ -31,6 +30,7 @@ function RechargeRecordQuery({ dispatch, rechargeRecordQuery, loading, intl: { f
           enterButton={true}
         />
       </div>
+      <RechargeRecordTable {...tableProps}/>
     </div>
   );
 }
