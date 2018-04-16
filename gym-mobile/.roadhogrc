@@ -1,16 +1,27 @@
 {
-  "entry": "src/index.js",
+  "entry": "src/*.js",
+  "publicPath":"./",
+  "outputPath": "./dist/gym-mobile",
+  "hash": true,
   "env": {
     "development": {
       "extraBabelPlugins": [
         "dva-hmr",
-        "transform-runtime"
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": "css" }]
       ]
     },
     "production": {
       "extraBabelPlugins": [
-        "transform-runtime"
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": "css" }]
       ]
+    }
+  },
+  "proxy": {
+    "/auth-service":{
+      "target": "http://10.0.251.97:8084",
+      "changeOrigin": true
     }
   }
 }

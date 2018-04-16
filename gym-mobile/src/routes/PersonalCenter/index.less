@@ -1,0 +1,110 @@
+.personalInfor{
+  padding: 5px 14px;
+  width: 100%;
+  height: 80px;
+  margin: 8px 0;
+  background-color: white;
+  .left{
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    overflow: hidden;
+    float: left;
+    img{
+      width: 70px;
+      height: auto;
+    }
+  }
+  .center{
+    float: left;
+    p{
+      padding: 0;
+      margin: 0 15px;
+      line-height: 35px;
+      height: 35px;
+      &:nth-child(1){
+        font-family: "Adobe 黑体 Std R";
+        font-weight: 600;
+        font-size: 18px;
+        .coachTag{
+          display:inline-block;
+          margin-left: 10px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .right{
+    float: right;
+    height: 30px;
+    margin-top: 38px;
+    p{
+      span{
+        color: #3ddfc7;
+        font-size: 16px;
+      }
+    }
+  }
+}
+.strip{
+  height: 42px;
+  background-color: white;
+  padding: 0 14px;
+  margin: 2px 0;
+  line-height: 42px;
+  span:nth-child(1){
+    color: #3ddfc7;
+    font-size: 24px;
+    display: inline-block;
+    margin-right: 20px;
+  }
+  span:nth-child(2){
+    font-size: 16px;
+    display: inline-block;
+    position: relative;
+    top: -4px;
+  }
+}
+@media screen and (max-width: 370px) {
+  .personalInfor{
+    height: 70px;
+    .left{
+      width: 60px;
+      height: 60px;
+      border-radius: 60px;
+      img{
+        width: 60px;
+      }
+    }
+    .center{
+      float: left;
+      p{
+        padding: 0;
+        margin: 0 15px;
+        line-height: 30px;
+        height: 30px;
+        &:nth-child(1){
+          font-family: "Adobe 黑体 Std R";
+          font-weight: 600;
+          font-size: 16px;
+        }
+      }
+    }
+    .right{
+      float: right;
+      height: 30px;
+      margin-top: 34px;
+      p{
+        span{
+          color: #3ddfc7;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .strip{
+    span:nth-child(2){
+      font-size: 14px;
+    }
+  }
+}

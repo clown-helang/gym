@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Form, Input} from 'antd';
 import {injectIntl, FormattedMessage} from 'react-intl';
-import { get_length, cut_str, getLocalStorage, setLocalStorage } from '../../utils';
+import { get_length, cut_str, getSession, setSession } from '../../utils';
 import { editUser } from '../../services/userManage'
 import messages from './messages';
 
@@ -18,7 +18,7 @@ function ChangeAccount({account_visible, edit_dto, setLoadingState, loading, set
       if (errors) {
         return;
       }
-      const token = getLocalStorage('token');
+      const token = getSession('token');
       const payload = {
         token,
         name:values.name,
@@ -28,7 +28,7 @@ function ChangeAccount({account_visible, edit_dto, setLoadingState, loading, set
       editUser({payload}).then((body) => {
         setLoadingState(false);
         if(body){
-          setLocalStorage('user', body.name);
+          setSession('user', body.name);
           setAccountVisibleAndUser(false,body.name);
         }
       },(res) => {

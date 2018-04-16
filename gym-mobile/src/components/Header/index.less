@@ -1,0 +1,62 @@
+.belt{
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  background-size: auto 50px;
+  .beltLeft{
+    float: left;
+    width: 40%;
+    height: inherit;
+    line-height: inherit;
+    img{
+      height: inherit;
+      width: auto;
+    }
+  }
+  .beltRight{
+    float: right;
+    display: inline;
+    text-align: right;
+    padding-right: 10px;
+    width: 55%;
+    height: inherit;
+    .name{
+      display: inline-table;
+      text-align: right;
+      font-size: 16px;
+      color: white;
+      margin-right: 20px;
+      position: relative;
+      bottom: -15px;
+    }
+    .photo{
+      display: inline-table;
+      width: 46px;
+      height: 46px;
+      border-radius: 46px;
+      overflow: hidden;
+      position: relative;
+      top: 2px;
+      img{
+        width: inherit;
+        height: inherit;
+      }
+    }
+  }
+}
+@media screen and (max-width: 370px) {
+  .belt{
+    height: 42px;
+    .beltRight{
+      .name{
+        margin-bottom: -18px;
+        font-size: 14px;
+      }
+      .photo{
+        width: 38px;
+        height: 38px;
+        border-radius: 38px;
+      }
+    }
+  }
+}

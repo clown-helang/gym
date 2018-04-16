@@ -5,7 +5,7 @@ import {injectIntl, FormattedMessage} from 'react-intl';
 import ChangeAccount from './ChangeAccount';
 import ChangePasswd from './ChangePasswd';
 import { queryUserById,editUser } from '../../services/userManage'
-import { setLocalStorage,getLocalStorage } from '../../utils';
+import { setSession,getSession } from '../../utils';
 import messages from './messages';
 import styles from './header.less';
 const language_html = window.appLocale.language==='chi'?'':`index-${window.appLocale.language}.html`;
@@ -34,13 +34,13 @@ class IndexHeader extends Component{
   };
   dropDownClick= ({ key }) => {
     const _this = this;
-    const token = getLocalStorage('token');
+    const token = getSession('token');
     if(`${key}` === 'logout'){
       Modal.confirm({
           title: this.props.intl.formatMessage(messages.title),
           content: this.props.intl.formatMessage(messages.content),
           onOk: () => {
-            localStorage.clear();
+            sessionStorage.clear();
             location.href="/";
           }
       });
@@ -58,7 +58,7 @@ class IndexHeader extends Component{
             edit_dto: body,
             account_visible:true
           })
-          setLocalStorage('user',body.name);
+          setSession('user',body.name);
         }
       },(res) => {
         Modal.error({
@@ -99,7 +99,7 @@ class IndexHeader extends Component{
   render() {
     const {visible,account_visible,edit_dto,loading} = this.state;
     const {intl:{formatMessage}} = this.props;
-    let activeHeadMenu = getLocalStorage('activeHeadMenu');
+    let activeHeadMenu = getSession('activeHeadMenu');
     let {user}=this.props;
     if(this.state.user!==''){
       user=this.state.user;

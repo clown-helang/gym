@@ -1,0 +1,64 @@
+.courseLogo{
+  margin: 10px 0;
+  padding: 14px;
+  width: 100%;
+  background-color: white;
+  height: auto;
+  img{
+    width: 100%;
+    height: auto;
+  }
+}
+.coursePrice{
+  margin: 10px 0;
+  padding: 14px;
+  background-color: white;
+  height: 50px;
+  width: 100%;
+  span{
+    display: inline-block;
+    width: 40%;
+    &:nth-child(1){
+      text-decoration-line: line-through;
+    }
+    &:nth-child(2){
+      color: red;
+      font-size: 16px;
+    }
+  }
+  a{
+    display: inline-block;
+    float: right;
+    text-decoration-line: underline;
+    color: #3ddfc7;
+  }
+}
+.coursesIntroduce{
+  padding: 14px 14px 50px 14px;
+  width: 100%;
+  height: auto;
+  background-color: white;
+  .introduceSection{
+    width: inherit;
+    height: auto;
+    p{
+      &:first-letter{
+        float: left;
+        font-size:2.5em;
+        padding-right:5px;
+        color:#f00;
+        text-transform:uppercase;
+      }
+    }
+    img{
+      display: inline-block;
+      margin-bottom: 10px;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 370px) {
+
+}

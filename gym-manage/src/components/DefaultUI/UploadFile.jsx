@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Upload, message, Button, Icon} from 'antd';
 import {injectIntl, FormattedMessage} from 'react-intl';
-import {getLocalStorage} from '../../utils';
+import {getSession} from '../../utils';
 import {baseURL} from '../../utils/config';
 import api from '../../utils/api';
 import messages from './messages';
@@ -87,7 +87,7 @@ class UploadFiles extends Component{
   render(){
     //console.log('fileList++++++:',this.state.fileList);
     const headers = {
-      "Authorization": 'Bearer ' + getLocalStorage("token")
+      "Authorization": 'Bearer ' + getSession("token")
     };
     return (
       <Upload

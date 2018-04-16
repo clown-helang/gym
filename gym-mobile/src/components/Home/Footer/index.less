@@ -1,0 +1,50 @@
+.footer{
+  .icon{
+    font-size: 30px;
+    color: white;
+    line-height: 50px;
+    position: absolute;
+    &:nth-child(1){
+      left: 6%;
+    }
+    &:nth-child(2){
+      left: 23%;
+    }
+    &:nth-child(3){
+      right: 23%;
+    }
+    &:nth-child(4){
+      right: 6%;
+    }
+  }
+  text-align: center;
+  .home{
+    display: inline-block;
+    border-radius: 60px;
+    height: 60px;
+    width: 60px;
+    img{
+      padding: 0;
+      margin: 0;
+      width: 70px;
+      height: 70px;
+      position: relative;
+      left: -7px;
+      top:-16px;
+    }
+  }
+  @media screen and (max-width: 370px) {
+    .icon {
+      font-size: 25px;
+      line-height: 45px;
+    }
+    .home{
+      img{
+        width: 65px;
+        height: 65px;
+        top:-12px;
+      }
+    }
+  }
+}
+

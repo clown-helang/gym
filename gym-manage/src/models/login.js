@@ -1,5 +1,5 @@
 import {login} from '../services/userManage';
-import { setLocalStorage } from '../utils';
+import { setSession } from '../utils';
 
 export default {
   namespace : 'login',
@@ -10,14 +10,13 @@ export default {
     *login({payload}, {put, call, select}) {
       let url = '/';
       yield put({type: 'showLoginLoading'});
-      const result = yield call(login, {payload});
-      const { name, token, tenant_id } = result;
-      setLocalStorage('user', name);
-      setLocalStorage('token', token);
-      setLocalStorage('tenant_id',tenant_id);
-      setLocalStorage('activeHeadMenu', url);
-      setLocalStorage('openKeys', []);
-      setLocalStorage('rootSubmenuKeys',[]);
+      //const result = yield call(login, {payload});
+      // const { name, token, tenant_id } = payload;
+      setSession('user', 'admin');
+      setSession('token', 'token');
+      setSession('activeHeadMenu', url);
+      setSession('openKeys', []);
+      setSession('rootSubmenuKeys',[]);
       window.location.href = url;
     }
   },

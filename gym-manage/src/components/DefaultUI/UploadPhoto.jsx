@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {Upload, Icon, Modal, message} from 'antd';
 import {injectIntl, FormattedMessage} from 'react-intl';
-import {getLocalStorage} from '../../utils';
+import {getSession} from '../../utils';
 import {baseURL} from '../../utils/config';
 import api from '../../utils/api';
 
@@ -81,7 +81,7 @@ class UploadPicture extends Component{
     }
   }
   onRemove = (file) => {
-    const token = getLocalStorage('token');
+    const token = getSession('token');
     let url=file.url||this.state.fileList[0].response.successful_files[0].resource_url;
     const payload = {
       token,
@@ -103,7 +103,7 @@ class UploadPicture extends Component{
 
   render(){
     const headers = {
-      "Authorization": 'Bearer ' + getLocalStorage("token")
+      "Authorization": 'Bearer ' + getSession("token")
     };
     const { previewVisible, previewImage } = this.state;
     const uploadButton = (

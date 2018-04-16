@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Button, Form, Input, Icon } from 'antd';
 import {injectIntl, FormattedMessage} from 'react-intl';
-import { getLocalStorage,get_length, cut_str, CheckPhone,getBytes } from '../../utils';
+import { getSession,get_length, cut_str, CheckPhone,getBytes } from '../../utils';
 import { changePasswd } from '../../services/userManage'
 import md5 from 'md5';
 import messages from './messages';
@@ -17,7 +17,7 @@ function ChangePasswd({visible, setVisible, setLoadingState, loading, form: { se
     validateFieldsAndScroll((errors, values) => {
       if (!errors) {
         setLoadingState(true);
-        const token = getLocalStorage('token');
+        const token = getSession('token');
         const payload={token,original_password:md5(getBytes(values.original_password)),new_password:md5(getBytes(values.new_password))};
         changePasswd({payload}).then((body) => {
           setLoadingState(false);

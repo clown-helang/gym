@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Layout, Menu, Icon } from 'antd';
 import { injectIntl } from 'react-intl';
-import { setLocalStorage,getLocalStorage } from '../../utils';
+import { setSession,getSession } from '../../utils';
 import styles from './sider.less';
 import logo from '../../assets/logo.png'
 const language_html = window.appLocale.language==='chi'?'':`index-${window.appLocale.language}.html`;
@@ -15,24 +15,24 @@ class IndexSider extends React.Component{
     super(props);
     this.state = {
       collapsed: false,
-      activeHeadMenu:getLocalStorage('activeHeadMenu'),
-      openKeys: getLocalStorage('openKeys'),
-      rootSubmenuKeys:getLocalStorage('rootSubmenuKeys')
+      activeHeadMenu:getSession('activeHeadMenu'),
+      openKeys: getSession('openKeys'),
+      rootSubmenuKeys:getSession('rootSubmenuKeys')
     }
   }
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
-    setLocalStorage('openKeys',this.state.openKeys);
-    setLocalStorage('rootSubmenuKeys',this.state.openKeys);
+    setSession('openKeys',this.state.openKeys);
+    setSession('rootSubmenuKeys',this.state.openKeys);
   };
   componentDidMount(){
     window.setCollapsedState = this.toggle;
   }
   menuClick = ({ key }) => {
-    const headerMenus = getLocalStorage('headerMenus');
-    setLocalStorage('activeHeadMenu',key);
+    const headerMenus = getSession('headerMenus');
+    setSession('activeHeadMenu',key);
     this.setState({activeHeadMenu:key});
     window.location.href=key;
   };
@@ -88,15 +88,15 @@ class IndexSider extends React.Component{
     if (this.state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       this.setState({ openKeys });
       this.setState({ rootSubmenuKeys:openKeys });
-      setLocalStorage('openKeys',openKeys);
-      setLocalStorage('rootSubmenuKeys',openKeys);
+      setSession('openKeys',openKeys);
+      setSession('rootSubmenuKeys',openKeys);
     } else {
       this.setState({
         openKeys: latestOpenKey ? [latestOpenKey] : [],
       });
       this.setState({ rootSubmenuKeys:latestOpenKey ? [latestOpenKey] : [] });
-      setLocalStorage('openKeys',latestOpenKey ? [latestOpenKey] : []);
-      setLocalStorage('rootSubmenuKeys',latestOpenKey ? [latestOpenKey] : []);
+      setSession('openKeys',latestOpenKey ? [latestOpenKey] : []);
+      setSession('rootSubmenuKeys',latestOpenKey ? [latestOpenKey] : []);
     }
   };
   render() {
@@ -109,7 +109,7 @@ class IndexSider extends React.Component{
       >
         <div className={styles.logo} onClick={()=>{
           window.location.href='/';
-          setLocalStorage('activeHeadMenu',null);
+          setSession('activeHeadMenu',null);
         }} style={{cursor:'pointer'}}>
           <img src={logo} alt="logo"/>
           <span style={{display:`${!this.state.collapsed ?'inline-block':'none'}`}}>
