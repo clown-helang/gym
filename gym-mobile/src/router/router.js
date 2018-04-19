@@ -128,6 +128,15 @@ function RouterConfig({ history, app }) {
             }, 'SetBreaks');
           },
         },
+        {
+          path: '/courseBooking',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/User'));
+              cb(null, require('../routes/CourseBooking'));
+            }, 'CourseBooking');
+          },
+        },
       ]
     },
   ];
