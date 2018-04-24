@@ -9,7 +9,7 @@ import pengyuyan4 from '../../assets/pengyuyan4.jpg'
 import pengyuyan from '../../assets/pengyuyan.jpg'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
-
+import { routerRedux } from 'dva/router'
 function CoachDetail({dispatch,coachDetail}) {
   const coach = {
     url: pengyuyan,
@@ -60,6 +60,9 @@ function CoachDetail({dispatch,coachDetail}) {
     name:'彭于晏',
     photo: TX
   };
+  const redirect = (path) => {
+    dispatch(routerRedux.push({ pathname: path }));
+  }
   return (
     <div>
       <Header dispatch={dispatch} user={user}/>
@@ -82,7 +85,7 @@ function CoachDetail({dispatch,coachDetail}) {
                 <div className={styles.courseName}>{item.name}</div>
                 {
                   index===0
-                  ? <div className={styles.button}>购买</div>
+                  ? <div className={styles.button} onClick={()=>redirect('/buyCourse')}>购买</div>
                   : <div className={styles.button2}>已购买</div>
                 }
 

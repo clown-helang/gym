@@ -42,6 +42,16 @@ export default [
         code: 'coachKPIQuery',
         path:'/#/statisticalManage/coachKPIQuery',
       },
+      {
+        name: '消费记录查询',
+        code: 'consumeRecordQuery',
+        path:'/#/statisticalManage/consumeRecordQuery',
+      },
+      {
+        name: '上课记录查询',
+        code: 'classRecordQuery',
+        path:'/#/statisticalManage/classRecordQuery',
+      },
     ]
   },
 ]

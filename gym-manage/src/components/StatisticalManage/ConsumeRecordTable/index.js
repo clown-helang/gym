@@ -5,16 +5,16 @@ import { injectIntl } from 'react-intl';
 import TableUI from '../../DefaultUI/TableUI';
 import messages from './messages';
 
-function RechargeRecordTable({ dispatch, rechargeRecordQuery, loading, intl: { formatMessage } }) {
+function ConsumeRecordTable({ dispatch, consumeRecordQuery, loading, intl: { formatMessage } }) {
   const columns = [
     {
-      title: formatMessage(messages.account),
+      title: formatMessage(messages.consumeAccount),
       dataIndex: 'account',
       key: 'account',
       width: '20%',
     },
     {
-      title: formatMessage(messages.rechargeAmountWithUnit),
+      title: formatMessage(messages.consumeAmount),
       dataIndex: 'rechargeAmount',
       key: 'rechargeAmount',
       width: '20%',
@@ -32,7 +32,7 @@ function RechargeRecordTable({ dispatch, rechargeRecordQuery, loading, intl: { f
       width: '20%',
     },
     {
-      title: formatMessage(messages.rechargeTime),
+      title: formatMessage(messages.consumeTime),
       dataIndex: 'rechargeTime',
       key: 'rechargeTime',
       render: (text, record) => {
@@ -44,33 +44,33 @@ function RechargeRecordTable({ dispatch, rechargeRecordQuery, loading, intl: { f
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'rechargeRecordQuery/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'consumeRecordQuery/getBIRLog', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'rechargeRecordQuery/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'consumeRecordQuery/getBIRLog', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'rechargeRecordQuery/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'consumeRecordQuery/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
 
   const tableProps = {
     columns,
-    data: rechargeRecordQuery.data,
-    page_size: rechargeRecordQuery.page_size,
+    data: consumeRecordQuery.data,
+    page_size: consumeRecordQuery.page_size,
     rowKey,
     tableOnChange,
     pageFunction,
-    currenPageNumber: rechargeRecordQuery.page_number,
+    currenPageNumber: consumeRecordQuery.page_number,
     loading,
   };
   return (
     <TableUI {...tableProps} />
   );
 }
-RechargeRecordTable.propTypes = {
+ConsumeRecordTable.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  rechargeRecordQuery: PropTypes.object.isRequired,
+  consumeRecordQuery: PropTypes.object.isRequired,
 };
 
-export default injectIntl(RechargeRecordTable);
+export default injectIntl(ConsumeRecordTable);

@@ -1,12 +1,8 @@
 import React from 'react'
 import { connect } from 'dva';
-import TX from '../../assets/touxiang.jpg'
-import styles from './index.less'
-import Course from '../../components/Course'
-import fuji from '../../assets/fuji2.jpg'
-import yujia from '../../assets/yujia.jpg'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
+import { Preview, PreviewHeader, PreviewFooter, PreviewBody, PreviewItem, PreviewButton } from 'react-weui';
 
 function ConsumeRecord({dispatch,user}) {
   const menu = {
@@ -21,11 +17,15 @@ function ConsumeRecord({dispatch,user}) {
         {
           user.consumeRecord.map((item,index) => {
             return (
-              <div key={index} className={styles.consumeItem}>
-                <p>时间：{item.consume_time}</p>
-                <p>课程：{item.courseName}</p>
-                <p>价格：<span>{item.price}</span> 元</p>
-              </div>
+              <Preview style={{marginTop:5}} key={index}>
+                <PreviewHeader>
+                  <PreviewItem label="总价" value={`￥ ${item.price}`} />
+                </PreviewHeader>
+                <PreviewBody>
+                  <PreviewItem label="课程名称" value={`${item.courseName}`}/>
+                  <PreviewItem label="购买时间" value={item.consume_time}/>
+                </PreviewBody>
+              </Preview>
             )
           })
         }

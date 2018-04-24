@@ -10,6 +10,7 @@ import yujia5 from '../../assets/yujia5.jpg'
 import yujia from '../../assets/yujia.jpg'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
+import { routerRedux } from 'dva/router'
 
 function CourseList({dispatch,courseList}) {
   const course = {
@@ -61,6 +62,9 @@ function CourseList({dispatch,courseList}) {
     name:'彭于晏',
     photo: TX
   };
+  const redirect = (path) => {
+    dispatch(routerRedux.push({ pathname: path }));
+  }
   return (
     <div>
       <Header dispatch={dispatch} user={user}/>
@@ -71,7 +75,7 @@ function CourseList({dispatch,courseList}) {
       <div className={styles.coursePrice}>
         <span>原价：{course.oldPrice}</span>
         <span>VIP价：{course.vipPrice}</span>
-        <a>立即购买</a>
+        <a onClick={()=>redirect('/buyCourse')}>立即购买</a>
       </div>
       <div className={styles.coursesIntroduce}>
         {

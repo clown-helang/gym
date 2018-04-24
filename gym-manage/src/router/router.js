@@ -130,6 +130,24 @@ function RouterConfig({ history, app }) {
           },
         },
         {
+          path: '/statisticalManage/consumeRecordQuery',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/StatisticalManage/ConsumeRecordQuery'));
+              cb(null, require('../routes/StatisticalManage/ConsumeRecordQuery'));
+            }, 'ConsumeRecordQuery');
+          },
+        },
+        {
+          path: '/statisticalManage/classRecordQuery',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/StatisticalManage/ClassRecordQuery'));
+              cb(null, require('../routes/StatisticalManage/ClassRecordQuery'));
+            }, 'ClassRecordQuery');
+          },
+        },
+        {
           path: '/*',
           name: 'PageNotFound',
           getComponent(nextState, cb) {

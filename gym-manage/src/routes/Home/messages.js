@@ -118,6 +118,14 @@ const messages = defineMessages({
       id: 'statisticalManage.coachKPIQuery',
       defaultMessage: '教练业绩查询'
     },
+    consumeRecordQuery: {
+      id: 'statisticalManage.consumeRecordQuery',
+      defaultMessage: '消费记录查询'
+    },
+    classRecordQuery: {
+      id: 'statisticalManage.classRecordQuery',
+      defaultMessage: '上课记录查询'
+    },
     detail: {
       id: 'common.detail',
       defaultMessage: '详情'

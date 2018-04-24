@@ -16,6 +16,7 @@ const init = {
   courseBackground:'',
   photo:'',
   type:'groupClass',
+  recommendCourse: 'yes',
   classTime:'',
   data: {},
 

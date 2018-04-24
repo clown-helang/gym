@@ -24,7 +24,7 @@ class RangePickerBar extends React.Component{
   render(){
     const {title, value} = this.props;
     return (
-      <div style = {{display: 'inline-flex'}}>
+      <div style = {{display: 'inline-flex',marginRight:50}}>
         <h5 style = {{display: 'inline-block', width: 80, fontSize: 14, position: 'relative', top: 4}}>{title}</h5>
         <RangePicker />
       </div>

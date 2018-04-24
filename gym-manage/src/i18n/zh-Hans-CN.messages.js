@@ -31,6 +31,8 @@ const common = {
   'common.upload':'上传',
   'common.uploadPicture':'上传图片',
   'common.uploadPictureTip':'支持扩展名：.png .jpg',
+  'common.yes':'是',
+  'common.no':'否',
 };
 const Login = {
   "common.login.title": System["common.System.title"],
@@ -102,6 +104,7 @@ const userManage = {
   'userManage.memberManage.rechargeTime':'充值时间',
 
   'userManage.coachManage':'教练管理',
+  'userManage.coachManage.account':'教练账号',
   'userManage.coachManage.name':'教练姓名',
   'userManage.coachManage.coachList':'教练列表',
   'userManage.coachManage.uploadPhoto':'上传头像',
@@ -120,6 +123,7 @@ const courseManage = {
   'courseManage.courseList': '课程列表',
   'courseManage.lengthOfTime': '课时（单位：小时）',
   'courseManage.type': '课程类型',
+  'courseManage.recommendCourse': '是否设置为推荐课程',
   'courseManage.groupClass': '团课',
   'courseManage.personalClass': '私教',
   'courseManage.coursePrice': '课程单价（单位：元）',
@@ -143,6 +147,14 @@ const statisticalManage = {
   'statisticalManage.coachKPIQuery.salesTotal': '销售总额（单位：元）',
   'statisticalManage.coachKPIQuery.salesRecord': '销售记录',
   'statisticalManage.coachKPIQuery.appointmentMember': '预约人',
+
+  'statisticalManage.consumeRecordQuery': '消费记录查询',
+  'statisticalManage.consumeAccount': '消费账号',
+  'statisticalManage.consumeAmount': '消费金额（单位：元）',
+  'statisticalManage.consumeTime': '消费时间',
+
+  'statisticalManage.classRecordQuery':'上课记录查询'
 };
+
 
 export default {...Login, ...errorResult,...common,...userManage,...courseManage,...statisticalManage};

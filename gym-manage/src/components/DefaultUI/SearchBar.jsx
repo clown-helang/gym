@@ -22,11 +22,15 @@ class SearchBar extends React.Component{
     }
   };
   render(){
-    const {title, tip, search, value} = this.props;
+    const {title, tip, search, value, enterButton} = this.props;
     return (
       <div className={styles.search}>
         <h5 className={styles.title}>{title}</h5>
-        <Search enterButton placeholder={tip} onSearch={search} autoComplete="off" value={value} onChange={this.handleChange} />
+        {
+          enterButton
+          ? <Search enterButton placeholder={tip} onSearch={search} autoComplete="off" value={value} onChange={this.handleChange} />
+          : <Input placeholder={tip} autoComplete="off" value={value} onChange={this.handleChange} />
+        }
       </div>
     );
   }

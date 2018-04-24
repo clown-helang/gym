@@ -9,6 +9,7 @@ import barLogo from '../../assets/bar_logo.png'
 import fuji from '../../assets/fuji2.jpg'
 import yujia from '../../assets/yujia.jpg'
 import barBg from '../../assets/barBg.png'
+import { routerRedux } from 'dva/router'
 
 function IndexPage({dispatch,indexPage}) {
   const course = [
@@ -25,6 +26,9 @@ function IndexPage({dispatch,indexPage}) {
     vipPrice: 1888
   }
   ];
+  const redirect = (path) => {
+    dispatch(routerRedux.push({ pathname: path }));
+  }
   return (
     <div>
       <div className={styles.panel}>
@@ -47,13 +51,13 @@ function IndexPage({dispatch,indexPage}) {
       <div className={styles.menuBar}>
         <div className={styles.menuBarLeft}/>
         <div className={styles.menuBarCenter}>
-          <div className={styles.groupClassList}>
+          <div className={styles.groupClassList} onClick={()=>{redirect('/courseList')}}>
             <span className={styles.icon}>
                <Icon type="appstore"/>
             </span>
             <a>课程列表</a>
           </div>
-          <div className={styles.personalClassList}>
+          <div className={styles.personalClassList} onClick={()=>{redirect('/coachList')}}>
             <span className={styles.icon}>
               <Icon type="team" />
             </span>

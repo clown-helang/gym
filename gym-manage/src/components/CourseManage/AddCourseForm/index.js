@@ -199,6 +199,20 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
             <Radio value='personalClass'>{formatMessage(messages.personalClass)}</Radio>
           </RadioGroup>)}
         </FormItem>
+        <FormItem {...formItemLayout} label={formatMessage(messages.recommendCourse)}>
+          {getFieldDecorator('type', {
+            initialValue: addCourseManage.recommendCourse,
+            rules: [
+              {
+                required: true,
+                message: formatMessage(messages.notNull).replace('***',formatMessage(messages.recommendCourse))
+              }
+            ],
+          })(<RadioGroup>
+            <Radio value='yes'>{formatMessage(messages.yes)}</Radio>
+            <Radio value='no'>{formatMessage(messages.no)}</Radio>
+          </RadioGroup>)}
+        </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.classTime)}>
           {getFieldDecorator('classTime', {
             initialValue: addCourseManage.classTime,

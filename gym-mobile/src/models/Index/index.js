@@ -1,6 +1,5 @@
 import { routerRedux } from 'dva/router';
 import { getBytes, getSession } from '../../utils';
-
 const appLocale = window.appLocale;
 
 export default {

@@ -4,7 +4,8 @@ import { connect } from 'dva';
 import Footer from '../../components/Home/Footer'
 import styles from './index.less';
 import footerBg from '../../assets/footer.png';
-
+import 'react-weui/build/packages/react-weui.css';
+import 'weui';
 class Home extends Component{
   constructor(props){
     super(props);

@@ -45,6 +45,10 @@ const messages = defineMessages({
     id: 'courseManage.type',
     defaultMessage: '课程类型'
   },
+  recommendCourse:{
+    id: 'courseManage.recommendCourse',
+    defaultMessage: '是否设置为推荐课程'
+  },
   groupClass:{
     id: 'courseManage.groupClass',
     defaultMessage: '团课'
@@ -88,6 +92,14 @@ const messages = defineMessages({
   cancelText:{
     id: 'common.cancel',
     defaultMessage: '取消'
+  },
+  yes:{
+    id: 'common.yes',
+    defaultMessage: '是'
+  },
+  no:{
+    id: 'common.no',
+    defaultMessage: '否'
   },
 });
 

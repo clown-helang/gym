@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'dva';
-import { Icon,Row,Col } from 'antd';
+import { Icon } from 'antd';
 import Header from '../../components/Header';
 import MenuBar from '../../components/MenuBar';
+import { Preview, PreviewHeader, PreviewFooter, PreviewBody, PreviewItem, PreviewButton } from 'react-weui';
+
 import styles from './index.less'
 function ClassRecord({dispatch,user}) {
   const menu = {
@@ -13,42 +15,38 @@ function ClassRecord({dispatch,user}) {
     <div>
       <Header dispatch={dispatch} user={user}/>
       <MenuBar menu={menu}/>
-
       {
-        user.classRecord.map((item,index) => {
+        user.classRecord.map((item,index)=>{
           return (
-            <div key={index} className={styles.classRecord}>
-              <div className={styles.left}>
-                <p>课程：{item.className}</p>
-                <p>教练：{item.coachName}</p>
-                <p>时间：{item.classTime}</p>
+            <Preview style={{marginTop:5}} key={index}>
+              <PreviewHeader>
+                <PreviewItem label="课程" value={item.className} />
+              </PreviewHeader>
+              <PreviewBody>
+                <PreviewItem label="教练" value={item.coachName}/>
+                <PreviewItem label="时间" value={item.classTime}/>
+                {
+                  item.state === 'finish'
+                  ? <PreviewItem label="状态" value="已完结"/>
+                  : <PreviewItem label="状态" value="已预约"/>
+                }
                 {
                   item.comments !== ''
-                  ? <p>评论：{item.comments}</p>
-                  : ''
+                    ? <PreviewItem label="评论" value={item.comments}/>
+                    : ''
                 }
-              </div>
-              {
-                item.state === 'finish'
-                ? <div className={styles.right}>
-                    <p>已完结</p>
-                    {
-                      item.comments === ''
-                      ? <p className={styles.comments}><Icon type='form'/> 评论</p>
-                      : <p className={styles.delete}><Icon type='delete'/> 删除评论</p>
-                    }
-
-                  </div>
-                : <div className={styles.right}>
-                    <p>已预约</p>
-                  </div>
-              }
-
-            </div>
+              </PreviewBody>
+              <PreviewFooter>
+                {
+                  item.comments === ''
+                  ? <PreviewButton style={{color:'#3ddfc7'}}><Icon type='form'/> 评论</PreviewButton>
+                  : <PreviewButton style={{color:'#3ddfc7'}}><Icon type='delete'/> 删除评论</PreviewButton>
+                }
+              </PreviewFooter>
+            </Preview>
           )
         })
       }
-
 
     </div>
   )

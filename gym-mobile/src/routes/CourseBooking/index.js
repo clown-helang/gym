@@ -1,18 +1,60 @@
 import React,{ Component } from 'react'
 import { connect } from 'dva';
-import { Radio, Row, Col, DatePicker, Button, TimePicker   } from 'antd'
-import { Form, FormCell, Cell, CellHeader,CellBody, CellFooter, Input, Label,Page } from 'react-weui'
+import {
+  Form,
+  FormCell,
+  Cells,
+  Cell,
+  CellsTitle,
+  ButtonArea,
+  Button,
+  Radio,
+  CellHeader,
+  CellBody,
+  CellFooter,
+  Input,
+  Label,
+  Page } from 'react-weui'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
-import 'weui';
-import 'react-weui/build/packages/react-weui.css';
 import styles from './index.less'
-import moment from 'moment';
-const format = 'HH:mm';
+import moment from 'moment-timezone'
 
 class CourseBooking extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      date: moment().format('YYYY-MM-DD').toString(),
+      start_time: '',
+      end_time: '',
+      class_duration:'1'
+    }
+  }
+  handleChange = (e) => {
+    let _state = {};
+    if(e.target.name === 'start_time'){
+      _state[e.target.name] = e.target.value;
+      _state['end_time'] = moment(`${this.state.date} ${e.target.value}`).add(this.state.class_duration,'h').format('hh:mm').toString();
+    }
+    else if(e.target.name === 'end_time'){
+      _state['start_time'] = moment(`${this.state.date} ${e.target.value}`).subtract(this.state.class_duration,'h').format('hh:mm').toString();
+      _state[e.target.name] = e.target.value;
+    }
+    else if(e.target.name === 'class_duration'){
+      _state[e.target.name] = e.target.value;
+      _state['start_time'] = '';
+      _state['end_time'] = '';
+    }
+    else {
+      _state[e.target.name] = e.target.value;
+    }
+    console.log(e.target.name,e.target.value)
+    this.setState(_state);
+  }
   render(){
     const {dispatch,user} = this.props;
+    const { date,start_time,end_time,class_duration } = this.state;
+    console.log(this.state);
     const menu = {
       icon:'schedule',
       title:'课程预约 —— 减脂大作战'
@@ -22,73 +64,79 @@ class CourseBooking extends Component {
       <div>
         <Header dispatch={dispatch} user={user}/>
         <MenuBar menu={menu}/>
-        {/*<div className={styles.CourseBooking}>*/}
-          {/*<Row className={styles.row}>*/}
-            {/*<Col span={6}>*/}
-              {/*预约日期:*/}
-            {/*</Col>*/}
-            {/*<Col span={18}>*/}
-              {/*<DatePicker onChange={this.onChange}  style={{width:'80%'}}/>*/}
-            {/*</Col>*/}
-          {/*</Row>*/}
+        <div className={styles.CourseBooking}>
+          <CellsTitle>选择课时</CellsTitle>
+          <Form radio>
+            <FormCell radio>
+              <CellBody>一课时</CellBody>
+              <CellFooter>
+                <Radio name="class_duration" value="1" defaultChecked = {class_duration==='1'} onClick={this.handleChange}/>
+              </CellFooter>
+            </FormCell>
+            <FormCell radio>
+              <CellBody>二课时</CellBody>
+              <CellFooter>
+                <Radio name="class_duration" value="2" defaultChecked = {class_duration==='2'} onClick={this.handleChange}/>
+              </CellFooter>
+            </FormCell>
+          </Form>
 
-          {/*<Row className={styles.row}>*/}
-            {/*<Col span={6}>*/}
-              {/*预约课时:*/}
-            {/*</Col>*/}
-            {/*<Col span={7} style={{marginRight:5}}>*/}
-              {/*<Button style={{width:'100%'}}>一课时</Button>*/}
-            {/*</Col>*/}
-            {/*<Col span={7}>*/}
-              {/*<Button style={{width:'100%'}}>二课时</Button>*/}
-            {/*</Col>*/}
-          {/*</Row>*/}
+          <br/>
+          <CellsTitle>选择时间</CellsTitle>
+          <Form>
+            <FormCell>
+              <CellHeader>
+                <Label>选择日期</Label>
+              </CellHeader>
+              <CellBody>
+                <Input type="date" name="date" value = {date} onChange={this.handleChange}/>
+              </CellBody>
+            </FormCell>
+            <FormCell>
+              <CellHeader>
+                <Label>开始时间</Label>
+              </CellHeader>
+              <CellBody>
+                <Input type="time" name="start_time" value = {start_time} onChange={this.handleChange}/>
+              </CellBody>
+            </FormCell>
 
-          {/*<Row className={styles.row}>*/}
-            {/*<Col span={6}>*/}
-              {/*开始时间:*/}
-            {/*</Col>*/}
-            {/*<Col span={18} className={styles.timePicker}>*/}
-              {/*<TimePicker getPopupContainer={trigger => trigger.parentNode} popupClassName={styles.startTime} defaultValue={moment('12:08', format)} format={format} />*/}
-            {/*</Col>*/}
-          {/*</Row>*/}
-          {/*<Row className={styles.row}>*/}
-            {/*<Col span={6}>*/}
-              {/*结束时间:*/}
-            {/*</Col>*/}
-            {/*<Col span={18}>*/}
-              {/*<TimePicker disabled={true} popupClassName="startTime" style={{width:'80%'}} defaultValue={moment('12:08', format)} format={format} />*/}
-            {/*</Col>*/}
-          {/*</Row>*/}
+            <FormCell>
+              <CellHeader>
+                <Label>结束时间</Label>
+              </CellHeader>
+              <CellBody>
+                <Input type="time" name="end_time" value = {end_time} onChange={this.handleChange}/>
+              </CellBody>
+            </FormCell>
 
-          {/*<Form>*/}
-            {/*<FormCell>*/}
-              {/*<CellHeader>*/}
-                {/*<Label>Date</Label>*/}
-              {/*</CellHeader>*/}
-              {/*<CellBody>*/}
-                {/*<Input type="date" defaultValue="" onChange={ e=> console.log(e.target.value)}/>*/}
-              {/*</CellBody>*/}
-            {/*</FormCell>*/}
-          {/*</Form>*/}
+            <br/>
+            <ButtonArea>
+              <Button style={{backgroundColor:'#3ddfc7'}}> 提交预约 </Button>
+            </ButtonArea>
 
+          </Form>
+          <br/>
+          <CellsTitle>当前日期已预约时间</CellsTitle>
+
+          <Cells>
+            <Cell>
+              <CellBody>
+                10:00 ~ 12:00
+              </CellBody>
+              <CellFooter>
+                张三
+              </CellFooter>
+            </Cell>
+          </Cells>
 
           {/*<Row className={styles.row}>*/}
             {/*<Col span={18} offset={6}>*/}
               {/*<Button style={{width:'80%',backgroundColor:'#3ddfc7',color:'#fff'}}>提交预约</Button>*/}
             {/*</Col>*/}
           {/*</Row>*/}
-        {/*</div>*/}
-        <Form>
-          <FormCell>
-            <CellHeader>
-              <Label>Date</Label>
-            </CellHeader>
-            <CellBody>
-              <Input type="datetime-local" defaultValue="" placeholder=""/>
-            </CellBody>
-          </FormCell>
-        </Form>
+        </div>
+
       </div>
     )
   }

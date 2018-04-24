@@ -67,6 +67,7 @@ function CourseList({dispatch,courseList}) {
     name:'彭于晏',
     photo: TX
   };
+
   return (
     <div>
       <Header dispatch={dispatch} user={user}/>

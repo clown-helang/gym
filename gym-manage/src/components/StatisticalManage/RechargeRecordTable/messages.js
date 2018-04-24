@@ -17,6 +17,10 @@ const messages = defineMessages({
     id: 'userManage.memberManage.rechargeTime',
     defaultMessage: '充值时间'
   },
+  salesMan:{
+    id: 'userManage.memberManage.salesMan',
+    defaultMessage: '销售人'
+  },
 });
 
 export default messages;

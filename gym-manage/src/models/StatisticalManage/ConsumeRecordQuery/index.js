@@ -20,7 +20,7 @@ const init = {
 };
 
 export default {
-  namespace: 'rechargeRecordQuery',
+  namespace: 'consumeRecordQuery',
   state : {},
   effects : {
     *getZones({ payload }, { put, call, select }) {
@@ -82,7 +82,7 @@ export default {
   subscriptions : {
     setup({dispatch, history}){
       return history.listen(({pathname}) => {
-        if (pathname === '/statisticalManage/rechargeRecordQuery') {
+        if (pathname === '/statisticalManage/consumeRecordQuery') {
           dispatch({type:'init'});
           //dispatch({type:'getZones'});
         }
