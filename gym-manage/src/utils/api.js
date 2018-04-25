@@ -1,7 +1,10 @@
 export default {
-  userLogin: '/auth-service/v1/users/login',
-  permissions:'/auth-service/v1/users/action-permissions',
-  changepasswd:'/auth-service/v1/users/passwords',
-  Users: '/auth-service/v1/users',
-  queryUsers: '/auth-service/v1/users/id',
+  getMembers: '/gym/getallguest.do',
+  getCoaches: '/gym/getalltecher.do',
+  getCoachById: '/gym/getonetecher.do',
+  getAdmins: '/gym/getalladmin.do',
+  getConsumeRecord: '/gym/getalloneshoplog.do',
+  getRechargeRecord: '/gym/getallrechargelog.do',
+  getCourses: '/gym/getallclassdefine.do',
+  getClassRecord: '/gym/getallclasslog.do',
 }

@@ -4,11 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/gym-manage/dist" />
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/mock" />
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/src/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-manage/src/services" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-manage/src/utils" />
       <excludeFolder url="file://$MODULE_DIR$/gym-mobile" />
       <excludeFolder url="file://$MODULE_DIR$/gym-mobile/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />

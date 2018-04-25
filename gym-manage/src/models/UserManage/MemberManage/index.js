@@ -1,30 +1,11 @@
-//import { getZones, delZones } from '../../services/';
+import { getMembers } from '../../../services/gymServices';
 
 const init = {
   search_value: '',
-  sort_direction: 'DESC',
   page_number: 1,
   page_size: 10,
   selectedRows: [],
-  data: {
-    total:2,
-    contents:[{
-      id: 1,
-      account:'zhangs@qq.com',
-      name: '张三',
-      phone: '15991234567',
-      rule: 'member',
-      balance: '5000'
-    },{
-      id: 2,
-      account:'lisi@qq.com',
-      name: '李四',
-      phone: '15991238888',
-      rule: 'member',
-      balance: '10000'
-    }
-    ]
-  },
+  data: {},
   editData:{},
   editVisible: false,
   rechargeVisible: false,
@@ -34,11 +15,13 @@ export default {
   namespace: 'memberManage',
   state : {},
   effects : {
-    *getZones({ payload }, { put, call, select }) {
+    *getMembers({ payload }, { put, call, select }) {
+      console.log(1111)
       const token = yield select(state => state.home.token);
-      let { search_value, sort_direction, page_number, page_size } = yield select(state => state.zoneConfiguration);
+      let { search_value, page_number, page_size } = yield select(state => state.memberManage);
       if (payload !== undefined) {
-        sort_direction = payload.sort_direction === undefined ? sort_direction : payload.sort_direction;
+        page_number = payload.page_number === undefined ? page_number : payload.page_number;
+        page_size = payload.page_size === undefined ? page_size : payload.page_size;
         const payload_search_value = payload.search_value;
         if(payload_search_value===undefined){
           page_number = payload.page_number || page_number;
@@ -48,22 +31,23 @@ export default {
         }
         page_size = payload.page_size || page_size;
       }
-      sort_direction = (sort_direction === 'descend' || sort_direction === 'DESC') ? 'DESC' : 'ASC';
       let _payload = {
         token,
-        sort_direction,
-        page_number,
-        page_size,
+        username:null,
+        pageNo:page_number,
+        pageSize:page_size,
       };
       if (!(!search_value)) {
         if (search_value.indexOf('%') > -1 || search_value.indexOf('#') > -1) {
-          _payload.search_value = encodeURIComponent(search_value);
+          _payload.username = encodeURIComponent(search_value);
         }else {
-          _payload.search_value = search_value
+          _payload.username = search_value
         }
       }
-      const { total, contents } = yield call(getZones,{ payload:{ ..._payload } });
-      yield put({type:'setData',payload:{ data:{ total, contents }, sort_direction, page_number, page_size }});
+      console.log(2222)
+      const { total, contents } = yield call(getMembers,{ payload:{ ..._payload } });
+      console.log(3333)
+      yield put({type:'setData',payload:{ data:{ total, contents }, page_number, page_size }});
     },
     *delZones({ payload }, { put, call, select }) {
       const token = yield select(state => state.home.token);
@@ -80,8 +64,8 @@ export default {
     init(state,{ payload }){
       return init;
     },
-    setData(state,{ payload:{data, sort_direction, page_number, page_size} }){
-      return {...state, data, sort_direction, page_number, page_size};
+    setData(state,{ payload:{data, page_number, page_size} }){
+      return {...state, data, page_number, page_size};
     },
     setSearchValue(state,{ payload:{search_value} }){
       return {...state, search_value};
@@ -104,7 +88,7 @@ export default {
       return history.listen(({pathname}) => {
         if (pathname === '/userManage/memberManage') {
           dispatch({type:'init'});
-          //dispatch({type:'getZones'});
+          dispatch({type:'getMembers'});
         }
       });
     }

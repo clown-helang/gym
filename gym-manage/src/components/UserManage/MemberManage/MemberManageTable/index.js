@@ -11,14 +11,14 @@ function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMess
   const columns = [
     {
       title: formatMessage(messages.account),
-      dataIndex: 'account',
-      key: 'account',
+      dataIndex: 'loginname',
+      key: 'loginname',
       width: '20%',
     },
     {
       title: formatMessage(messages.name),
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'realname',
+      key: 'realname',
       width: '20%',
     },
     {
@@ -29,8 +29,8 @@ function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMess
     },
     {
       title: formatMessage(messages.balance),
-      dataIndex: 'balance',
-      key: 'balance',
+      dataIndex: 'money',
+      key: 'money',
       width: '20%',
     },
     {
