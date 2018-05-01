@@ -26,9 +26,9 @@ function RechargeRecordTable({ dispatch, rechargeRecordQuery, loading, intl: { f
       width: '20%',
     },
     {
-      title: formatMessage(messages.adminAccount),
-      dataIndex: 'adminAccount',
-      key: 'adminAccount',
+      title: formatMessage(messages.adminName),
+      dataIndex: 'adminName',
+      key: 'adminName',
       width: '20%',
     },
     {

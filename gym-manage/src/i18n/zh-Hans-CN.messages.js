@@ -128,7 +128,7 @@ const courseManage = {
   'courseManage.personalClass': '私教',
   'courseManage.coursePrice': '课程单价（单位：元）',
   'courseManage.coursePriceNotUnit': '课程单价',
-  'courseManage.state': '状态',
+  'courseManage.courseState': '状态',
   'courseManage.effective': '有效',
   'courseManage.invalid': '无效',
   'courseManage.courseBackground': '课程背景图',

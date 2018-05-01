@@ -1,4 +1,4 @@
-//import { getZones, delZones } from '../../services/';
+import { getConsumeRecord } from '../../../services/gymServices';
 
 const init = {
   search_value: '',
@@ -17,17 +17,20 @@ const init = {
       coachName:'安西教练',
     }]
   },
+  starttime:null,
+  endtime:null,
 };
 
 export default {
   namespace: 'consumeRecordQuery',
   state : {},
   effects : {
-    *getZones({ payload }, { put, call, select }) {
+    *getConsumeRecord({ payload }, { put, call, select }) {
       const token = yield select(state => state.home.token);
-      let { search_value, sort_direction, page_number, page_size } = yield select(state => state.zoneConfiguration);
+      let { starttime, endtime, search_value, page_number, page_size } = yield select(state => state.consumeRecordQuery);
       if (payload !== undefined) {
-        sort_direction = payload.sort_direction === undefined ? sort_direction : payload.sort_direction;
+        page_number = payload.page_number === undefined ? page_number : payload.page_number;
+        page_size = payload.page_size === undefined ? page_size : payload.page_size;
         const payload_search_value = payload.search_value;
         if(payload_search_value===undefined){
           page_number = payload.page_number || page_number;
@@ -37,22 +40,28 @@ export default {
         }
         page_size = payload.page_size || page_size;
       }
-      sort_direction = (sort_direction === 'descend' || sort_direction === 'DESC') ? 'DESC' : 'ASC';
       let _payload = {
         token,
-        sort_direction,
-        page_number,
-        page_size,
+        techerid:null,
+        studentid:null,
+        studentname:null,
+        techername:null,
+        starttime,
+        endtime,
+        classid:-1,
+        classname:null,
+        pageNo:page_number,
+        pageSize:page_size,
       };
       if (!(!search_value)) {
         if (search_value.indexOf('%') > -1 || search_value.indexOf('#') > -1) {
-          _payload.search_value = encodeURIComponent(search_value);
+          _payload.techername = encodeURIComponent(search_value);
         }else {
-          _payload.search_value = search_value
+          _payload.techername = search_value
         }
       }
-      const { total, contents } = yield call(getZones,{ payload:{ ..._payload } });
-      yield put({type:'setData',payload:{ data:{ total, contents }, sort_direction, page_number, page_size }});
+      const { total, contents } = yield call(getConsumeRecord,{ payload:{ ..._payload } });
+      yield put({type:'setData',payload:{ data:{ total, contents }, page_number, page_size }});
     },
     *delZones({ payload }, { put, call, select }) {
       const token = yield select(state => state.home.token);
@@ -69,8 +78,8 @@ export default {
     init(state,{ payload }){
       return init;
     },
-    setData(state,{ payload:{data, sort_direction, page_number, page_size} }){
-      return {...state, data, sort_direction, page_number, page_size};
+    setData(state,{ payload:{data, page_number, page_size} }){
+      return {...state, data, page_number, page_size};
     },
     setSearchValue(state,{ payload:{search_value} }){
       return {...state, search_value};
@@ -84,7 +93,7 @@ export default {
       return history.listen(({pathname}) => {
         if (pathname === '/statisticalManage/consumeRecordQuery') {
           dispatch({type:'init'});
-          //dispatch({type:'getZones'});
+          dispatch({type:'getConsumeRecord'});
         }
       });
     }

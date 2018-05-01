@@ -27,7 +27,8 @@ class CourseBooking extends Component {
       date: moment().format('YYYY-MM-DD').toString(),
       start_time: '',
       end_time: '',
-      class_duration:'1'
+      class_duration:'1',
+      type:'group'
     }
   }
   handleChange = (e) => {
@@ -53,7 +54,7 @@ class CourseBooking extends Component {
   }
   render(){
     const {dispatch,user} = this.props;
-    const { date,start_time,end_time,class_duration } = this.state;
+    const { date,start_time,end_time,class_duration,type } = this.state;
     console.log(this.state);
     const menu = {
       icon:'schedule',
@@ -64,78 +65,144 @@ class CourseBooking extends Component {
       <div>
         <Header dispatch={dispatch} user={user}/>
         <MenuBar menu={menu}/>
-        <div className={styles.CourseBooking}>
-          <CellsTitle>选择课时</CellsTitle>
-          <Form radio>
-            <FormCell radio>
-              <CellBody>一课时</CellBody>
-              <CellFooter>
-                <Radio name="class_duration" value="1" defaultChecked = {class_duration==='1'} onClick={this.handleChange}/>
-              </CellFooter>
-            </FormCell>
-            <FormCell radio>
-              <CellBody>二课时</CellBody>
-              <CellFooter>
-                <Radio name="class_duration" value="2" defaultChecked = {class_duration==='2'} onClick={this.handleChange}/>
-              </CellFooter>
-            </FormCell>
-          </Form>
+        {
+          type === 'group'
+          ? <div className={styles.CourseBooking}>
+              <CellsTitle>选择课时</CellsTitle>
+              <Form radio>
+                <FormCell radio>
+                  <CellBody>一课时</CellBody>
+                  <CellFooter>
+                    <Radio name="class_duration" value="1" defaultChecked = {class_duration==='1'} onClick={this.handleChange}/>
+                  </CellFooter>
+                </FormCell>
+                <FormCell radio>
+                  <CellBody>二课时</CellBody>
+                  <CellFooter>
+                    <Radio name="class_duration" value="2" defaultChecked = {class_duration==='2'} onClick={this.handleChange}/>
+                  </CellFooter>
+                </FormCell>
+              </Form>
 
-          <br/>
-          <CellsTitle>选择时间</CellsTitle>
-          <Form>
-            <FormCell>
-              <CellHeader>
-                <Label>选择日期</Label>
-              </CellHeader>
-              <CellBody>
-                <Input type="date" name="date" value = {date} onChange={this.handleChange}/>
-              </CellBody>
-            </FormCell>
-            <FormCell>
-              <CellHeader>
-                <Label>开始时间</Label>
-              </CellHeader>
-              <CellBody>
-                <Input type="time" name="start_time" value = {start_time} onChange={this.handleChange}/>
-              </CellBody>
-            </FormCell>
+              <br/>
+              <CellsTitle>选择时间</CellsTitle>
+              <Form>
+                <FormCell>
+                  <CellHeader>
+                    <Label>选择日期</Label>
+                  </CellHeader>
+                  <CellBody>
+                    <Input type="date" name="date" value = {date} onChange={this.handleChange}/>
+                  </CellBody>
+                </FormCell>
+                <FormCell>
+                  <CellHeader>
+                    <Label>开始时间</Label>
+                  </CellHeader>
+                  <CellBody>
+                    <Input type="time" name="start_time" value = {start_time} onChange={this.handleChange}/>
+                  </CellBody>
+                </FormCell>
 
-            <FormCell>
-              <CellHeader>
-                <Label>结束时间</Label>
-              </CellHeader>
-              <CellBody>
-                <Input type="time" name="end_time" value = {end_time} onChange={this.handleChange}/>
-              </CellBody>
-            </FormCell>
+                <FormCell>
+                  <CellHeader>
+                    <Label>结束时间</Label>
+                  </CellHeader>
+                  <CellBody>
+                    <Input type="time" name="end_time" value = {end_time} onChange={this.handleChange}/>
+                  </CellBody>
+                </FormCell>
 
-            <br/>
-            <ButtonArea>
-              <Button style={{backgroundColor:'#3ddfc7'}}> 提交预约 </Button>
-            </ButtonArea>
+                <br/>
+                <ButtonArea>
+                  <Button style={{backgroundColor:'#3ddfc7'}}> 提交预约 </Button>
+                </ButtonArea>
 
-          </Form>
-          <br/>
-          <CellsTitle>当前日期已预约时间</CellsTitle>
+              </Form>
+              <br/>
+              <CellsTitle>当前日期已预约时间</CellsTitle>
+              <div style={{marginBottom:50}}>
+                <Cells>
+                  <Cell>
+                    <CellBody>
+                      10:00 ~ 12:00
+                    </CellBody>
+                    <CellFooter>
+                      张三
+                    </CellFooter>
+                  </Cell>
+                </Cells>
+              </div>
+            </div>
+          : <div className={styles.CourseBooking}>
+              <CellsTitle>选择课时</CellsTitle>
+              <Form radio>
+                <FormCell radio>
+                  <CellBody>一课时</CellBody>
+                  <CellFooter>
+                    <Radio name="class_duration" value="1" defaultChecked = {class_duration==='1'} onClick={this.handleChange}/>
+                  </CellFooter>
+                </FormCell>
+                <FormCell radio>
+                  <CellBody>二课时</CellBody>
+                  <CellFooter>
+                    <Radio name="class_duration" value="2" defaultChecked = {class_duration==='2'} onClick={this.handleChange}/>
+                  </CellFooter>
+                </FormCell>
+              </Form>
 
-          <Cells>
-            <Cell>
-              <CellBody>
-                10:00 ~ 12:00
-              </CellBody>
-              <CellFooter>
-                张三
-              </CellFooter>
-            </Cell>
-          </Cells>
+              <br/>
+              <CellsTitle>选择时间</CellsTitle>
+              <Form>
+                <FormCell>
+                  <CellHeader>
+                    <Label>选择日期</Label>
+                  </CellHeader>
+                  <CellBody>
+                    <Input type="date" name="date" value = {date} onChange={this.handleChange}/>
+                  </CellBody>
+                </FormCell>
+                <FormCell>
+                  <CellHeader>
+                    <Label>开始时间</Label>
+                  </CellHeader>
+                  <CellBody>
+                    <Input type="time" name="start_time" value = {start_time} onChange={this.handleChange}/>
+                  </CellBody>
+                </FormCell>
 
-          {/*<Row className={styles.row}>*/}
-            {/*<Col span={18} offset={6}>*/}
-              {/*<Button style={{width:'80%',backgroundColor:'#3ddfc7',color:'#fff'}}>提交预约</Button>*/}
-            {/*</Col>*/}
-          {/*</Row>*/}
-        </div>
+                <FormCell>
+                  <CellHeader>
+                    <Label>结束时间</Label>
+                  </CellHeader>
+                  <CellBody>
+                    <Input type="time" name="end_time" value = {end_time} onChange={this.handleChange}/>
+                  </CellBody>
+                </FormCell>
+
+                <br/>
+                <ButtonArea>
+                  <Button style={{backgroundColor:'#3ddfc7'}}> 提交预约 </Button>
+                </ButtonArea>
+
+              </Form>
+              <br/>
+              <CellsTitle>当前日期已预约时间</CellsTitle>
+              <div style={{marginBottom:50}}>
+                <Cells>
+                  <Cell>
+                    <CellBody>
+                      10:00 ~ 12:00
+                    </CellBody>
+                    <CellFooter>
+                      张三
+                    </CellFooter>
+                  </Cell>
+                </Cells>
+              </div>
+            </div>
+        }
+
 
       </div>
     )

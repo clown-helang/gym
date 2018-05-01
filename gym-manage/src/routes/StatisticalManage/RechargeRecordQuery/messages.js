@@ -1,9 +1,9 @@
 import {defineMessages} from 'react-intl';
 
 const messages = defineMessages({
-  account:{
-    id: 'userManage.adminManage.account',
-    defaultMessage: '管理员账号'
+  name:{
+    id: 'userManage.adminManage.name',
+    defaultMessage: '管理员姓名'
   },
   inputTip:{
     id: 'common.inputTip',

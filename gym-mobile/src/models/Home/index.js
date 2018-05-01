@@ -20,15 +20,10 @@ export default {
   },
   subscriptions : {
     setup({dispatch, history}) {
-      return history.listen(({pathname}) => {
-        // const token = getSession("token");
-        // const user = getSession("user");
-        // if ( (!token) && pathname !== '/login') {
-        //   dispatch(routerRedux.push("/login"));
-        // } else{
-        //   const path = pathname.split('/');
-        //   dispatch({type:'init', payload:{user, token,path: path.filter(item => item !== '') }});
-        // }
+      return history.listen(({pathname,query}) => {
+        if(pathname === '/'){
+          dispatch(routerRedux.push('/index'));
+        }
       });
     }
   }

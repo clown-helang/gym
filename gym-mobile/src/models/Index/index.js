@@ -1,6 +1,7 @@
-import { routerRedux } from 'dva/router';
 import { getBytes, getSession } from '../../utils';
-const appLocale = window.appLocale;
+import { Modal } from 'antd';
+const confirm = Modal.confirm;
+
 
 export default {
   namespace : 'indexPage',
@@ -19,15 +20,12 @@ export default {
   },
   subscriptions : {
     setup({dispatch, history}) {
-      return history.listen(({pathname}) => {
-        // const token = getSession("token");
-        // const user = getSession("user");
-        // if ( (!token) && pathname !== '/login') {
-        //   dispatch(routerRedux.push("/login"));
-        // } else{
-        //   const path = pathname.split('/');
-        //   dispatch({type:'init', payload:{user, token,path: path.filter(item => item !== '') }});
-        // }
+      return history.listen(({pathname,query}) => {
+        console.log('1111',pathname,query)
+        if(pathname.indexOf('/index')>-1){
+          console.log(pathname);
+          //alert('index页'+JSON.stringify(query))
+        }
       });
     }
   }

@@ -10,8 +10,8 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
   const columns = [
     {
       title: formatMessage(messages.courseName),
-      dataIndex: 'courseName',
-      key: 'courseName',
+      dataIndex: 'classname',
+      key: 'classname',
       width: '15%',
     },
     {
@@ -21,22 +21,22 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
       width: '15%',
     },
     {
-      title: formatMessage(messages.state),
+      title: formatMessage(messages.courseState),
       dataIndex: 'state',
       key: 'state',
       width: '14%',
-      render: (text, record) => {
-        return formatMessage(messages[text]);
-      },
+      // render: (text, record) => {
+      //   return formatMessage(messages[text]);
+      // },
     },
     {
       title: formatMessage(messages.courseType),
       dataIndex: 'courseType',
       key: 'courseType',
       width: '14%',
-      render: (text, record) => {
-        return formatMessage(messages[text]);
-      },
+      // render: (text, record) => {
+      //   return formatMessage(messages[text]);
+      // },
     },
     {
       title: formatMessage(messages.classTime),
@@ -46,8 +46,8 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
     },
     {
       title: formatMessage(messages.coursePrice),
-      dataIndex: 'coursePrice',
-      key: 'coursePrice',
+      dataIndex: 'classmoney',
+      key: 'classmoney',
       width: '15%',
     },
     {

@@ -21,7 +21,7 @@ function RechargeRecordQuery({ dispatch, rechargeRecordQuery, loading, intl: { f
       <div className="search-bar">
         <SearchBar
           valueName="search_value"
-          title={formatMessage(messages.account)}
+          title={formatMessage(messages.name)}
           value={rechargeRecordQuery.search_value}
           tip={formatMessage(messages.inputTip)}
           search={search}

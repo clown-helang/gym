@@ -9,9 +9,9 @@ const messages = defineMessages({
     id: 'userManage.memberManage.rechargeAmountWithUnit',
     defaultMessage: '充值金额（单位：元）'
   },
-  adminAccount:{
-    id: 'userManage.adminManage.account',
-    defaultMessage: '管理员账号'
+  adminName:{
+    id: 'userManage.adminManage.name',
+    defaultMessage: '管理员姓名'
   },
   rechargeTime:{
     id: 'userManage.memberManage.rechargeTime',

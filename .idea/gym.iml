@@ -8,7 +8,6 @@
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/mock" />
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/src/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-mobile" />
       <excludeFolder url="file://$MODULE_DIR$/gym-mobile/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />

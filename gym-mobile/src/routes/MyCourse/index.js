@@ -18,13 +18,21 @@ function MyCourse({dispatch,user}) {
       operation: '预 约'
     },
     {
-    url: fuji,
-    name: '極 ● 腹肌撕裂者初级 ',
-    oldPrice: 2000,
-    vipPrice: 1888,
-    status:'已学完',
-    operation: '再次购买'
-  }
+      url: fuji,
+      name: '極 ● 完美胸肌塑性 ',
+      oldPrice: 2000,
+      vipPrice: 1888,
+      status:'有效',
+      operation: '预 约'
+    },
+    {
+      url: fuji,
+      name: '極 ● 腹肌撕裂者初级 ',
+      oldPrice: 2000,
+      vipPrice: 1888,
+      status:'已学完',
+      operation: '再次购买'
+    },
   ];
   const menu = {
     icon:'shopping-cart',

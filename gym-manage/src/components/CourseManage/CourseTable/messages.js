@@ -9,8 +9,8 @@ const messages = defineMessages({
     id: 'userManage.coachManage.name',
     defaultMessage: '教练姓名'
   },
-  state:{
-    id: 'courseManage.state',
+  courseState:{
+    id: 'courseManage.courseState',
     defaultMessage: '状态'
   },
   effective:{

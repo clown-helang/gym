@@ -9,14 +9,14 @@ function CoachManageTable({ dispatch, coachManage, loading, intl: { formatMessag
   const columns = [
     {
       title: formatMessage(messages.account),
-      dataIndex: 'account',
-      key: 'account',
+      dataIndex: 'loginname',
+      key: 'loginname',
       width: '25%',
     },
     {
       title: formatMessage(messages.name),
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'realname',
+      key: 'realname',
       width: '25%',
     },
     {

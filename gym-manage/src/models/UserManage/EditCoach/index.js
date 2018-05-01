@@ -1,4 +1,4 @@
-//import { getFilmContentById, editFilmContentById } from '../../../../services/FilmDistributionManage';
+import { getCoachById } from '../../../services/gymServices';
 import { routerRedux } from 'dva/router';
 const messages = window.appLocale.messages;
 
@@ -47,9 +47,9 @@ export default {
   namespace: 'editCoach',
   state : {},
   effects : {
-    *getFilmContentById({ payload: { id } }, { put, call, select }) {
+    *getCoachById({ payload: { id } }, { put, call, select }) {
       const token = yield select(state => state.home.token);
-      const data = yield call(getFilmContentById, { payload: { token, id } });
+      const data = yield call(getCoachById, { payload: { token, id } });
       yield put({type:'setData',payload:{ data }});
     },
     *editFilmContentById({ payload: { postData } }, { put, call, select }) {
@@ -78,6 +78,9 @@ export default {
       return history.listen(({pathname, query}) => {
         if (pathname === '/userManage/coachManage/edit') {
           dispatch({type:'init'});
+          if(query.id){
+            dispatch({type:'getCoachById',payload:{id:query.id}})
+          }
         }
       });
     }
