@@ -35,7 +35,7 @@ function MyCourse({dispatch,user}) {
     },
   ];
   const menu = {
-    icon:'shopping-cart',
+    icon:'myCourse',
     title:'我的课表'
   };
   return (

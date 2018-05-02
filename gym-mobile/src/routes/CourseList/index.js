@@ -26,7 +26,7 @@ function CourseList({dispatch,courseList}) {
     }
   ];
   const menu = {
-    icon:'appstore',
+    icon: 'courseList',
     title:'课程列表'
   };
   const user = {

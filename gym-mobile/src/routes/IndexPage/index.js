@@ -52,15 +52,11 @@ function IndexPage({dispatch,indexPage}) {
         <div className={styles.menuBarLeft}/>
         <div className={styles.menuBarCenter}>
           <div className={styles.groupClassList} onClick={()=>{redirect('/courseList')}}>
-            <span className={styles.icon}>
-               <Icon type="appstore"/>
-            </span>
+            <i className={`iconfont ${styles.icon}`}>&#xe692;</i>
             <a>课程列表</a>
           </div>
           <div className={styles.personalClassList} onClick={()=>{redirect('/coachList')}}>
-            <span className={styles.icon}>
-              <Icon type="team" />
-            </span>
+            <i className={`iconfont ${styles.icon}`}>&#xe626;</i>
             <a>私教列表</a>
           </div>
         </div>

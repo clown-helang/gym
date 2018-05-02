@@ -60,7 +60,7 @@ function CourseList({dispatch,courseList}) {
     },
   ];
   const menu = {
-    icon:'team',
+    icon:'coachList',
     title:'私教列表'
   };
   const user = {

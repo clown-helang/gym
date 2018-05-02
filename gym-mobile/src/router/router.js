@@ -75,7 +75,7 @@ function RouterConfig({ history, app }) {
           },
         },
         {
-          path: '/shoppingCart',
+          path: '/myCourse',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
               registerModel(app, require('../models/User'));
