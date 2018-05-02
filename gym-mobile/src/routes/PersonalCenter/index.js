@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'dva';
 import styles from './index.less'
-import { Icon } from 'antd'
 import { routerRedux } from 'dva/router'
 import Header from '../../components/Header'
 
@@ -21,28 +20,31 @@ function PersonalCenter({dispatch,user}) {
           <p>账号：{user.account}</p>
         </div>
         <div className={styles.right}>
-          <p>会员等级：<span>VIP {user.level}</span></p>
+          <p>
+            <i className='iconfont' style={{color:'#3ddfc7',fontSize:24,marginRight:5,position:'relative',top:5}}>&#xe60d;</i>
+            <span>VIP {user.level}</span>
+          </p>
         </div>
       </div>
 
       <div className={styles.strip} style={{marginBottom:20,marginTop:15}}>
-        <span><Icon type="wallet"/></span>
+        <i className={`iconfont ${styles.icon}`}>&#xe608;</i>
         <span>积分余额：<span style={{color:'#3ddfc7',fontSize:20,position:'relative',top:2}}>{user.balance}</span>元</span>
       </div>
-      <div className={styles.strip} onClick={()=>{redirect('/classRecord')}}>
-        <span><Icon type="table"/></span>
-        <span>上课记录</span>
-      </div>
       <div className={styles.strip} onClick={()=>{redirect('/reservationRecord')}}>
-        <span><Icon type="schedule"/></span>
+        <i className={`iconfont ${styles.icon}`}>&#xe656;</i>
         <span>预约记录</span>
       </div>
+      <div className={styles.strip} onClick={()=>{redirect('/classRecord')}}>
+        <i className={`iconfont ${styles.icon}`}>&#xe63d;</i>
+        <span>上课记录</span>
+      </div>
       <div className={styles.strip} onClick={()=>{redirect('/consumeRecord')}}>
-        <span><Icon type="tags-o"/></span>
+        <i className={`iconfont ${styles.icon}`}>&#xe6f6;</i>
         <span>消费记录</span>
       </div>
       <div className={styles.strip} style={{marginTop:20}} onClick={()=>{redirect('/setBreaks')}}>
-        <span><Icon type="setting"/></span>
+        <i className={`iconfont ${styles.icon}`}>&#xe693;</i>
         <span>设置休息时间</span>
       </div>
     </div>

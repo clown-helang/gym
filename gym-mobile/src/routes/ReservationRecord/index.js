@@ -7,7 +7,7 @@ import moment from 'moment-timezone'
 let _defaultValue = moment().format('YYYY-MM-DD').toString()
 function ReservationRecord({dispatch,user}) {
   const menu = {
-    icon:'schedule',
+    icon:'reservationRecord',
     title:'预约记录'
   };
   const onChange = (value) =>{

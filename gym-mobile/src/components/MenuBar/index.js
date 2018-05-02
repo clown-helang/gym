@@ -9,11 +9,11 @@ function MenuBar({menu}) {
       case 'courseList':
         return <i className={`iconfont ${styles.icon}`}>&#xe692;</i>
       case 'coachList':
-        return <i className={`iconfont ${styles.icon}`}>&#xe61c;</i>
+        return <i className={`iconfont ${styles.icon}`} style={{fontSize:24}}>&#xe68c;</i>
       case 'myCourse':
-        return <i className={`iconfont ${styles.icon}`}>&#xe65a;</i>
+        return <i className={`iconfont ${styles.icon}`}>&#xe62b;</i>
       case 'classRecord':
-        return <i className={`iconfont ${styles.icon}`}>&#xe63d;</i>
+        return <i className={`iconfont ${styles.icon}`} style={{fontSize:24}}>&#xe63d;</i>
       case 'consumeRecord':
         return <i className={`iconfont ${styles.icon}`}>&#xe6f6;</i>
       case 'reservationRecord':

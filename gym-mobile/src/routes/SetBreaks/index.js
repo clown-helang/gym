@@ -50,7 +50,7 @@ class SetBreaks extends Component  {
     const { dispatch, user } = this.props;
     const { date, breaks } = this.state
     const menu = {
-      icon:'coffee',
+      icon:'setBreaks',
       title:'设置休息时间'
     };
     return (

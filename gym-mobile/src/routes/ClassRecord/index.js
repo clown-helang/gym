@@ -8,7 +8,7 @@ import { Preview, PreviewHeader, PreviewFooter, PreviewBody, PreviewItem, Previe
 import styles from './index.less'
 function ClassRecord({dispatch,user}) {
   const menu = {
-    icon:'table',
+    icon:'classRecord',
     title:'上课记录'
   };
   return (

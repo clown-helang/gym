@@ -6,7 +6,7 @@ import { Preview, PreviewHeader, PreviewFooter, PreviewBody, PreviewItem, Previe
 
 function ConsumeRecord({dispatch,user}) {
   const menu = {
-    icon:'tags-o',
+    icon:'consumeRecord',
     title:'消费记录'
   };
   return (
