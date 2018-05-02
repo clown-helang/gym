@@ -4,6 +4,8 @@ import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
 import { Preview, PreviewHeader, PreviewFooter, PreviewBody, PreviewItem, PreviewButton, Input } from 'react-weui';
 import moment from 'moment-timezone'
+import styles from './index.less'
+
 let _defaultValue = moment().format('YYYY-MM-DD').toString()
 function ReservationRecord({dispatch,user}) {
   const menu = {
@@ -17,26 +19,34 @@ function ReservationRecord({dispatch,user}) {
     <div>
       <Header dispatch={dispatch} user={user}/>
       <MenuBar menu={menu}/>
-        {
-          user.reservationRecord.map((item,index) => {
-            return (
-              <Preview style={{marginTop:5}} key={index}>
-                <PreviewHeader>
-                  <PreviewItem label={<Input type="date" name="date" defaultValue={_defaultValue} onChange={onChange}/>} value={item.courseName} />
-                </PreviewHeader>
-                <PreviewBody>
-                  {
-                    item.reservation.map((i,key)=>{
-                      return (
-                        <PreviewItem label={i.start_time+'~'+i.end_time} value={i.name} key={key}/>
-                      )
-                    })
-                  }
-                </PreviewBody>
-              </Preview>
-            )
-          })
-        }
+      {
+        user.reservationRecord.map((item,index) => {
+          return (
+            <div className={styles.reservationRecord} key={index}>
+              <div className={styles.recordHeader}>
+                <div className={styles.headerLeft}>
+                  <Input type="date" name="date" defaultValue={_defaultValue} onChange={onChange}/>
+                </div>
+                <div className={styles.headerRight}>
+                  <span>{item.courseName}</span>
+                </div>
+              </div>
+              <div className={styles.recordBody}>
+                {
+                  item.reservation.map((i,key)=>{
+                    return (
+                      <div className={styles.bodyItem} key={key}>
+                        <span>{i.start_time+'~'+i.end_time}</span>
+                        <span>{i.name}</span>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </div>
+          )
+        })
+      }
     </div>
   )
 }

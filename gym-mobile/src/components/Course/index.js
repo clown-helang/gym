@@ -3,8 +3,8 @@ import styles from './index.less'
 import { routerRedux } from 'dva/router'
 
 function Course({dispatch, course, type}) {
-  const redirect = (path) => {
-    dispatch(routerRedux.push({ pathname: path }));
+  const redirect = (path,id) => {
+    dispatch(routerRedux.push({ pathname: path, query:{id} }));
   }
   return (
     <div className={styles.course}>

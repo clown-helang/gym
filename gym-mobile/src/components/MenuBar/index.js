@@ -20,6 +20,8 @@ function MenuBar({menu}) {
         return <i className={`iconfont ${styles.icon}`}>&#xe656;</i>
       case 'setBreaks':
         return <i className={`iconfont ${styles.icon}`}>&#xe693;</i>
+      case 'courseBooking':
+        return <i className={`iconfont ${styles.icon}`}>&#xe62e;</i>
       default:
         return null
     }
@@ -27,7 +29,7 @@ function MenuBar({menu}) {
   return (
     <div className={styles.menuBar}>
       {iconGenerator(menu.icon)}
-      <a>{menu.title}</a>
+      <span>{menu.title}</span>
     </div>
   )
 }

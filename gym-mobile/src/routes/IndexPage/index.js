@@ -35,9 +35,9 @@ function IndexPage({dispatch,indexPage}) {
         <img src={panel}/>
       </div>
       <div className={styles.belt} style={{backgroundImage: `url(${barBg})`}}>
-        <div className={styles.beltLeft}>
-          <img src={barLogo}/>
-        </div>
+        {/*<div className={styles.beltLeft}>*/}
+          {/*/!*<img src={barLogo}/>*!/*/}
+        {/*</div>*/}
         <div className={styles.beltRight}>
           <div className={styles.name}>
             <span>彭于晏</span>
@@ -56,7 +56,7 @@ function IndexPage({dispatch,indexPage}) {
             <a>课程列表</a>
           </div>
           <div className={styles.personalClassList} onClick={()=>{redirect('/coachList')}}>
-            <i className={`iconfont ${styles.icon}`}>&#xe626;</i>
+            <i className={`iconfont ${styles.icon}`}>&#xe68c;</i>
             <a>私教列表</a>
           </div>
         </div>

@@ -1,5 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { getBytes, getSession } from '../../utils';
+import fuji from '../../assets/fuji2.jpg'
+import yujia from '../../assets/yujia.jpg'
 import TX from '../../assets/touxiang.jpg'
 const appLocale = window.appLocale;
 
@@ -62,7 +64,40 @@ export default {
           name:'彭于晏'
         }]
       }
-    ]
+    ],
+    course: [
+      {
+        id:1,
+        url: yujia,
+        name: '極 ● 团体瑜伽课30节 ',
+        oldPrice: 2000,
+        vipPrice: 1888,
+        status:'有效',
+        operation: '预 约',
+        type: 'group'
+      },
+      {
+        id:2,
+        url: fuji,
+        name: '極 ● 完美胸肌塑性 ',
+        oldPrice: 2000,
+        vipPrice: 1888,
+        status:'有效',
+        operation: '预 约',
+        type: 'personal'
+      },
+      {
+        id:3,
+        url: fuji,
+        name: '極 ● 腹肌撕裂者初级 ',
+        oldPrice: 2000,
+        vipPrice: 1888,
+        status:'已学完',
+        operation: '再次购买',
+        type: 'personal'
+      },
+    ],
+    bookingCourse:{}
   },
   effects : {},
   reducers : {
@@ -72,18 +107,24 @@ export default {
     setUser(state,{ user }){
       return {...state,user }
     },
+    setBookingCourse(state, { payload:{ id } }){
+      let bookingCourse = {}
+      state.course.map(item=>{
+        if(parseInt(item.id) === parseInt(id)){
+          bookingCourse = item
+        }
+      })
+      return {...state, bookingCourse }
+    }
   },
   subscriptions : {
     setup({dispatch, history}) {
-      return history.listen(({pathname}) => {
-        // const token = getSession("token");
-        // const user = getSession("user");
-        // if ( (!token) && pathname !== '/login') {
-        //   dispatch(routerRedux.push("/login"));
-        // } else{
-        //   const path = pathname.split('/');
-        //   dispatch({type:'init', payload:{user, token,path: path.filter(item => item !== '') }});
-        // }
+      return history.listen(({pathname,query}) => {
+        if(pathname === '/courseBooking' ){
+          if(query.id){
+            dispatch({type:'setBookingCourse',payload:{ id: query.id}})
+          }
+        }
       });
     }
   }

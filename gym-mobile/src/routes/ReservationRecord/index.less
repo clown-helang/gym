@@ -1,39 +1,50 @@
 .reservationRecord{
-  padding: 14px 0;
-  width: 100%;
-  height: auto;
   background-color: white;
-  margin-bottom: 8px;
-  .top{
-    margin-bottom: 10px;
-    display: table;
-    width: 100%;
-    p{
-      font-weight: 600;
-      font-family: "Adobe 黑体 Std R";
-      font-size: 16px;
-      display: inline-block;
-      border: none;
-      width: 50%;
-      height: 2rem;
+  margin-top: 5px;
+  padding: 10px 15px;
+  color: #999999;
+  font-size: .9em;
+  text-align: right;
+  .recordHeader{
+    height: 40px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    .headerLeft{
+      display: inline-table;
       float: left;
-      line-height: 2rem;
+      min-width: 5em;
+      max-width: 40%;
+      text-align:justify;
+      text-align-last:justify;
+      font:400 13.3333px Arial;
+      line-height: 40px;
+    }
+    .headerRight{
+      display: inline-table;
+      font-size: 1.7em;
+      line-height: 40px;
+      color: rgba(0, 0, 0, 0.65);
     }
   }
-  p{
-    clear: both;
-    margin: 0;
-    line-height: 3rem;
-    height: 3rem;
-    span{
-      width: 50%;
-      display: inline-block;
-      &:nth-child(2){
-        text-align: right;
+  .recordBody{
+    margin-top: 15px;
+    .bodyItem{
+      height: 28px;
+      span:nth-child(1){
+        display: inline-block;
+        width: 50%;
+        text-align: left;
+        line-height: 28px;
+      }
+      span:nth-child(2){
+        display: inline-block;
+        width: 50%;
+        line-height: 28px;
       }
     }
   }
 }
+
 @media screen and (max-width: 370px) {
 
 }

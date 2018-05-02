@@ -8,36 +8,11 @@ import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
 
 function MyCourse({dispatch,user}) {
-  const course = [
-    {
-      url: yujia,
-      name: '極 ● 团体瑜伽课30节 ',
-      oldPrice: 2000,
-      vipPrice: 1888,
-      status:'有效',
-      operation: '预 约'
-    },
-    {
-      url: fuji,
-      name: '極 ● 完美胸肌塑性 ',
-      oldPrice: 2000,
-      vipPrice: 1888,
-      status:'有效',
-      operation: '预 约'
-    },
-    {
-      url: fuji,
-      name: '極 ● 腹肌撕裂者初级 ',
-      oldPrice: 2000,
-      vipPrice: 1888,
-      status:'已学完',
-      operation: '再次购买'
-    },
-  ];
   const menu = {
     icon:'myCourse',
     title:'我的课表'
   };
+  const { course } = user;
   return (
     <div>
       <Header dispatch={dispatch} user={user}/>
