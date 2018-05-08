@@ -9,34 +9,39 @@ function ClassRecordTable({ dispatch, classRecordQuery, loading, intl: { formatM
   const columns = [
     {
       title: formatMessage(messages.courseName),
-      dataIndex: 'courseName',
-      key: 'courseName',
+      dataIndex: 'classname',
+      key: 'classname',
       width: '20%',
     },
     {
       title: formatMessage(messages.courseType),
-      dataIndex: 'courseType',
-      key: 'courseType',
-      width: '20%',
+      dataIndex: 'classdefineid',
+      key: 'classdefineid',
+      width: '16%',
+      render: (text, record) => {
+        return text === '1'?formatMessage(messages.personalClass):formatMessage(messages.groupClass);
+      },
     },
     {
       title: formatMessage(messages.coachName),
-      dataIndex: 'coachName',
-      key: 'coachName',
-      width: '20%',
+      dataIndex: 'classtecher',
+      key: 'classtecher',
+      width: '16%',
     },
     {
-      title: formatMessage(messages.appointmentMember),
-      dataIndex: 'appointmentMember',
-      key: 'appointmentMember',
-      width: '20%',
+      title: formatMessage(messages.memberName),
+      dataIndex: 'classstudent',
+      key: 'classstudent',
+      width: '16%',
     },
     {
       title: formatMessage(messages.classTime),
       dataIndex: 'classTime',
       key: 'classTime',
       render: (text, record) => {
-        return moment(record.payTime).format('YYYY-MM-DD HH:mm:ss');
+        if(record.starttime&&record.endtime){
+          return record.starttime + ' ~ ' + record.endtime;
+        }
       },
     },
   ];

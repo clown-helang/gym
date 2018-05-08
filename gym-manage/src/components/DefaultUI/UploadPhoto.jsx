@@ -25,12 +25,12 @@ class UploadPicture extends Component{
   onChange = ({file, fileList, event}) => {
     if (file.status === 'done') {
       let success_file=[{
-        horizontal_resolution:file.response.successful_files[0].horizontal_resolution,
+        //horizontal_resolution:file.response.successful_files[0].horizontal_resolution,
         name:file.response.successful_files[0].name,
         original_name:file.response.successful_files[0].original_name,
         url:file.response.successful_files[0].resource_url,
-        size:file.response.successful_files[0].size,
-        vertical_resolution:file.response.successful_files[0].vertical_resolution
+        //size:file.response.successful_files[0].size,
+        //vertical_resolution:file.response.successful_files[0].vertical_resolution
       }];
       this.triggerChange(success_file);
     } else if (file.status === 'error') {
@@ -51,10 +51,10 @@ class UploadPicture extends Component{
               name: value[0].name,
               status: 'done',
               url: value[0].url,
-              horizontal_resolution:value[0].horizontal_resolution,
+              //horizontal_resolution:value[0].horizontal_resolution,
               original_name:value[0].original_name,
-              size:value[0].size,
-              vertical_resolution:value[0].vertical_resolution
+              //size:value[0].size,
+              //vertical_resolution:value[0].vertical_resolution
             }
           ]
         });
@@ -115,7 +115,7 @@ class UploadPicture extends Component{
     return (
       <div className="clearfix">
         <Upload
-          action={`${baseURL}${api.savePictures}`}
+          action={`${baseURL}${api.uploadImages}`}
           headers={headers}
           listType="picture-card"
           fileList={this.state.fileList}

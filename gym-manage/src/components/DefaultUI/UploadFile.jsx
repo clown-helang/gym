@@ -16,47 +16,44 @@ class UploadFiles extends Component{
     }
   }
   componentWillReceiveProps(nextProps) {
-    //console.log('-----nextProps------',nextProps);
-    //console.log('----this.props------:',this.props);
-    const value = nextProps.value.successful_files||nextProps.value;
-    let _fileList =this.state.fileList;
-
-    if(value!==undefined&&this.props.value!==value&&value!==''){
-      value.map(item=>{
-        let flag=false;
-        _fileList.map(value=>{
-          if(value.resource_url===item.resource_url){
-            flag=true;
+    if(nextProps.value){
+      const value = nextProps.value.successful_files||nextProps.value;
+      let _fileList =this.state.fileList;
+      if(value!==undefined&&this.props.value!==value&&value!==''){
+        value.map(item=>{
+          let flag=false;
+          _fileList.map(value=>{
+            if(value.resource_url===item.resource_url||value.resource_url===item.url){
+              flag=true;
+            }
+          });
+          if(!flag){
+            if(item.id!==undefined){
+              _fileList.push({
+                uid: uuid++,
+                name: item.original_name,
+                status: 'done',
+                url: item.resource_url,
+                id:item.id
+              })
+            }else{
+              _fileList.push({
+                uid: uuid++,
+                name: item.original_name,
+                status: 'done',
+                url: item.resource_url,
+              })
+            }
           }
         });
-        if(!flag){
-          if(item.id!==undefined){
-            _fileList.push({
-              uid: uuid++,
-              name: item.original_name,
-              status: 'done',
-              url: item.resource_url,
-              id:item.id
-            })
-          }else{
-            _fileList.push({
-              uid: uuid++,
-              name: item.original_name,
-              status: 'done',
-              url: item.resource_url,
-            })
-          }
-
-        }
-      });
-      this.setState({
-        fileList: _fileList
-      });
+        this.setState({
+          fileList: _fileList
+        });
+      }
     }
   }
   onChange = ({file, fileList, event}) => {
     if (file.status === 'done') {
-      //console.log('onChange:',fileList);
       this.triggerChange(fileList);
     } else if (file.status === 'error') {
       message.error(`${file.name}`+this.props.intl.formatMessage(messages.form.uploadFailed));
@@ -66,14 +63,12 @@ class UploadFiles extends Component{
   };
   onRemove = (e) => {
     const _fileList = this.state.fileList.filter(item => item.uid!==e.uid);
-    //console.log('_fileList*****',_fileList)
     this.setState({
       fileList: _fileList
     });
     this.triggerChange(_fileList);
   };
   triggerChange = (changedValue) => {
-    //console.log('changedValue2222:',changedValue);
     const onChange = this.props.onChange;
     if (onChange) {
       if (changedValue === undefined) {
@@ -85,7 +80,18 @@ class UploadFiles extends Component{
   };
 
   render(){
-    //console.log('fileList++++++:',this.state.fileList);
+    const { target } = this.props;
+    let url = '';
+    switch(target){
+      case 'ClassIntroduce':
+        url = `${baseURL}${api.uploadClassIntroduce}`;break;
+      case 'ClassBg':
+        url = `${baseURL}${api.uploadClassBg}`;break;
+      case 'TeacherPhoto':
+        url = `${baseURL}${api.uploadTeacherPhoto}`;break;
+      case 'TeacherIntroduce':
+        url = `${baseURL}${api.uploadTeacherIntroduce}`;break;
+    }
     const headers = {
       "Authorization": 'Bearer ' + getSession("token")
     };
@@ -93,7 +99,7 @@ class UploadFiles extends Component{
       <Upload
         className={styles.upload}
         accept=".jpg,.png"
-        action={`${baseURL}${api.upload_pictures}`}
+        action={url}
         listType='picture'
         headers={headers}
         onChange={this.onChange}

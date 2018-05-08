@@ -37,6 +37,10 @@ const messages = defineMessages({
     id: 'userManage.memberManage.classTime',
     defaultMessage: '上课时间'
   },
+  lengthOfTime:{
+    id: 'courseManage.lengthOfTime',
+    defaultMessage: '课时（单位：小时）'
+  },
   coursePrice:{
     id: 'courseManage.coursePrice',
     defaultMessage: '课程单价（单位：元）'
@@ -48,6 +52,22 @@ const messages = defineMessages({
   edit:{
     id: 'common.edit',
     defaultMessage: '编辑'
+  },
+  publish:{
+    id: 'common.publish',
+    defaultMessage: '发布'
+  },
+  cancelPublish:{
+    id: 'common.cancelPublish',
+    defaultMessage: '取消发布'
+  },
+  thePublished:{
+    id: 'common.thePublished',
+    defaultMessage: '已发布'
+  },
+  toBeReleased:{
+    id: 'common.toBeReleased',
+    defaultMessage: '待发布'
   },
 });
 

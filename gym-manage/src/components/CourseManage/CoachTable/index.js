@@ -9,8 +9,8 @@ function CoachTable({ dispatch, addCourseManage, loading, intl: { formatMessage 
   const columns = [
     {
       title: formatMessage(messages.name),
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'realname',
+      key: 'realname',
       width: '45%',
     },
     {
@@ -34,6 +34,17 @@ function CoachTable({ dispatch, addCourseManage, loading, intl: { formatMessage 
 
 
   const handleOk = () => {
+    let _coachList = [];
+    if(addCourseManage.data.contents){
+      addCourseManage.selectedRows.map(item=>{
+        addCourseManage.data.contents.map(i=>{
+          if(parseInt(item) === parseInt(i.id)){
+            _coachList.push(i)
+          }
+        })
+      })
+    }
+    dispatch({type:"addCourseManage/setCoachList", payload:{ coachList: {total:_coachList.length,contents:_coachList} }})
     dispatch({type:"addCourseManage/setVisible", payload:{ visible: false }})
   };
   const handleCancel = () => {
@@ -41,7 +52,7 @@ function CoachTable({ dispatch, addCourseManage, loading, intl: { formatMessage 
   };
   const tableProps = {
     columns,
-    data: addCourseManage.coachList,
+    data: addCourseManage.data,
     rowSelection,
     rowKey,
     loading,

@@ -9,23 +9,18 @@ function CourseTable({ dispatch, editCoach, loading, intl: { formatMessage } }) 
   const columns = [
     {
       title: formatMessage(messages.courseName),
-      dataIndex: 'courseName',
-      key: 'courseName',
-      width: '30%',
+      dataIndex: 'classname',
+      key: 'classname',
+      width: '50%',
     },
     {
       title: formatMessage(messages.courseType),
-      dataIndex: 'courseType',
-      key: 'courseType',
-      width: '30%',
+      dataIndex: 'type',
+      key: 'type',
+      width: '50%',
       render: (text, record) => {
-        return formatMessage(messages[text]);
+        return text === '1'?formatMessage(messages.personalClass):formatMessage(messages.groupClass);
       },
-    },
-    {
-      title: formatMessage(messages.classTime),
-      dataIndex: 'classTime',
-      key: 'classTime',
     },
   ];
 
@@ -43,6 +38,17 @@ function CourseTable({ dispatch, editCoach, loading, intl: { formatMessage } }) 
 
 
   const handleOk = () => {
+    let _courseList = [];
+    if(editCoach.data.contents){
+      editCoach.selectedRows.map(item=>{
+        editCoach.data.contents.map(i=>{
+          if(parseInt(item) === parseInt(i.id)){
+            _courseList.push(i)
+          }
+        })
+      })
+    }
+    dispatch({type:"editCoach/setCourseList", payload:{ courseList: {total:_courseList.length,contents:_courseList} }})
     dispatch({type:"editCoach/setVisible", payload:{ visible: false }})
   };
   const handleCancel = () => {
@@ -50,7 +56,7 @@ function CourseTable({ dispatch, editCoach, loading, intl: { formatMessage } }) 
   };
   const tableProps = {
     columns,
-    data: editCoach.courseList,
+    data: editCoach.data,
     rowSelection,
     rowKey,
     loading,

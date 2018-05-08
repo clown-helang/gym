@@ -14,7 +14,7 @@ function CourseManage({ dispatch, courseManage, loading, intl: { formatMessage }
     dispatch(routerRedux.push({ pathname: '/courseManage/add' }));
   };
   const search = (search_value) => {
-    dispatch({type:'courseManage/getZones',payload:{search_value}})
+    dispatch({type:'courseManage/getCourses',payload:{search_value}})
   };
   const tableProps = { dispatch, courseManage, loading:loading.models.courseManage };
   return (

@@ -4,7 +4,7 @@ import { Layout, Menu, Icon, Dropdown, Modal, Form  } from 'antd';
 import {injectIntl, FormattedMessage} from 'react-intl';
 import ChangeAccount from './ChangeAccount';
 import ChangePasswd from './ChangePasswd';
-import { queryUserById,editUser } from '../../services/userManage'
+import { queryUserById,editUser } from '../../services/gymServices'
 import { setSession,getSession } from '../../utils';
 import messages from './messages';
 import styles from './header.less';

@@ -21,9 +21,9 @@ const messages = defineMessages({
     id: 'userManage.memberManage.rechargeTime',
     defaultMessage: '充值时间'
   },
-  account:{
-    id: 'statisticalManage.rechargeRecordQuery.account',
-    defaultMessage: '充值账号'
+  memberName:{
+    id: 'userManage.memberManage.name',
+    defaultMessage: '会员姓名'
   },
 });
 

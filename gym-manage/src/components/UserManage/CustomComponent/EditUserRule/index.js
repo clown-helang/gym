@@ -17,7 +17,7 @@ const formHttpItemLayout = {
   },
 };
 
-function EditUserRule({ account, name, phone, rule, visible, loading, submitEdit, cancelEdit, form, intl: { formatMessage } }) {
+function EditUserRule({ realname, phone, usertype, visible, loading, submitEdit, cancelEdit, form, intl: { formatMessage } }) {
   const { validateFields, getFieldDecorator } = form;
 
   const handleSubmit = (e) => {
@@ -41,14 +41,9 @@ function EditUserRule({ account, name, phone, rule, visible, loading, submitEdit
         <Spin spinning = {loading}>
           <div style={{ paddingTop: 20, width: '100%' }}>
             <Form layout="horizontal">
-              <FormItem {...formHttpItemLayout} label={formatMessage(messages.account)}>
-                {getFieldDecorator('account', {
-                  initialValue: account,
-                })(<Input disabled={true}/>)}
-              </FormItem>
               <FormItem {...formHttpItemLayout} label={formatMessage(messages.name)}>
-                {getFieldDecorator('name', {
-                  initialValue: name,
+                {getFieldDecorator('realname', {
+                  initialValue: realname,
                 })(<Input disabled={true}/>)}
               </FormItem>
               <FormItem {...formHttpItemLayout} label={formatMessage(messages.phone)}>
@@ -57,12 +52,12 @@ function EditUserRule({ account, name, phone, rule, visible, loading, submitEdit
                 })(<Input disabled={true}/>)}
               </FormItem>
               <FormItem {...formHttpItemLayout} label={formatMessage(messages.type)}>
-                {getFieldDecorator('rule', {
-                  initialValue: rule,
+                {getFieldDecorator('type', {
+                  initialValue: usertype,
                 })( <Select style={{ width: '100%' }}>
-                  <Option value="member">{formatMessage(messages.member)}</Option>
-                  <Option value="coach">{formatMessage(messages.coach)}</Option>
-                  <Option value="admin">{formatMessage(messages.admin)}</Option>
+                  <Option value="3">{formatMessage(messages.member)}</Option>
+                  <Option value="2">{formatMessage(messages.coach)}</Option>
+                  <Option value="1">{formatMessage(messages.admin)}</Option>
                 </Select>)}
               </FormItem>
             </Form>

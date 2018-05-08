@@ -13,25 +13,31 @@ function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMess
       title: formatMessage(messages.account),
       dataIndex: 'loginname',
       key: 'loginname',
-      width: '20%',
+      width: '17%',
     },
     {
       title: formatMessage(messages.name),
       dataIndex: 'realname',
       key: 'realname',
-      width: '20%',
+      width: '17%',
     },
     {
       title: formatMessage(messages.phone),
       dataIndex: 'phone',
       key: 'phone',
-      width: '20%',
+      width: '17%',
     },
     {
       title: formatMessage(messages.balance),
       dataIndex: 'money',
       key: 'money',
-      width: '20%',
+      width: '17%',
+    },
+    {
+      title: formatMessage(messages.vipClass),
+      dataIndex: 'vipclass',
+      key: 'vipclass',
+      width: '17%',
     },
     {
       title: formatMessage(messages.operation),
@@ -40,7 +46,7 @@ function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMess
       render: (text, record) => {
         return (
           <span>
-            <a className="table-btns" onClick={() => edit(record)}>{formatMessage(messages.edit)}</a>
+            <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
             <Divider type="vertical" />
             <a className="table-btns" onClick={() => recharge(record)}>{formatMessage(messages.recharge)}</a>
             <Divider type="vertical" />
@@ -50,12 +56,13 @@ function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMess
       },
     },
   ];
-  const edit = (record) => {
-    dispatch({type:'memberManage/setEditData',payload:{ editData: record }});
+  const edit = (id) => {
+    dispatch({type:'memberManage/getMembersById',payload:{ id }});
     dispatch({type:'memberManage/setEditVisible',payload:{ editVisible: true }})
   };
   const recharge = (record) => {
-    dispatch({type:'memberManage/setEditData',payload:{ editData: record }});
+    dispatch({type:'memberManage/setMemberInformation',payload:{ memberId:record.id, memberAccount:record.loginname, memberName:record.realname }});
+    dispatch({type:'memberManage/getCoaches'})
     dispatch({type:'memberManage/setRechargeVisible',payload:{ rechargeVisible: true }})
   };
   const detail = (id) => {
@@ -65,14 +72,14 @@ function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMess
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'memberManage/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'memberManage/getMembers', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'memberManage/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'memberManage/getMembers', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'memberManage/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'memberManage/getMembers', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
 
   const tableProps = {

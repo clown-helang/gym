@@ -2,21 +2,10 @@ import { getConsumeRecord } from '../../../services/gymServices';
 
 const init = {
   search_value: '',
-  sort_direction: 'DESC',
   page_number: 1,
   page_size: 10,
-  selectedRows: [],
-  data: {
-    total: 1,
-    contents:[{
-      id:1,
-      account:'hel@qq.com',
-      rechargeAmount:'100000',
-      adminAccount: 'admin@ji.com.cn',
-      rechargeTime: '2020-12-13 12:00',
-      coachName:'安西教练',
-    }]
-  },
+
+  data: {},
   starttime:null,
   endtime:null,
 };
@@ -46,8 +35,8 @@ export default {
         studentid:null,
         studentname:null,
         techername:null,
-        starttime,
-        endtime,
+        starttime:starttime||null,
+        endtime:endtime||null,
         classid:-1,
         classname:null,
         pageNo:page_number,
@@ -84,8 +73,8 @@ export default {
     setSearchValue(state,{ payload:{search_value} }){
       return {...state, search_value};
     },
-    setSelectedRows(state,{ payload:{selectedRows} }){
-      return {...state, selectedRows};
+    setRangeTime(state,{ payload:{timeRange} }){
+      return {...state, starttime:timeRange[0]?`${timeRange[0]} 00:00:00`:null , endtime:timeRange[1]? `${timeRange[1]} 23:59:59`: null};
     }
   },
   subscriptions : {

@@ -33,14 +33,14 @@ function AdminManageTable({ dispatch, adminManage, loading, intl: { formatMessag
       render: (text, record) => {
         return (
           <span>
-            <a className="table-btns" onClick={() => edit(record)}>{formatMessage(messages.edit)}</a>
+            <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
           </span>
         );
       },
     },
   ];
-  const edit = (record) => {
-    dispatch({type:'adminManage/setEditData',payload:{ editData: record }});
+  const edit = (id) => {
+    dispatch({type:'adminManage/getMembersById',payload:{ id }});
     dispatch({type:'adminManage/setVisible',payload:{ visible: true }})
   };
 
@@ -48,14 +48,14 @@ function AdminManageTable({ dispatch, adminManage, loading, intl: { formatMessag
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'adminManage/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'adminManage/getAdmins', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'adminManage/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'adminManage/getAdmins', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'adminManage/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'adminManage/getAdmins', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
 
   const tableProps = {

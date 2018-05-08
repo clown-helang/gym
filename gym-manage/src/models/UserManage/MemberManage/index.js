@@ -1,14 +1,20 @@
-import { getMembers } from '../../../services/gymServices';
-
+import { getMembers, getCoaches, rechargeMoney, getMembersById, changeUserType} from '../../../services/gymServices';
+import { getSession } from '../../../utils';
 const init = {
   search_value: '',
   page_number: 1,
   page_size: 10,
-  selectedRows: [],
+
   data: {},
   editData:{},
+
   editVisible: false,
   rechargeVisible: false,
+  // 充值
+  memberId:'',
+  memberAccount:'',
+  memberName:'',
+  coachList:[],
 };
 
 export default {
@@ -16,7 +22,6 @@ export default {
   state : {},
   effects : {
     *getMembers({ payload }, { put, call, select }) {
-      console.log(1111)
       const token = yield select(state => state.home.token);
       let { search_value, page_number, page_size } = yield select(state => state.memberManage);
       if (payload !== undefined) {
@@ -44,20 +49,47 @@ export default {
           _payload.username = search_value
         }
       }
-      console.log(2222)
       const { total, contents } = yield call(getMembers,{ payload:{ ..._payload } });
-      console.log(3333)
       yield put({type:'setData',payload:{ data:{ total, contents }, page_number, page_size }});
     },
-    *delZones({ payload }, { put, call, select }) {
+    *getMembersById({ payload:{ id } }, { put, call, select }){
       const token = yield select(state => state.home.token);
-      let { selectedRows, data, page_number } = yield select(state => state.zoneConfiguration);
-      if(data.contents.length===selectedRows.length){
-        page_number --
-      }
-      yield call(delZones, { payload: { token, selectedRows } });
-      yield put({type:'setSelectedRows',payload:{ selectedRows:[] }});
-      yield put({type:'getZones',payload:{ page_number }});
+      const editData = yield call(getMembersById, { payload: { token,id } });
+      yield put({type:'setEditData', payload:{ editData }});
+    },
+    *changeUserType({ payload:{ type } }, { put, call, select }){
+      const token = yield select(state => state.home.token);
+      const { id } = yield select(state => state.memberManage.editData);
+      yield call(changeUserType, { payload: { token, id, type } });
+      yield put({type:'getMembers'});
+    },
+    *getCoaches({ payload }, { put, call, select }) {
+      const token = yield select(state => state.home.token);
+      let coachList = [];
+      let _payload = {
+        token,
+        techername:null,
+        pageNo: 1,
+        pageSize: 1000,
+      };
+      const { contents } = yield call(getCoaches,{ payload:{ ..._payload } });
+
+      contents.map(item =>{
+        coachList.push({
+          value: item.id,
+          text: item.realname
+        })
+      })
+
+      yield put({type:'setCoachList',payload:{ coachList }});
+    },
+    *rechargeMoney({ payload:{ postData } }, { put, call, select }) {
+      let adminid = getSession('user_id');
+      const token = yield select(state => state.home.token);
+      let { memberId } = yield select(state => state.memberManage);
+      yield call(rechargeMoney, { payload: { studentid:memberId, techerid:postData.salesMan, money: postData.rechargeAmount,adminid  } });
+      yield put({type:'setMemberInformation',payload:{ memberId:'', memberAccount:'', memberName:'' }});
+      yield put({type:'getMembers'});
     },
   },
   reducers : {
@@ -81,6 +113,12 @@ export default {
     },
     setRechargeVisible(state,{ payload:{ rechargeVisible }}){
       return {...state, rechargeVisible};
+    },
+    setMemberInformation(state,{ payload:{ memberId, memberAccount, memberName } }){
+      return {...state, memberId, memberAccount, memberName};
+    },
+    setCoachList(state,{ payload:{ coachList }}){
+      return {...state, coachList};
     },
   },
   subscriptions : {

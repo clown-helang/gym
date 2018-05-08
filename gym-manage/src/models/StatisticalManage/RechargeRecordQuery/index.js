@@ -1,24 +1,14 @@
 import { getRechargeRecord } from '../../../services/gymServices';
 
 const init = {
-  search_value: '',
-  sort_direction: 'DESC',
   page_number: 1,
   page_size: 10,
-  selectedRows: [],
-  data: {
-    total: 1,
-    contents:[{
-      id:1,
-      account:'hel@qq.com',
-      rechargeAmount:'100000',
-      adminName: 'admin',
-      rechargeTime: '2020-12-13 12:00',
-      coachName:'安西教练',
-    }]
-  },
+
+  data: {},
   starttime:null,
   endtime:null,
+  studentname:null,
+  adminname:null,
 };
 
 export default {
@@ -27,7 +17,7 @@ export default {
   effects : {
     *getRechargeRecord({ payload }, { put, call, select }) {
       const token = yield select(state => state.home.token);
-      let { starttime, endtime, search_value, page_number, page_size } = yield select(state => state.rechargeRecordQuery);
+      let { studentname, adminname, starttime, endtime, search_value, page_number, page_size } = yield select(state => state.rechargeRecordQuery);
       if (payload !== undefined) {
         page_number = payload.page_number === undefined ? page_number : payload.page_number;
         page_size = payload.page_size === undefined ? page_size : payload.page_size;
@@ -45,11 +35,11 @@ export default {
         techerid:null,
         studentid:null,
         adminid:null,
-        username:null,
+        studentname:studentname||null,
         techername:null,
-        adminname:null,
-        starttime,
-        endtime,
+        adminname:adminname||null,
+        starttime:starttime||null,
+        endtime:endtime||null,
         pageNo:page_number,
         pageSize:page_size,
       };
@@ -81,11 +71,14 @@ export default {
     setData(state,{ payload:{data, page_number, page_size} }){
       return {...state, data, page_number, page_size};
     },
-    setSearchValue(state,{ payload:{search_value} }){
-      return {...state, search_value};
+    setStudentName(state,{ payload:{studentname} }){
+      return {...state, studentname};
     },
-    setSelectedRows(state,{ payload:{selectedRows} }){
-      return {...state, selectedRows};
+    setAdminName(state,{ payload:{adminname} }){
+      return {...state, adminname};
+    },
+    setRangeTime(state,{ payload:{timeRange} }){
+      return {...state, starttime:timeRange[0]?`${timeRange[0]} 00:00:00`:null , endtime:timeRange[1]? `${timeRange[1]} 23:59:59`: null};
     }
   },
   subscriptions : {

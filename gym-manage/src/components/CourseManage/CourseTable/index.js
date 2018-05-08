@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { routerRedux } from 'dva/router'
 import TableUI from '../../DefaultUI/TableUI';
-import { Modal } from 'antd'
+import { Modal, Divider } from 'antd'
 import messages from './messages';
+
+const confirm = Modal.confirm;
 
 function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } }) {
   const columns = [
@@ -16,32 +18,31 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
     },
     {
       title: formatMessage(messages.coachName),
-      dataIndex: 'coachName',
-      key: 'coachName',
+      dataIndex: 'classtecher',
+      key: 'classtecher',
       width: '15%',
-    },
-    {
-      title: formatMessage(messages.courseState),
-      dataIndex: 'state',
-      key: 'state',
-      width: '14%',
-      // render: (text, record) => {
-      //   return formatMessage(messages[text]);
-      // },
+      render: (text, record) => {
+        if(text){
+          let teachers = text.split(',');
+          return teachers.map((item,index)=>{
+            return <p style={{margin:0}} key={index}>{item.split(':')[1]}</p>
+          })
+        }
+      },
     },
     {
       title: formatMessage(messages.courseType),
-      dataIndex: 'courseType',
-      key: 'courseType',
+      dataIndex: 'type',
+      key: 'type',
       width: '14%',
-      // render: (text, record) => {
-      //   return formatMessage(messages[text]);
-      // },
+      render: (text, record) => {
+        return text === '1'?formatMessage(messages.personalClass):formatMessage(messages.groupClass);
+      },
     },
     {
-      title: formatMessage(messages.classTime),
-      dataIndex: 'classTime',
-      key: 'classTime',
+      title: formatMessage(messages.lengthOfTime),
+      dataIndex: 'classsize',
+      key: 'classsize',
       width: '15%',
     },
     {
@@ -51,22 +52,55 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
       width: '15%',
     },
     {
+      title: formatMessage(messages.courseState),
+      dataIndex: 'state',
+      key: 'state',
+      width: '14%',
+      render: (text, record) => {
+        return text === '0'? formatMessage(messages.toBeReleased): formatMessage(messages.thePublished);
+      },
+    },
+    {
       title: formatMessage(messages.operation),
       dataIndex: 'operation',
       key: 'operation',
       render: (text, record) => {
-        return (
-          <span>
-            <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
-          </span>
-        );
+        if(record.isshop === '2'){
+          return (
+            <div>
+              <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
+              <Divider type="vertical" />
+              <a className="table-btns" onClick={() => changeCourseState(record.id,'1')}>{formatMessage(messages.publish)}</a>
+            </div>
+          );
+        } else if(record.isshop === '1'){
+          return (
+            <div>
+              <a className="table-btns" onClick={() => changeCourseState(record.id,'0')}>{formatMessage(messages.cancelPublish)}</a>
+            </div>
+          );
+        } else {
+          return (
+            <div>
+              <a className="table-btns" onClick={() => changeCourseState(record.id,'1')}>{formatMessage(messages.publish)}</a>
+            </div>
+          );
+        }
       },
     },
   ];
 
   const rowKey = record => record.id;
   const edit = (id) => {
-    dispatch(routerRedux.push({ pathname: '/courseManage/edit'}))
+    dispatch(routerRedux.push({ pathname: '/courseManage/edit',query:{id}}))
+  };
+  const changeCourseState = (id,isshop) =>{
+    confirm({
+      title: `确认要${isshop==="0"?"取消发布":"发布"}当前选中的课程吗？`,
+      onOk() {
+        dispatch({ type: 'courseManage/changeClassIsShop', payload:{ id, isshop }});
+      },
+    });
   };
   const pageFunction = {
     onChange(page, pageSize) {

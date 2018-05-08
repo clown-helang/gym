@@ -5,7 +5,7 @@ import styles from './index.less'
 import logo from '../../../assets/logo.png'
 
 
-function Footer({dispatch, home}) {
+function Footer({dispatch}) {
 
   const onClick = (url) =>{
     dispatch(routerRedux.push({pathname:`/${url}`}))

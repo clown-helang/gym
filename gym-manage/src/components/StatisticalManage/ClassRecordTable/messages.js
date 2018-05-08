@@ -29,6 +29,10 @@ const messages = defineMessages({
     id: 'userManage.memberManage.classTime',
     defaultMessage: '上课时间'
   },
+  memberName:{
+    id: 'userManage.memberManage.name',
+    defaultMessage: '会员姓名'
+  },
 });
 
 export default messages;

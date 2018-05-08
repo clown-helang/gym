@@ -8,35 +8,29 @@ import messages from './messages';
 function ConsumeRecordTable({ dispatch, consumeRecordQuery, loading, intl: { formatMessage } }) {
   const columns = [
     {
-      title: formatMessage(messages.consumeAccount),
-      dataIndex: 'account',
-      key: 'account',
-      width: '20%',
+      title: formatMessage(messages.memberName),
+      dataIndex: 'studentname',
+      key: 'studentname',
+      width: '25%',
     },
     {
       title: formatMessage(messages.consumeAmount),
-      dataIndex: 'rechargeAmount',
-      key: 'rechargeAmount',
-      width: '20%',
+      dataIndex: 'money',
+      key: 'money',
+      width: '25%',
     },
     {
       title: formatMessage(messages.salesMan),
-      dataIndex: 'coachName',
-      key: 'coachName',
-      width: '20%',
-    },
-    {
-      title: formatMessage(messages.adminAccount),
-      dataIndex: 'adminAccount',
-      key: 'adminAccount',
-      width: '20%',
+      dataIndex: 'techername',
+      key: 'techername',
+      width: '25%',
     },
     {
       title: formatMessage(messages.consumeTime),
-      dataIndex: 'rechargeTime',
-      key: 'rechargeTime',
+      dataIndex: 'shoptime',
+      key: 'shoptime',
       render: (text, record) => {
-        return moment(record.payTime).format('YYYY-MM-DD HH:mm:ss');
+        return text;
       },
     },
   ];

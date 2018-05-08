@@ -15,10 +15,10 @@ function MemberManage({ dispatch, memberManage, loading, intl: { formatMessage }
     dispatch(routerRedux.push({ pathname: '/basicInformation/zone_configuration/add' }));
   };
   const search = (search_value) => {
-    dispatch({type:'memberManage/getZones',payload:{search_value}})
+    dispatch({type:'memberManage/getMembers',payload:{search_value}})
   };
   const submitEdit = (postData) =>{
-    console.log('submit---',postData);
+    dispatch({type:'memberManage/changeUserType',payload:{type:postData.type}})
     dispatch({type:'memberManage/setEditVisible',payload:{editVisible:false}})
   };
   const cancelEdit = () =>{
@@ -26,18 +26,18 @@ function MemberManage({ dispatch, memberManage, loading, intl: { formatMessage }
   };
 
   const submitRecharge = (postData) =>{
-    console.log('submit---',postData);
+    dispatch({type:'memberManage/rechargeMoney',payload:{postData}})
     dispatch({type:'memberManage/setRechargeVisible',payload:{rechargeVisible:false}})
   };
   const cancelRecharge = () =>{
     dispatch({type:'memberManage/setRechargeVisible',payload:{rechargeVisible:false}})
   };
 
-  const { editData:{name, phone, rule, account}, editVisible, rechargeVisible } = memberManage;
+  const { memberName, memberAccount, editData:{ realname, phone, usertype},coachList, editVisible, rechargeVisible } = memberManage;
 
   const tableProps = { dispatch, memberManage, loading:loading.models.memberManage };
-  const editProps = { account, name, phone, rule, visible:editVisible, loading:false, submitEdit, cancelEdit};
-  const rechargeProps = { account, name, visible:rechargeVisible, loading:false, submitRecharge, cancelRecharge};
+  const editProps = { realname, phone, usertype, visible:editVisible, loading:false, submitEdit, cancelEdit};
+  const rechargeProps = { memberAccount, memberName, coachList,  visible:rechargeVisible, loading:false, submitRecharge, cancelRecharge};
   return (
     <div className={styles.content}>
       <div className="search-bar">

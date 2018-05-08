@@ -1,21 +1,12 @@
-import { getAdmins } from '../../../services/gymServices';
+import { getAdmins, changeUserType, getMembersById } from '../../../services/gymServices';
 
 const init = {
   search_value: '',
-  sort_direction: 'DESC',
+
   page_number: 1,
   page_size: 10,
-  selectedRows: [],
-  data: {
-    total:1,
-    contents:[{
-      id: 1,
-      account:'admin@qq.com',
-      name: '店长',
-      phone: '15991234567',
-      rule: 'admin'
-    }],
-  },
+
+  data: {},
   visible: false,
   editData:{},
 };
@@ -55,15 +46,16 @@ export default {
       const { total, contents } = yield call(getAdmins,{ payload:{ ..._payload } });
       yield put({type:'setData',payload:{ data:{ total, contents }, page_number, page_size }});
     },
-    *delZones({ payload }, { put, call, select }) {
+    *getMembersById({ payload:{ id } }, { put, call, select }){
       const token = yield select(state => state.home.token);
-      let { selectedRows, data, page_number } = yield select(state => state.zoneConfiguration);
-      if(data.contents.length===selectedRows.length){
-        page_number --
-      }
-      yield call(delZones, { payload: { token, selectedRows } });
-      yield put({type:'setSelectedRows',payload:{ selectedRows:[] }});
-      yield put({type:'getZones',payload:{ page_number }});
+      const editData = yield call(getMembersById, { payload: { token,id } });
+      yield put({type:'setEditData', payload:{ editData }});
+    },
+    *changeUserType({ payload:{ type } }, { put, call, select }){
+      const token = yield select(state => state.home.token);
+      const { id } = yield select(state => state.adminManage.editData);
+      yield call(changeUserType, { payload: { token, id, type } });
+      yield put({type:'getAdmins'});
     },
   },
   reducers : {

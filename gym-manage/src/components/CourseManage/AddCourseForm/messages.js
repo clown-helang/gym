@@ -58,8 +58,12 @@ const messages = defineMessages({
     defaultMessage: '私教'
   },
   classTime:{
-    id: 'userManage.memberManage.classTime',
-    defaultMessage: '上课时间'
+    id: 'courseManage.classTime',
+    defaultMessage: '课时时长'
+  },
+  timeUnit:{
+    id: 'courseManage.timeUnit',
+    defaultMessage: '小时'
   },
   operation:{
     id: 'common.operation',

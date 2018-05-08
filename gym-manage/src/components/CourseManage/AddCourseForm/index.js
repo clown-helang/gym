@@ -1,7 +1,7 @@
 import React from 'react';
 import { routerRedux } from 'dva/router'
 import { injectIntl } from 'react-intl';
-import { Form, Button, Col, Row, Input, Select, Icon, Radio,DatePicker  } from 'antd';
+import { Form, Button, Col, Row, Input, Select, Icon, Radio,DatePicker, InputNumber } from 'antd';
 import { get_length, cut_str, trim, isTrue} from '../../../utils/index';
 import TableUI from '../../DefaultUI/TableUI';
 import UploadFile from '../../DefaultUI/UploadFile';
@@ -45,12 +45,50 @@ const LayoutWithOutLabel = {
 
 function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessage },form:{ getFieldDecorator, setFieldsValue, getFieldValue, validateFields }  }) {
   // const loadingState = loading.effects['reviewForm/editUsersRoles']||loading.effects['reviewForm/queryRoles']||loading.effects['reviewForm/queryUsersRoles']||false;
-  const { descriptionList } = addCourseManage;
+  const { introduce } = addCourseManage;
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        const { coachList } = addCourseManage;
+        console.log('values---',values)
+        let postData = {
+          classname: values.classname,
+          iscommend: values.iscommend,
+          isshop: '2',
+          classmoney: values.classmoney,
+          classtecher:[],
+          classsize: values.classsize,
+          introduce: [],
+          type: values.type,
+          classimg:[]
+        }
+        if(values.classimg.length>0){
+          postData.classimg = JSON.stringify([{
+            resource_url: values.classimg[0].response.successful_files[0].resource_url,
+            original_name: values.classimg[0].name
+          }])
+        }
+        if(coachList.contents){
+          coachList.contents.map(item => {
+            postData.classtecher.push(`${item.id}:${item.realname}`)
+          })
+        }
+        values.keys.map(item=>{
+          let _resource_url = '',_name= '';
+          if(values[`resource_url_${item.key}`].length>0){
+            _resource_url = values[`resource_url_${item.key}`][0].response.successful_files[0].resource_url;
+            _name = values[`resource_url_${item.key}`][0].name;
+          }
+          postData.introduce.push({
+            description: values[`description_${item.key}`],
+            resource_url: _resource_url,
+            original_name:_name
+          })
+        })
+        postData.introduce = JSON.stringify(postData.introduce)
+        console.log('postData--',postData)
+        dispatch({type:'addCourseManage/addNewCourse', payload:{ postData }})
       }
     });
   };
@@ -60,15 +98,9 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
   const columns = [
     {
       title: formatMessage(messages.coachName),
-      dataIndex: 'coachName',
-      key: 'coachName',
-      width: '33%'
-    },
-    {
-      title: formatMessage(messages.phone),
-      dataIndex: 'phone',
-      key: 'phone',
-      width: '33%'
+      dataIndex: 'realname',
+      key: 'realname',
+      width: '50%'
     },
     {
       title: formatMessage(messages.operation),
@@ -84,16 +116,18 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
     },
   ];
   const del = (id) =>{
-    console.log(id)
+    const _coachList = addCourseManage.coachList.contents.filter(item => parseInt(item.id) !== parseInt(id));
+    dispatch({type:"addCourseManage/setCoachList", payload:{ coachList: {total:_coachList.length,contents:_coachList} }})
   };
   const rowKey = record => record.id;
   const tableProps = {
     columns,
-    data: addCourseManage.data,
+    data: addCourseManage.coachList,
     rowKey,
     loading: loading.models.addCourseManage,
   };
   const addCoach = () =>{
+    dispatch({type:"addCourseManage/getCoaches"})
     dispatch({type:"addCourseManage/setVisible", payload:{ visible: true }})
   };
   const remove = (k) => {
@@ -108,24 +142,23 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
   const add = () =>{
     let fieldValue = {};
     const keys = getFieldValue('keys');
-    console.log('keys---',keys);
     fieldValue['keys'] = keys.concat({
       key: ++uuid,
-      url: '',
+      resource_url: '',
       description: ''
     });
     setFieldsValue(fieldValue);
   };
-  descriptionList.map(item=>{
+  introduce.map(item=>{
     if(!item.key){
       item.key = ++uuid;
     }
   });
-  getFieldDecorator('keys', { initialValue: descriptionList });
+  getFieldDecorator('keys', { initialValue: introduce });
   const keys = getFieldValue('keys');
   const formItems = keys.map((k, index) => {
     return (
-      <div key={k.key}>
+      <div key={k.key} className={styles.formItems}>
         <FormItem {...(index===0?descriptionLayout:LayoutWithOutLabel)} label={index===0?formatMessage(messages.courseDescription):''}>
           {getFieldDecorator(`description_${k.key}`, {
             initialValue: k.description,
@@ -139,12 +172,10 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
 
         </FormItem>
         <FormItem {...(index===0?descriptionLayout:LayoutWithOutLabel)} label={index===0?formatMessage(messages.uploadPicture):''}>
-          <div style={{width:'100%',height:32}}>
-            {getFieldDecorator(`url_${k.key}`, {
-              initialValue: k.url,
-            })(
-              <UploadFile />
-            )}
+          <div style={{width:'75%'}}>
+            {getFieldDecorator(`resource_url_${k.key}`, {
+              initialValue: k.resource_url!==''?[{resource_url:k.resource_url,original_name:k.original_name}]:'',
+            })(<UploadFile target="ClassIntroduce"/>)}
           </div>
         </FormItem>
       </div>
@@ -155,8 +186,8 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
     <div style={{marginTop:20,marginLeft:20}}>
       <Form onSubmit={handleSubmit}>
         <FormItem {...formItemLayout} label={formatMessage(messages.courseName)}>
-          {getFieldDecorator('name', {
-            initialValue: addCourseManage.name,
+          {getFieldDecorator('classname', {
+            initialValue: addCourseManage.classname||'',
             rules: [
               {
                 required: true,
@@ -173,9 +204,9 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
           })(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.courseBackground)}>
-          {getFieldDecorator('courseBackground', {
-            initialValue: addCourseManage.courseBackground,
-          })(<UploadFile />)}
+          {getFieldDecorator('classimg', {
+            initialValue: addCourseManage.classimg,
+          })(<UploadFile target="ClassBg"/>)}
         </FormItem>
 
         {formItems}
@@ -187,7 +218,7 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
         </Row>
         <FormItem {...formItemLayout} label={formatMessage(messages.courseType)}>
           {getFieldDecorator('type', {
-            initialValue: addCourseManage.type,
+            initialValue: addCourseManage.type||'',
             rules: [
               {
                 required: true,
@@ -195,13 +226,13 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
               }
             ],
           })(<RadioGroup>
-            <Radio value='groupClass'>{formatMessage(messages.groupClass)}</Radio>
-            <Radio value='personalClass'>{formatMessage(messages.personalClass)}</Radio>
+            <Radio value='1'>{formatMessage(messages.groupClass)}</Radio>
+            <Radio value='2'>{formatMessage(messages.personalClass)}</Radio>
           </RadioGroup>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.recommendCourse)}>
-          {getFieldDecorator('type', {
-            initialValue: addCourseManage.recommendCourse,
+          {getFieldDecorator('iscommend', {
+            initialValue: addCourseManage.iscommend,
             rules: [
               {
                 required: true,
@@ -209,24 +240,37 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
               }
             ],
           })(<RadioGroup>
-            <Radio value='yes'>{formatMessage(messages.yes)}</Radio>
-            <Radio value='no'>{formatMessage(messages.no)}</Radio>
+            <Radio value='1'>{formatMessage(messages.yes)}</Radio>
+            <Radio value='0'>{formatMessage(messages.no)}</Radio>
           </RadioGroup>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.classTime)}>
-          {getFieldDecorator('classTime', {
-            initialValue: addCourseManage.classTime,
+          {getFieldDecorator('classsize', {
+            initialValue: addCourseManage.classsize||'',
             rules: [
               {
                 required: true,
                 message: formatMessage(messages.notNull).replace('***',formatMessage(messages.classTime))
               }
             ],
-          })(<RangePicker />)}
+          })(<InputNumber />)}
+          <span className="ant-form-text">{formatMessage(messages.timeUnit)}</span>
+        </FormItem>
+        <FormItem {...formItemLayout} label={formatMessage(messages.coursePriceNotUnit)}>
+          {getFieldDecorator('classmoney', {
+            initialValue: addCourseManage.classmoney||'',
+            rules: [
+              {
+                required: true,
+                message: formatMessage(messages.notNull).replace('***',formatMessage(messages.coursePriceNotUnit))
+              }
+            ],
+          })(<InputNumber />)}
+          <span className="ant-form-text">{formatMessage(messages.priceUnit)}</span>
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.selectCoach)}>
           {getFieldDecorator('selectCoach', {
-            initialValue: addCourseManage.selectCoach,
+            initialValue: addCourseManage.selectCoach||'',
           })(<Button type="primary" onClick = {addCoach}>
               {formatMessage(messages.add)}
             </Button>)}
@@ -246,7 +290,7 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
         </FormItem>
       </Form>
 
-      <CoachTable addCourseManage={addCourseManage} dispatch={dispatch}/>
+      <CoachTable addCourseManage={addCourseManage} dispatch={dispatch} loading={loading.models.addCourseManage}/>
     </div>
   );
 }

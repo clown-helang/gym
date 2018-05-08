@@ -9,9 +9,13 @@ const messages = defineMessages({
     id: 'common.Account.name',
     defaultMessage: '姓名'
   },
-  durationOfClass:{
-    id: 'statisticalManage.coachKPIQuery.durationOfClass',
-    defaultMessage: '上课总时长（单位：小时）'
+  groupDurationOfClass:{
+    id: 'statisticalManage.coachKPIQuery.groupDurationOfClass',
+    defaultMessage: '团课上课总时长（单位：小时）'
+  },
+  personalDurationOfClass:{
+    id: 'statisticalManage.coachKPIQuery.personalDurationOfClass',
+    defaultMessage: '私教上课总时长（单位：小时）'
   },
   salesTotal:{
     id: 'statisticalManage.coachKPIQuery.salesTotal',

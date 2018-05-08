@@ -11,29 +11,34 @@ function ClassRecord({dispatch, coachKPIDetail, loading, intl: { formatMessage }
   const columns = [
     {
       title: formatMessage(messages.courseName),
-      dataIndex: 'courseName',
-      key: 'courseName',
+      dataIndex: 'classname',
+      key: 'classname',
       width: '23%',
     },
     {
       title: formatMessage(messages.courseType),
-      dataIndex: 'courseType',
-      key: 'courseType',
+      dataIndex: 'classdefineid',
+      key: 'classdefineid',
       width: '23%',
       render: (text, record) => {
-        return formatMessage(messages[text])
-      }
+        return text === '1'?formatMessage(messages.personalClass):formatMessage(messages.groupClass);
+      },
     },
     {
-      title: formatMessage(messages.appointmentMember),
-      dataIndex: 'appointmentMember',
-      key: 'appointmentMember',
+      title: formatMessage(messages.memberName),
+      dataIndex: 'classstudent',
+      key: 'classstudent',
       width: '23%',
     },
     {
       title: formatMessage(messages.classTime),
       dataIndex: 'classTime',
       key: 'classTime',
+      render: (text, record) => {
+        if(record.starttime&&record.endtime){
+          return record.starttime + ' ~ ' + record.endtime;
+        }
+      },
     },
   ];
 
@@ -50,7 +55,9 @@ function ClassRecord({dispatch, coachKPIDetail, loading, intl: { formatMessage }
   const tableOnChange = (pagination, filters, sorter) => {
     dispatch({ type: 'coachKPIDetail/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
-
+  const search = () => {
+    dispatch({ type: 'coachKPIDetail/getClassRecord' });
+  }
   const tableProps = {
     columns,
     data: coachKPIDetail.classRecord,
@@ -65,13 +72,13 @@ function ClassRecord({dispatch, coachKPIDetail, loading, intl: { formatMessage }
     <div style={{marginTop:-10}}>
       <div className="search-bar">
         <RangePickerBar
-        valueName="search_value"
-        title={formatMessage(messages.selectData)}
-        value={coachKPIDetail.search_value}
-        modalName="coachKPIDetail/setSearchValue"
-        dispatch={dispatch}
+          valueName="timeRange"
+          title={formatMessage(messages.selectData)}
+          value={[coachKPIDetail.starttime,coachKPIDetail.endtime]}
+          modalName="coachKPIDetail/setRangeTime"
+          dispatch={dispatch}
         />
-        <Button type="primary" icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
+        <Button onClick={search} type="primary" icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
       </div>
       <TableUI {...tableProps} />
     </div>

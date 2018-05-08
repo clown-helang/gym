@@ -10,44 +10,44 @@ function BasicInformation({ memberDetail, loading, intl: { formatMessage } }) {
   const columns = [
     {
       title: formatMessage(messages.courseName),
-      dataIndex: 'courseName',
-      key: 'courseName',
+      dataIndex: 'classname',
+      key: 'classname',
       width: '17%',
     },
     {
       title: formatMessage(messages.coachName),
-      dataIndex: 'coachName',
-      key: 'coachName',
+      dataIndex: 'classtecher',
+      key: 'classtecher',
       width: '17%',
     },
     {
       title: formatMessage(messages.lengthOfTime),
-      dataIndex: 'lengthOfTime',
-      key: 'lengthOfTime',
+      dataIndex: 'classsize',
+      key: 'classsize',
       width: '17%',
     },
     {
       title: formatMessage(messages.courseType),
-      dataIndex: 'courseType',
-      key: 'courseType',
+      dataIndex: 'type',
+      key: 'type',
       width: '16%',
       render: (text, record) => {
-        return formatMessage(messages[text])
-      }
+        return text === '1'?formatMessage(messages.personalClass):formatMessage(messages.groupClass);
+      },
     },
     {
       title: formatMessage(messages.payTime),
       dataIndex: 'payTime',
       key: 'payTime',
       width: '17%',
-      render: (text, record) => {
-        return moment(record.payTime).format('YYYY-MM-DD HH:mm:ss');
-      },
+      // render: (text, record) => {
+      //   return moment(record.payTime).format('YYYY-MM-DD HH:mm:ss');
+      // },
     },
     {
       title: formatMessage(messages.coursePrice),
-      dataIndex: 'coursePrice',
-      key: 'coursePrice',
+      dataIndex: 'classmoney',
+      key: 'classmoney',
     },
   ];
   const rowKey = record => record.id;
@@ -61,22 +61,20 @@ function BasicInformation({ memberDetail, loading, intl: { formatMessage } }) {
   return (
     <div style={{fontSize:16}}>
       <Row style={{margin:'10px 5px 20px'}}>
-        <Col span={2}>{formatMessage(messages.account)}:</Col>
-        <Col span={10}>{memberDetail.account}</Col>
+        <Col span={2}>{formatMessage(messages.name)}:</Col>
+        <Col span={10}>{memberDetail.realname}</Col>
         <Col span={2}>{formatMessage(messages.type)}:</Col>
-        <Col span={10}>{formatMessage(messages[memberDetail.rule])}</Col>
+        <Col span={10}>{memberDetail.usertype==='3'?formatMessage(messages.member):''}</Col>
       </Row>
       <Row style={{margin:'25px 5px'}}>
-        <Col span={2}>{formatMessage(messages.name)}:</Col>
-        <Col span={10}>{memberDetail.name}</Col>
         <Col span={2}>{formatMessage(messages.phone)}:</Col>
         <Col span={10}>{memberDetail.phone}</Col>
+        <Col span={2}>{formatMessage(messages.balance)}:</Col>
+        <Col span={10}>{memberDetail.money}&nbsp;{formatMessage(messages.rechargeUnit)}</Col>
       </Row>
       <Row style={{margin:'25px 5px'}}>
-        <Col span={2}>{formatMessage(messages.createTime)}:</Col>
-        <Col span={10}>{memberDetail.createTime}</Col>
-        <Col span={2}>{formatMessage(messages.balance)}:</Col>
-        <Col span={10}>{memberDetail.balance}&nbsp;{formatMessage(messages.rechargeUnit)}</Col>
+        <Col span={2}>{formatMessage(messages.vipClass)}:</Col>
+        <Col span={10}>{memberDetail.vipclass}</Col>
       </Row>
       <Row style={{margin:'25px 5px'}}>
         <Col span={2}>{formatMessage(messages.ownCourse)}:</Col>

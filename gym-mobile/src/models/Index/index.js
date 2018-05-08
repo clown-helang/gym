@@ -5,10 +5,7 @@ const confirm = Modal.confirm;
 
 export default {
   namespace : 'indexPage',
-  state : {
-    user: getSession("user"),
-    token: getSession("token"),
-  },
+  state : {},
   effects : {},
   reducers : {
     init(state,{ payload:{ user, token, path } }){
@@ -21,9 +18,8 @@ export default {
   subscriptions : {
     setup({dispatch, history}) {
       return history.listen(({pathname,query}) => {
-        console.log('1111',pathname,query)
         if(pathname.indexOf('/index')>-1){
-          console.log(pathname);
+          //console.log(pathname);
           //alert('index页'+JSON.stringify(query))
         }
       });

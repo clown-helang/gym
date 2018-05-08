@@ -46,14 +46,14 @@ function CoachManageTable({ dispatch, coachManage, loading, intl: { formatMessag
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'coachManage/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'coachManage/getCoaches', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'coachManage/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'coachManage/getCoaches', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'coachManage/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'coachManage/getCoaches', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
 
   const tableProps = {

@@ -1,33 +1,14 @@
 import { getClassRecord } from '../../../services/gymServices';
 
 const init = {
-  sort_direction: 'DESC',
   page_number: 1,
   page_size: 10,
-  search_value: '',
 
-  data: {
-    total:2,
-    contents:[{
-      id: 1,
-      courseName:'精品瑜伽课',
-      coachName:'安西教练',
-      appointmentMember: '安琪',
-      courseType: 'groupClass',
-      classTime: '2017-08-09 12:00:00 - 2017-08-09 14:00:00',
-    },{
-      id: 2,
-      courseName:'腹肌塑型课',
-      coachName:'麦克海尔教练',
-      appointmentMember: '安琪',
-      courseType: 'personalClass',
-      classTime: '2017-08-10 12:00:00 - 2017-08-10 14:00:00',
-    }]
-  },
+  data: {},
   starttime:null,
   endtime:null,
   username:null,
-  techername:null,
+  teachername:null,
 };
 
 export default {
@@ -35,9 +16,8 @@ export default {
   state : {},
   effects : {
     *getClassRecord({ payload }, { put, call, select }) {
-      console.log(1111)
       const token = yield select(state => state.home.token);
-      let { username, techername, starttime, endtime, search_value, page_number, page_size } = yield select(state => state.classRecordQuery);
+      let { username, teachername, starttime, endtime, search_value, page_number, page_size } = yield select(state => state.classRecordQuery);
       if (payload !== undefined) {
         page_number = payload.page_number === undefined ? page_number : payload.page_number;
         page_size = payload.page_size === undefined ? page_size : payload.page_size;
@@ -53,14 +33,16 @@ export default {
       let _payload = {
         token,
         isover:null,
-        starttime,
-        endtime,
+        starttime:starttime||null,
+        endtime:endtime||null,
         classtime:-1,
-        techerid:null,
-        userid:null,
+        classtecherid:null,
+        classstudentid:null,
         classname:null,
-        username,
-        techername,
+        classstudent:username,
+        classtecher:teachername,
+        classdefineid:-1,
+        shoplogid:-1,
         pageNo:page_number,
         pageSize:page_size,
       };
@@ -72,19 +54,25 @@ export default {
     init(state,{ payload }){
       return init;
     },
-    setOwnCourse(state,{ payload:{ownCourse, sort_direction, page_number, page_size} }){
-      return {...state, ownCourse, sort_direction, page_number, page_size};
+    setData(state,{ payload:{data, page_number, page_size} }){
+      return {...state, data, page_number, page_size};
     },
-    setSearchValue(state,{ payload:{search_value} }){
-      return {...state, search_value};
+    setUserName(state,{ payload:{username} }){
+      return {...state, username};
     },
+    setTeacherName(state,{ payload:{teachername} }){
+      return {...state, teachername};
+    },
+    setRangeTime(state,{ payload:{timeRange} }){
+      return {...state, starttime:timeRange[0]?`${timeRange[0]} 00:00:00`:null , endtime:timeRange[1]? `${timeRange[1]} 23:59:59`: null};
+    }
   },
   subscriptions : {
     setup({dispatch, history}){
       return history.listen(({pathname, query}) => {
         if (pathname === '/statisticalManage/classRecordQuery') {
           dispatch({type:'init'});
-          //dispatch({type:'getZones'});
+          dispatch({type:'getClassRecord'});
         }
       });
     }

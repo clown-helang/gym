@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Form, Input} from 'antd';
 import {injectIntl, FormattedMessage} from 'react-intl';
 import { get_length, cut_str, getSession, setSession } from '../../utils';
-import { editUser } from '../../services/userManage'
+import { editUser } from '../../services/gymServices'
 import messages from './messages';
 
 const FormItem = Form.Item;

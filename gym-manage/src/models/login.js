@@ -1,4 +1,4 @@
-import {login} from '../services/userManage';
+import {login} from '../services/gymServices';
 import { setSession } from '../utils';
 
 export default {

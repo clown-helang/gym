@@ -54,6 +54,9 @@ function get_length(s){ //获取字符串长度 中文占一个 英文占0.5个
   }
   return char_length;
 }
+function isTrue(value) {
+  return (value!==undefined&&value!==''&&value!==null);
+}
 function cut_str(str, len){//截取字符串 从str 中截取len 个字符，中文占一个 英文占0.5个
   var char_length = 0;
   for (var i = 0; i < str.length; i++){
@@ -70,14 +73,40 @@ function cut_str(str, len){//截取字符串 从str 中截取len 个字符，中
     }
   }
 }
-//校验是否是电话号码
-function CheckPhone(phone) {
-  const pattern=/^[0-9+-\s]+$/i;
-  return pattern.test(phone);
+//去掉左边的空白
+function trimLeft(s){
+  if(s == null) {
+    return "";
+  }
+  var whitespace = new String(" \t\n\r");
+  var str = new String(s);
+  if (whitespace.indexOf(str.charAt(0)) != -1) {
+    var j=0, i = str.length;
+    while (j < i && whitespace.indexOf(str.charAt(j)) != -1){
+      j++;
+    }
+    str = str.substring(j, i);
+  }
+  return str;
 }
 
-function isTrue(value) {
-  return (value!==undefined)&&(value!==null)&&(value!=='')
+//去掉右边的空白 www.2cto.com
+function trimRight(s){
+  if(s == null) return "";
+  var whitespace = new String(" \t\n\r");
+  var str = new String(s);
+  if (whitespace.indexOf(str.charAt(str.length-1)) != -1){
+    var i = str.length - 1;
+    while (i >= 0 && whitespace.indexOf(str.charAt(i)) != -1){
+      i--;
+    }
+    str = str.substring(0, i+1);
+  }
+  return str;
+}
+//去掉前后空格
+function trim(s){
+  return trimRight(trimLeft(s));
 }
 export default {
   setSession,
@@ -88,6 +117,8 @@ export default {
   compareLength,
   get_length,
   cut_str,
-  CheckPhone,
-  isTrue
+  isTrue,
+  trimRight,
+  trimLeft,
+  trim
 }

@@ -12,6 +12,7 @@ const appLocale = window.appLocale;
 const app = dva({
   // history: browserHistory,
   onError (error) {
+    //console.log('error---',error)
     if(error instanceof TypeError){
       Modal.warning({title:appLocale.messages.error,content:error});
     }else{

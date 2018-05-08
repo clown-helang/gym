@@ -13,7 +13,7 @@ function CoachManage({ dispatch, coachManage, loading, intl: { formatMessage } }
     dispatch(routerRedux.push({ pathname: '/basicInformation/zone_configuration/add' }));
   };
   const search = (search_value) => {
-    dispatch({type:'coachManage/getZones',payload:{search_value}})
+    dispatch({type:'coachManage/getCoaches',payload:{search_value}})
   };
   const tableProps = { dispatch, coachManage, loading:loading.models.coachManage };
   return (

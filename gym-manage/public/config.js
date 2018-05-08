@@ -1,5 +1,5 @@
 window.baseConfig = {
-  //baseURL: 'http://10.0.251.246:10080',
+  //baseURL: 'http://chinaji.club',
   baseZone:-4, //时区设置默认为0时区
   systemName:{
     chi: '后台管理系统',

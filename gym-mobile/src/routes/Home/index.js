@@ -14,19 +14,15 @@ class Home extends Component{
     }
   }
   render(){
-    const {children, dispatch, home} = this.props;
-    const {user} = home;
-    const setUser = (user) => {
-      dispatch({type:'home/setUser',payload:{user}})
-    };
-    const headerProps = { user };
+    const {children, dispatch } = this.props;
+
     return (
       <div className={styles.container}>
         <div className={styles.content}>
           {children||''}
         </div>
         <div className={styles.footer} style={{backgroundImage: `url(${footerBg})`}}>
-          <Footer dispatch={dispatch} home={home}/>
+          <Footer dispatch={dispatch} />
         </div>
       </div>
     )

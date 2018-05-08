@@ -9,9 +9,9 @@ const messages = defineMessages({
     id: 'statisticalManage.consumeAmount',
     defaultMessage: '消费金额（单位：元）'
   },
-  adminAccount:{
-    id: 'userManage.adminManage.account',
-    defaultMessage: '管理员账号'
+  adminName:{
+    id: 'userManage.adminManage.name',
+    defaultMessage: '管理员姓名'
   },
   consumeTime:{
     id: 'statisticalManage.consumeTime',
@@ -20,6 +20,10 @@ const messages = defineMessages({
   salesMan:{
     id: 'userManage.memberManage.salesMan',
     defaultMessage: '销售人'
+  },
+  memberName:{
+    id: 'userManage.memberManage.name',
+    defaultMessage: '会员姓名'
   },
 });
 

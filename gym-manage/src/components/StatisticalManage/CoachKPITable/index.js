@@ -8,27 +8,27 @@ import messages from './messages';
 function CoachKPITable({ dispatch, coachKPIQuery, loading, intl: { formatMessage } }) {
   const columns = [
     {
-      title: formatMessage(messages.account),
-      dataIndex: 'account',
-      key: 'account',
-      width: '20%',
-    },
-    {
       title: formatMessage(messages.name),
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'realname',
+      key: 'realname',
       width: '20%',
     },
     {
-      title: formatMessage(messages.durationOfClass),
-      dataIndex: 'durationOfClass',
-      key: 'durationOfClass',
+      title: formatMessage(messages.groupDurationOfClass),
+      dataIndex: 'onetomanymanyclasssum',
+      key: 'onetomanymanyclasssum',
+      width: '20%',
+    },
+    {
+      title: formatMessage(messages.personalDurationOfClass),
+      dataIndex: 'onetooneclasssum',
+      key: 'onetooneclasssum',
       width: '20%',
     },
     {
       title: formatMessage(messages.salesTotal),
-      dataIndex: 'salesTotal',
-      key: 'salesTotal',
+      dataIndex: 'rechargsum',
+      key: 'rechargsum',
       width: '20%',
     },
     {
@@ -45,6 +45,7 @@ function CoachKPITable({ dispatch, coachKPIQuery, loading, intl: { formatMessage
     },
   ];
   const detail = (id) => {
+    console.log('id',id)
     dispatch(routerRedux.push({pathname: '/statisticalManage/coachKPIQuery/detail', query:{ id }}));
   };
 

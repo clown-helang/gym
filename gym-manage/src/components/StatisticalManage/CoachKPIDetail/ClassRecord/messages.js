@@ -25,9 +25,9 @@ const messages = defineMessages({
     id: 'courseManage.personalClass',
     defaultMessage: '私教'
   },
-  appointmentMember:{
-    id: 'statisticalManage.coachKPIQuery.appointmentMember',
-    defaultMessage: '预约人'
+  memberName:{
+    id: 'userManage.memberManage.name',
+    defaultMessage: '会员姓名'
   },
   classTime:{
     id: 'userManage.memberManage.classTime',

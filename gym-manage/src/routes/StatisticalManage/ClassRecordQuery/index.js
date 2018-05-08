@@ -14,39 +14,39 @@ function ClassRecordQuery({ dispatch, classRecordQuery, loading, intl: { formatM
   const add = () => {
     dispatch(routerRedux.push({ pathname: '/basicInformation/zone_configuration/add' }));
   };
-  const search = (search_value) => {
-    dispatch({type:'classRecordQuery/getZones',payload:{search_value}})
+  const search = () => {
+    dispatch({type:'classRecordQuery/getClassRecord'})
   };
   const tableProps = { dispatch, classRecordQuery, loading:loading.models.classRecordQuery };
   return (
     <div className={styles.content}>
       <div className="search-bar">
         <RangePickerBar
-          valueName="search_value"
+          valueName="timeRange"
           title={formatMessage(messages.selectData)}
-          value={classRecordQuery.search_value}
-          modalName="classRecordQuery/setSearchValue"
+          value={[classRecordQuery.starttime,classRecordQuery.endtime]}
+          modalName="classRecordQuery/setRangeTime"
           dispatch={dispatch}
         />
         <SearchBar
-          valueName="search_value"
+          valueName="username"
           title={formatMessage(messages.memberName)}
-          value={classRecordQuery.search_value}
+          value={classRecordQuery.username}
           tip={formatMessage(messages.inputTip)}
           search={search}
-          modalName="classRecordQuery/setSearchValue"
+          modalName="classRecordQuery/setUserName"
           dispatch={dispatch}
         />
         <SearchBar
-          valueName="search_value"
+          valueName="teachername"
           title={formatMessage(messages.coachName)}
-          value={classRecordQuery.search_value}
+          value={classRecordQuery.teachername}
           tip={formatMessage(messages.inputTip)}
           search={search}
-          modalName="classRecordQuery/setSearchValue"
+          modalName="classRecordQuery/setTeacherName"
           dispatch={dispatch}
         />
-        <Button type="primary" icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
+        <Button type="primary" onClick={search} icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
       </div>
       <ClassRecordTable {...tableProps}/>
     </div>

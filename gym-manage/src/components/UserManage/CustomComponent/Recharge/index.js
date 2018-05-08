@@ -17,9 +17,8 @@ const formHttpItemLayout = {
   },
 };
 
-function EditUserRule({ account, name, visible, loading, submitRecharge, cancelRecharge, form, intl: { formatMessage } }) {
+function Recharge({ memberAccount, memberName, coachList, visible, loading, submitRecharge, cancelRecharge, form, intl: { formatMessage } }) {
   const { validateFields, getFieldDecorator } = form;
-
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((err, postData) => {
@@ -42,14 +41,14 @@ function EditUserRule({ account, name, visible, loading, submitRecharge, cancelR
           <div style={{ paddingTop: 20, width: '100%' }}>
             <FormItem {...formHttpItemLayout} label={formatMessage(messages.account)}>
               {getFieldDecorator('account', {
-                initialValue: account,
-              })(<Input disabled={true}/>)}
+                initialValue: memberAccount,
+              })(<Input readOnly={true}/>)}
             </FormItem>
             <Form layout="horizontal">
               <FormItem {...formHttpItemLayout} label={formatMessage(messages.name)}>
                 {getFieldDecorator('name', {
-                  initialValue: name,
-                })(<Input disabled={true}/>)}
+                  initialValue: memberName,
+                })(<Input readOnly={true}/>)}
               </FormItem>
               <FormItem {...formHttpItemLayout} label={formatMessage(messages.rechargeAmount)}>
                 {getFieldDecorator('rechargeAmount', {
@@ -59,11 +58,10 @@ function EditUserRule({ account, name, visible, loading, submitRecharge, cancelR
               </FormItem>
               <FormItem {...formHttpItemLayout} label={formatMessage(messages.salesMan)}>
                 {getFieldDecorator('salesMan', {
-                  initialValue: '',
-                })( <Select style={{ width: '100%' }} placeholder = {formatMessage(messages.selectTip)}>
-                  <Option value="1">安西教练</Option>
-                  <Option value="2">麦克海尔教练</Option>
-                  <Option value="3">波波维奇教练</Option>
+                })(<Select style={{ width: '100%' }} placeholder = {formatMessage(messages.selectTip)}>
+                  {
+                    coachList.map((item,index) => <Option key={index} value={item.value}>{item.text}</Option>)
+                  }
                 </Select>)}
               </FormItem>
             </Form>
@@ -74,4 +72,4 @@ function EditUserRule({ account, name, visible, loading, submitRecharge, cancelR
   );
 }
 
-export default Form.create()(injectIntl(EditUserRule));
+export default Form.create()(injectIntl(Recharge));

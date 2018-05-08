@@ -30,11 +30,12 @@ class IndexSider extends React.Component{
   componentDidMount(){
     window.setCollapsedState = this.toggle;
   }
-  menuClick = ({ key }) => {
-    const headerMenus = getSession('headerMenus');
-    setSession('activeHeadMenu',key);
-    this.setState({activeHeadMenu:key});
-    window.location.href=key;
+  menuClick = ({key}) => {
+    if(key){
+      setSession('activeHeadMenu',key);
+      this.setState({activeHeadMenu:key});
+      window.location.href=key;
+    }
   };
 
   getIcon = icon => {

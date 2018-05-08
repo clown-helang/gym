@@ -14,19 +14,19 @@ function CoachManage({ dispatch, adminManage, loading, intl: { formatMessage } }
     dispatch(routerRedux.push({ pathname: '/basicInformation/zone_configuration/add' }));
   };
   const search = (search_value) => {
-    dispatch({type:'adminManage/getZones',payload:{search_value}})
+    dispatch({type:'adminManage/getAdmins',payload:{search_value}})
   };
   const submitEdit = (postData) =>{
-    console.log('submit---',postData);
+    dispatch({type:'adminManage/changeUserType',payload:{type:postData.type}})
     dispatch({type:'adminManage/setVisible',payload:{visible:false}})
   };
   const cancelEdit = () =>{
     dispatch({type:'adminManage/setVisible',payload:{visible:false}})
   };
-  const { editData:{name, phone, rule, account}, visible } = adminManage;
+  const { editData:{realname, phone, usertype, account}, visible } = adminManage;
 
   const tableProps = { dispatch, adminManage, loading:loading.models.adminManage };
-  const editProps = { account, name, phone, rule, visible, loading:false, submitEdit, cancelEdit};
+  const editProps = { realname, phone, usertype, visible, loading:false, submitEdit, cancelEdit};
   return (
     <div className={styles.content}>
       <div className="search-bar">

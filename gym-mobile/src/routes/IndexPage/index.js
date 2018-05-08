@@ -10,6 +10,7 @@ import fuji from '../../assets/fuji2.jpg'
 import yujia from '../../assets/yujia.jpg'
 import barBg from '../../assets/barBg.png'
 import { routerRedux } from 'dva/router'
+import { getSession, setSession } from '../../utils';
 
 function IndexPage({dispatch,indexPage}) {
   const course = [
@@ -29,6 +30,9 @@ function IndexPage({dispatch,indexPage}) {
   const redirect = (path) => {
     dispatch(routerRedux.push({ pathname: path }));
   }
+  const name = getSession('name')
+  const headImgUrl = getSession('headimgurl')
+  console.log(headImgUrl);
   return (
     <div>
       <div className={styles.panel}>
@@ -40,10 +44,10 @@ function IndexPage({dispatch,indexPage}) {
         {/*</div>*/}
         <div className={styles.beltRight}>
           <div className={styles.name}>
-            <span>彭于晏</span>
+            <span>{name}</span>
           </div>
           <div className={styles.photo}>
-            <img src={TX}/>
+            <img src={headImgUrl}/>
           </div>
         </div>
       </div>

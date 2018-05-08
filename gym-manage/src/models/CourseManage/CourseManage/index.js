@@ -1,23 +1,10 @@
-import { getCourses } from '../../../services/gymServices';
+import { getCourses, changeClassIsShop } from '../../../services/gymServices';
 
 const init = {
   search_value: '',
-  sort_direction: 'DESC',
   page_number: 1,
   page_size: 10,
-  selectedRows: [],
-  data: {
-    total: 1,
-    contents:[{
-      id: 1,
-      courseName: '腹肌塑型课',
-      coachName: '波波维奇',
-      state: 'effective',
-      courseType: 'personalClass',
-      classTime: '2018-05-01 ~ 2018-07-01',
-      coursePrice: '2000'
-    }]
-  },
+  data: {},
 };
 
 export default {
@@ -46,6 +33,7 @@ export default {
         classname:null,
         pageNo:page_number,
         pageSize:page_size,
+        isshop: null
       };
       if (!(!search_value)) {
         if (search_value.indexOf('%') > -1 || search_value.indexOf('#') > -1) {
@@ -57,16 +45,11 @@ export default {
       const { total, contents } = yield call(getCourses,{ payload:{ ..._payload } });
       yield put({type:'setData',payload:{ data:{ total, contents }, page_number, page_size }});
     },
-    *delZones({ payload }, { put, call, select }) {
+    *changeClassIsShop({ payload:{id, isshop} }, { put, call, select }){
       const token = yield select(state => state.home.token);
-      let { selectedRows, data, page_number } = yield select(state => state.zoneConfiguration);
-      if(data.contents.length===selectedRows.length){
-        page_number --
-      }
-      yield call(delZones, { payload: { token, selectedRows } });
-      yield put({type:'setSelectedRows',payload:{ selectedRows:[] }});
-      yield put({type:'getZones',payload:{ page_number }});
-    },
+      yield call(changeClassIsShop,{ payload:{ token, id, isshop } });
+      yield put({type:'getCourses'});
+    }
   },
   reducers : {
     init(state,{ payload }){
@@ -78,9 +61,6 @@ export default {
     setSearchValue(state,{ payload:{search_value} }){
       return {...state, search_value};
     },
-    setSelectedRows(state,{ payload:{selectedRows} }){
-      return {...state, selectedRows};
-    }
   },
   subscriptions : {
     setup({dispatch, history}){

@@ -33,6 +33,10 @@ const messages = defineMessages({
     id: 'common.detail',
     defaultMessage: '详情'
   },
+  vipClass:{
+    id: 'userManage.memberManage.vipClass',
+    defaultMessage: '会员等级'
+  },
 });
 
 export default messages;

@@ -1,28 +1,30 @@
 import { routerRedux } from 'dva/router';
-import { getBytes, getSession } from '../../utils';
+import { getSession, setSession } from '../../utils';
+import { getMembersById } from '../../services/gymServices'
 
 const appLocale = window.appLocale;
 
 export default {
   namespace : 'home',
-  state : {
-    user: getSession("user"),
-    token: getSession("token"),
-  },
-  effects : {},
-  reducers : {
-    init(state,{ payload:{ user, token, path } }){
-      return {...state, user, token, path };
+  state : {},
+  effects : {
+    *getMembersById({ payload:{ id } }, { put, call, select }){
+      const data = yield call(getMembersById, { payload: { id } });
+      if(data){
+        setSession('id',data.id)
+        setSession('name',data.nickName)
+        setSession('headimgurl',data.headimgurl)
+        setSession('usertype',data.usertype)
+      }
     },
-    setUser(state,{ user }){
-      return {...state,user }
-    },
   },
+  reducers : {},
   subscriptions : {
     setup({dispatch, history}) {
       return history.listen(({pathname,query}) => {
         if(pathname === '/'){
-          dispatch(routerRedux.push('/index'));
+          dispatch({type:'getMembersById',payload:{id:'or9F0xJw5Xv_c8C6qcYEVjDSNDyg'}})
+          dispatch(routerRedux.push('/indexPage'));
         }
       });
     }

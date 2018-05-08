@@ -21,6 +21,10 @@ const messages = defineMessages({
     id: 'userManage.memberManage.salesMan',
     defaultMessage: '销售人'
   },
+  memberName:{
+    id: 'userManage.memberManage.name',
+    defaultMessage: '会员姓名'
+  },
 });
 
 export default messages;

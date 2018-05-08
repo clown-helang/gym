@@ -32,7 +32,7 @@ export default function request(arr) {
     method: arr.method,
     mode: 'cors',
     headers: {
-      "Content-Type": "application/json;charset=utf-8",
+      "Content-Type": "application/x-www-form-urlencoded",
       "Accept": "application/json;charset=utf-8",
     }
   };
@@ -45,7 +45,12 @@ export default function request(arr) {
       if(arr.body!=undefined&&arr.body){
         options.body = JSON.stringify(arr.body);
       }else{
-        options.body = JSON.stringify(arr.params);
+        let formData = ''
+        for(let key in arr.params){
+          formData += key +'='+ arr.params[key] + '&'
+        }
+        formData = formData.substr(0,formData.length-1);
+        options.body = formData;
       }
   }else{
     real_url = real_url + '?';

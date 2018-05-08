@@ -33,6 +33,11 @@ const common = {
   'common.uploadPictureTip':'支持扩展名：.png .jpg',
   'common.yes':'是',
   'common.no':'否',
+  'common.publish':'发布',
+  'common.cancelPublish':'取消发布',
+  'common.thePublished':'已发布',
+  'common.toBeReleased':'待发布',
+  'uploadFailed':'上传失败'
 };
 const Login = {
   "common.login.title": System["common.System.title"],
@@ -81,6 +86,7 @@ const userManage = {
   'userManage.memberManage':'会员管理',
   'userManage.memberDetail':'会员详情',
   'userManage.memberManage.name':'会员姓名',
+  'userManage.memberManage.vipClass':'会员等级',
   'userManage.memberManage.account':'会员账号',
   'userManage.memberManage.balance':'账户余额（单位：元）',
   'userManage.memberManage.balanceNotUnit':'账户余额',
@@ -122,12 +128,15 @@ const courseManage = {
   'courseManage.name': '课程名称',
   'courseManage.courseList': '课程列表',
   'courseManage.lengthOfTime': '课时（单位：小时）',
+  'courseManage.classTime': '课时时长',
+  'courseManage.timeUnit': '小时',
   'courseManage.type': '课程类型',
   'courseManage.recommendCourse': '是否设置为推荐课程',
   'courseManage.groupClass': '团课',
   'courseManage.personalClass': '私教',
   'courseManage.coursePrice': '课程单价（单位：元）',
   'courseManage.coursePriceNotUnit': '课程单价',
+  'courseManage.priceUnit': '元/人民币',
   'courseManage.courseState': '状态',
   'courseManage.effective': '有效',
   'courseManage.invalid': '无效',
@@ -135,7 +144,6 @@ const courseManage = {
   'courseManage.courseDescription': '课程介绍',
   'courseManage.addCourseDescription': '添加课程介绍',
   'courseManage.selectCoach': '选择教练',
-  'courseManage.priceUnit': '元/人民币',
 };
 const statisticalManage = {
   'statisticalManage': '统计管理',
@@ -143,7 +151,8 @@ const statisticalManage = {
   'statisticalManage.rechargeRecordQuery.account': '充值账号',
 
   'statisticalManage.coachKPIQuery': '教练业绩查询',
-  'statisticalManage.coachKPIQuery.durationOfClass': '上课总时长（单位：小时）',
+  'statisticalManage.coachKPIQuery.groupDurationOfClass': '团课上课总时长（单位：小时）',
+  'statisticalManage.coachKPIQuery.personalDurationOfClass': '私教上课总时长（单位：小时）',
   'statisticalManage.coachKPIQuery.salesTotal': '销售总额（单位：元）',
   'statisticalManage.coachKPIQuery.salesRecord': '销售记录',
   'statisticalManage.coachKPIQuery.appointmentMember': '预约人',

@@ -1,43 +1,26 @@
-import { getCoachById } from '../../../services/gymServices';
+import { getCoachById, getCourses } from '../../../services/gymServices';
 import { routerRedux } from 'dva/router';
 const messages = window.appLocale.messages;
 
 const init = {
-  descriptionList:[
-    {
-      url:'',
-      description:'最佳教练'
-    }
-  ],
-  id: 1,
-  account: 'boboweiqi@qq.com',
-  name: '波波维奇',
-  phone: '15991234567',
-  rule: 'coach',
-  photo: '',
-  data:{
-    total: 1,
-    contents:[{
-      id: 1,
-      courseName: '精品瑜伽课',
-      courseType: 'groupClass',
-      classTime: '2018-05-01 ~ 2018-07-01'
-    }]
-  },
-  courseList:{
-    total: 2,
-    contents:[{
-      id: 1,
-      courseName: '精品瑜伽课',
-      courseType: 'groupClass',
-      classTime: '2018-05-01 ~ 2018-07-01'
-    },{
-      id: 2,
-      courseName: '腹肌塑型课',
-      courseType: 'personalClass',
-      classTime: '2018-06-01 ~ 2018-07-01'
-    }]
-  },
+  loginname: "",
+  phone: "",
+  realname: "",
+  id: "",
+  vipclass: "",
+  status: "",
+  money: '',
+  introduce: [{
+    description:'',
+    resource_url:'',
+    original_name:''
+  }],
+  topimg: [{
+    resource_url:'',
+    original_name:''
+  }],
+
+  data:{},
 
   visible: false,
   selectedRows:[],
@@ -49,28 +32,49 @@ export default {
   effects : {
     *getCoachById({ payload: { id } }, { put, call, select }) {
       const token = yield select(state => state.home.token);
-      const data = yield call(getCoachById, { payload: { token, id } });
-      yield put({type:'setData',payload:{ data }});
+      const editData = yield call(getCoachById, { payload: { token, id } });
+      if(!editData.introduce){
+        editData.introduce = [{
+          description:'',
+          resource_url:'',
+          original_name:''
+        }]
+      }
+      yield put({type:'setEditData',payload:{ editData }});
     },
-    *editFilmContentById({ payload: { postData } }, { put, call, select }) {
+    *getCourses({ payload }, { put, call, select }) {
       const token = yield select(state => state.home.token);
-      let { id } = yield select(state => state.editFilmInformation);
-      yield call(editFilmContentById, { payload: { token, id, postData } });
-      yield put(routerRedux.push({pathname: '/pushManage/filmDistributionManage'}));
+      let _payload = {
+        token,
+        id:-1,
+        iscommend:null,
+        classname:null,
+        pageNo:1,
+        pageSize:1000,
+        isshop: null
+      };
+      const { total, contents } = yield call(getCourses,{ payload:{ ..._payload } });
+      yield put({type:'setData',payload:{ data:{ total, contents } }});
     },
   },
   reducers : {
     init(state,{ payload }){
       return init;
     },
-    setData(state,{ payload:{data} }){
-      return {...state, ...data};
+    setData(state,{ payload:{ data } }){
+      return { ...state, data };
+    },
+    setEditData(state,{ payload:{ editData } }){
+      return { ...state, ...editData };
     },
     setVisible(state,{ payload:{visible} }){
       return {...state, visible};
     },
     setSelectedRows(state,{ payload:{ selectedRows } }){
       return {...state, selectedRows};
+    },
+    setCourseList(state,{ payload:{ courseList } }){
+      return { ...state, courseList };
     },
   },
   subscriptions : {

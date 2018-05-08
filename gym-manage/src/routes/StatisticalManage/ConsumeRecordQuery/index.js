@@ -14,18 +14,18 @@ function ConsumeRecordQuery({ dispatch, consumeRecordQuery, loading, intl: { for
   const add = () => {
     dispatch(routerRedux.push({ pathname: '/basicInformation/zone_configuration/add' }));
   };
-  const search = (search_value) => {
-    dispatch({type:'consumeRecordQuery/getZones',payload:{search_value}})
+  const search = () => {
+    dispatch({type:'consumeRecordQuery/getConsumeRecord'})
   };
   const tableProps = { dispatch, consumeRecordQuery, loading:loading.models.consumeRecordQuery };
   return (
     <div className={styles.content}>
       <div className="search-bar">
         <RangePickerBar
-          valueName="search_value"
+          valueName="timeRange"
           title={formatMessage(messages.selectData)}
-          value={consumeRecordQuery.search_value}
-          modalName="consumeRecordQuery/setSearchValue"
+          value={[consumeRecordQuery.starttime,consumeRecordQuery.endtime]}
+          modalName="consumeRecordQuery/setRangeTime"
           dispatch={dispatch}
         />
         <SearchBar
@@ -37,7 +37,7 @@ function ConsumeRecordQuery({ dispatch, consumeRecordQuery, loading, intl: { for
           modalName="consumeRecordQuery/setSearchValue"
           dispatch={dispatch}
         />
-        <Button type="primary" icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
+        <Button type="primary" onClick={search} icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
       </div>
       <ConsumeRecordTable {...tableProps}/>
     </div>

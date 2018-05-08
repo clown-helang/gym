@@ -8,35 +8,35 @@ import messages from './messages';
 function RechargeRecordTable({ dispatch, rechargeRecordQuery, loading, intl: { formatMessage } }) {
   const columns = [
     {
-      title: formatMessage(messages.account),
-      dataIndex: 'account',
-      key: 'account',
+      title: formatMessage(messages.memberName),
+      dataIndex: 'studentname',
+      key: 'studentname',
       width: '20%',
     },
     {
       title: formatMessage(messages.rechargeAmountWithUnit),
-      dataIndex: 'rechargeAmount',
-      key: 'rechargeAmount',
+      dataIndex: 'money',
+      key: 'money',
       width: '20%',
     },
     {
       title: formatMessage(messages.salesMan),
-      dataIndex: 'coachName',
-      key: 'coachName',
+      dataIndex: 'techername',
+      key: 'techername',
       width: '20%',
     },
     {
       title: formatMessage(messages.adminName),
-      dataIndex: 'adminName',
-      key: 'adminName',
+      dataIndex: 'adminname',
+      key: 'adminname',
       width: '20%',
     },
     {
       title: formatMessage(messages.rechargeTime),
-      dataIndex: 'rechargeTime',
-      key: 'rechargeTime',
+      dataIndex: 'time',
+      key: 'time',
       render: (text, record) => {
-        return moment(record.payTime).format('YYYY-MM-DD HH:mm:ss');
+        return text;
       },
     },
   ];

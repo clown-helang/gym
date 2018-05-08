@@ -19,8 +19,8 @@
     }
   },
   "proxy": {
-    "/auth-service":{
-      "target": "http://10.0.251.97:8084",
+    "/gym":{
+      "target": "http://chinaji.club",
       "changeOrigin": true
     }
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Button, Form, Input, Icon } from 'antd';
 import {injectIntl, FormattedMessage} from 'react-intl';
 import { getSession,get_length, cut_str, CheckPhone,getBytes } from '../../utils';
-import { changePasswd } from '../../services/userManage'
+import { changePasswd } from '../../services/gymServices'
 import md5 from 'md5';
 import messages from './messages';
 

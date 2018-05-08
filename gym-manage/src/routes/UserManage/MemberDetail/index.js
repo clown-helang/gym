@@ -13,17 +13,7 @@ const TabPane = Tabs.TabPane;
 function MemberDetail({ dispatch, memberDetail, loading, intl: { formatMessage } }) {
   return (
     <div className={styles.content}>
-      <Tabs defaultActiveKey="1">
-        <TabPane tab={<span><Icon type="idcard" />{formatMessage(messages.baseInformation)}</span>} key="1">
-          <BasicInformation memberDetail={memberDetail} loading={loading.models.memberDetail}/>
-        </TabPane>
-        <TabPane tab={<span><Icon type="calendar" />{formatMessage(messages.classRecord)}</span>} key="2">
-          <ClassRecord dispatch={dispatch} memberDetail={memberDetail} loading={loading.models.memberDetail} />
-        </TabPane>
-        <TabPane tab={<span><Icon type="bank" />{formatMessage(messages.rechargeRecord)}</span>} key="3">
-          <RechargeRecord dispatch={dispatch} memberDetail={memberDetail} loading={loading.models.memberDetail} />
-        </TabPane>
-      </Tabs>
+      <BasicInformation memberDetail={memberDetail} loading={loading.models.memberDetail}/>
     </div>
   );
 }

@@ -13,21 +13,21 @@ function CoachKPIQuery({ dispatch, coachKPIQuery, loading, intl: { formatMessage
   const add = () => {
     dispatch(routerRedux.push({ pathname: '/basicInformation/zone_configuration/add' }));
   };
-  const search = (search_value) => {
-    dispatch({type:'coachKPIQuery/getZones',payload:{search_value}})
+  const search = () => {
+    dispatch({type:'coachKPIQuery/getCoachKPI'})
   };
   const tableProps = { dispatch, coachKPIQuery, loading:loading.models.coachKPIQuery };
   return (
     <div className={styles.content}>
       <div className="search-bar">
         <RangePickerBar
-          valueName="search_value"
+          valueName="timeRange"
           title={formatMessage(messages.selectData)}
-          value={coachKPIQuery.search_value}
-          modalName="coachKPIQuery/setSearchValue"
+          value={[coachKPIQuery.starttime,coachKPIQuery.endtime]}
+          modalName="coachKPIQuery/setRangeTime"
           dispatch={dispatch}
         />
-        <Button type="primary" icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
+        <Button type="primary" onClick={search} icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
       </div>
       <CoachKPITable {...tableProps}/>
     </div>

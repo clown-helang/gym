@@ -10,33 +10,32 @@ import messages from './messages';
 function RechargeRecord({dispatch, coachKPIDetail, loading, intl: { formatMessage } }) {
   const columns = [
     {
-      title: formatMessage(messages.account),
-      dataIndex: 'account',
-      key: 'account',
+      title: formatMessage(messages.memberName),
+      dataIndex: 'studentname',
+      key: 'studentname',
       width: '25%',
     },
     {
       title: formatMessage(messages.rechargeAmountWithUnit),
-      dataIndex: 'rechargeAmount',
-      key: 'rechargeAmount',
+      dataIndex: 'money',
+      key: 'money',
       width: '25%',
     },
     {
       title: formatMessage(messages.adminName),
-      dataIndex: 'adminName',
-      key: 'adminName',
+      dataIndex: 'adminname',
+      key: 'adminname',
       width: '25%',
     },
     {
       title: formatMessage(messages.rechargeTime),
-      dataIndex: 'rechargeTime',
-      key: 'rechargeTime',
-      render: (text, record) => {
-        return moment(record.rechargeTime).format('YYYY-MM-DD HH:mm:ss');
-      },
+      dataIndex: 'time',
+      key: 'time',
     },
   ];
-
+  const search = () => {
+    dispatch({ type: 'coachKPIDetail/getRechargeRecord' });
+  }
   const rowKey = record => record.id;
 
   const pageFunction = {
@@ -65,13 +64,13 @@ function RechargeRecord({dispatch, coachKPIDetail, loading, intl: { formatMessag
     <div style={{marginTop:-10}}>
       <div className="search-bar">
         <RangePickerBar
-        valueName="search_value"
-        title={formatMessage(messages.selectData)}
-        value={coachKPIDetail.search_value}
-        modalName="coachKPIDetail/setSearchValue"
-        dispatch={dispatch}
+          valueName="timeRange"
+          title={formatMessage(messages.selectData)}
+          value={[coachKPIDetail.salesStartTime,coachKPIDetail.salesEndTime]}
+          modalName="coachKPIDetail/setSalesRangeTime"
+          dispatch={dispatch}
         />
-        <Button type="primary" icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
+        <Button type="primary" onClick={search} icon="search" style={{marginLeft:20,position:'relative',top:5}}>{formatMessage(messages.search)}</Button>
       </div>
       <TableUI {...tableProps} />
     </div>

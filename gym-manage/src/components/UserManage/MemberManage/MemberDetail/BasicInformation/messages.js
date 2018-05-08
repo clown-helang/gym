@@ -69,6 +69,10 @@ const messages = defineMessages({
     id: 'courseManage.coursePrice',
     defaultMessage: '课程单价'
   },
+  vipClass:{
+    id: 'userManage.memberManage.vipClass',
+    defaultMessage: '会员等级'
+  },
 });
 
 export default messages;
