@@ -27,4 +27,11 @@ export default {
   addNewCourse: '/gym/addnewclassdefine.do',
   getCourseById: '/gym/getclassdefineByid.do',
 
+  setClassOver: '/gym/OverClass.do',
+  cancelAppointClass: '/gym/CancelClass.do',
+  getCourseByTeacherId: '/gym/getclassdefinebytecher.do',
+
+  teacherComment: '/gym/techercomment.do',
+  studentComment: '/gym/studentcomment.do',
+  buyClass: '/gym//BuyClass.do',
 }

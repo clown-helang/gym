@@ -10,9 +10,9 @@ import MenuBar from '../../components/MenuBar'
 
 function CourseList({dispatch,courseList}) {
 
-  const {course} = courseList;
+  const {courses} = courseList;
 
-  console.log(course);
+  console.log(courses);
   const menu = {
     icon: 'courseList',
     title:'课程列表'
@@ -24,7 +24,7 @@ function CourseList({dispatch,courseList}) {
       <MenuBar menu={menu}/>
       <div className={styles.courses}>
         {
-          course.map((item,index) => <Course key={index} course={item} dispatch={dispatch}/>)
+          courses.map((item,index) => <Course key={index} course={item} dispatch={dispatch}/>)
         }
       </div>
     </div>

@@ -42,7 +42,7 @@ function RouterConfig({ history, app }) {
           path: '/courseDetail',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('../models/CourseDetail'));
+              registerModel(app, require('../models/CourseList'));
               cb(null, require('../routes/CourseDetail'));
             }, 'CourseDetail');
           },
@@ -69,7 +69,7 @@ function RouterConfig({ history, app }) {
           path: '/coachDetail',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('../models/CoachDetail'));
+              registerModel(app, require('../models/CoachList'));
               cb(null, require('../routes/CoachDetail'));
             }, 'CoachDetail');
           },

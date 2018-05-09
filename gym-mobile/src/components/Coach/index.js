@@ -4,7 +4,7 @@ import { routerRedux } from 'dva/router'
 
 function Coach({dispatch, coach}) {
   const redirect = (path) => {
-    dispatch(routerRedux.push({ pathname: path }));
+    dispatch(routerRedux.push({ pathname: path ,query:{coach}}));
   }
   return (
     <div className={styles.coach} onClick={()=>{redirect('/coachDetail')}}>

@@ -9,28 +9,7 @@
     height: auto;
   }
 }
-.orderDetail{
-  width: 100%;
-  height: auto;
-  background-color: white;
-  padding: 14px;
-  line-height: 3rem;
-  .coursePrice{
-    margin: 10px 0;
-    span:nth-child(1){
-      font-family: "Adobe 黑体 Std R";
-      display: inline-block;
-      color: red;
-      font-size: 1.6rem;
-      margin-right: 20px;
-    }
-    span:nth-child(2){
-      display: inline-block;
-      font-size: 0.8rem;
-      text-decoration-line: line-through;
-    }
-  }
-}
+
 
 .buyButton{
   height: 50px;
@@ -51,7 +30,94 @@
   }
 }
 
+.orderDetail{
+  background-color: white;
+  margin-top: 5px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  color: #999999;
+  font-size: 1.2em;
+  text-align: right;
+  .recordHeader{
+    height: 50px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    .headerLeft{
+      display: inline-table;
+      float: left;
+      min-width: 3em;
+      text-align:justify;
+      text-align-last:justify;
+      font-weight: 400;
+      font-size: 1.3em;
+      line-height: 50px;
+    }
+    .headerRight{
+      display: inline-table;
+      font-size: 2.2em;
+      line-height: 50px;
+      color: red;
+    }
+  }
+  .recordBody{
+    margin-top: 15px;
+    .bodyItem{
+      height: 50px;
+      span:nth-child(1){
+        display: inline-block;
+        width: 50%;
+        text-align: left;
+        line-height: 50px;
+      }
+      span:nth-child(2){
+        display: inline-block;
+        width: 50%;
+        line-height: 50px;
+      }
+    }
+    .selectTeacher{
+      height: 50px;
+      .itemLeft{
+        display: inline-block;
+        width: 40%;
+        text-align: left;
+        line-height: 50px;
+      }
+      .itemRight{
+        display: inline-block;
+        width: 60%;
+      }
+    }
+
+  }
+}
+.recordFooter{
+  border-top: solid 1px #eee;
+  background-color: white;
+  position: relative;
+  line-height: 60px;
+  height: 60px;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  a{
+    width: 100%;
+    height: inherit;
+    font-size: 1.3em;
+    text-align: center;
+    color: #3ddfc7;
+    font-weight: 500;
+  }
+}
 
 @media screen and (max-width: 370px) {
-
+  .orderDetail{
+    .recordHeader{
+      .headerRight{
+        font-size: 2em;
+      }
+    }
+  }
 }

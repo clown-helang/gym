@@ -1,24 +1,9 @@
-import { getBytes, getSession } from '../../utils';
-import { getCourses } from '../../services/gymServices'
-import fuji from '../../assets/fuji2.jpg'
-import yujia from '../../assets/yujia.jpg'
-
+import { getCourses, getCoaches } from '../../services/gymServices'
 
 const init = {
-  course: [
-    {
-      classimg: yujia,
-      classname: '团体瑜伽课30节 ',
-      classmoney: 2000,
-      type: "2"
-    },
-    {
-      classimg: fuji,
-      classname: '腹肌撕裂者初级 ',
-      classmoney: 2000,
-      type: "1"
-    }
-  ]
+  courses: [],
+  coaches:[],
+  course:{}
 }
 
 export default {
@@ -35,23 +20,43 @@ export default {
         isshop: null
       };
       const { contents } = yield call(getCourses,{ payload:{ ..._payload } });
-      yield put({type:'setCourse', payload:{ course:contents}});
+      yield put({type:'setCourseList', payload:{ courses:contents}});
+    },
+    *getCoaches({ payload }, { put, call, select }) {
+      let _payload = {
+        techername:null,
+        pageNo:1,
+        pageSize:1000,
+      };
+      const { contents } = yield call(getCoaches,{ payload:{ ..._payload } });
+      yield put({type:'setCoachList',payload:{ coaches:contents }});
     },
   },
   reducers : {
     init(state){
       return init;
     },
-    setCourse(state,{ payload:{ course } }){
-      return { ...state, course }
+    setCourseList(state,{ payload:{ courses } }){
+      return { ...state, courses }
     },
+    setCoachList(state,{ payload:{coaches} }){
+      return {...state, coaches }
+    },
+    setCourse(state,{ payload:{course}} ){
+      return {...state, course }
+    }
   },
   subscriptions : {
     setup({dispatch, history}) {
-      return history.listen(({pathname}) => {
+      return history.listen(({pathname,query}) => {
         if(pathname === '/courseList'){
           dispatch({type: 'init'});
           dispatch({type: 'getCourses'})
+        }
+        if(pathname === '/courseDetail'){
+          if(query.course){
+            dispatch({type: 'setCourse',payload:{course:JSON.parse(query.course)}})
+          }
         }
       });
     }

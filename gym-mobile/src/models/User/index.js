@@ -1,40 +1,29 @@
-import { getBytes, getSession } from '../../utils';
+import { getConsumeRecord, getMembersById, getClassRecord } from '../../services/gymServices'
+import { getSession } from '../../utils';
 import fuji from '../../assets/fuji2.jpg'
 import yujia from '../../assets/yujia.jpg'
 import TX from '../../assets/touxiang.jpg'
 
 const init = {
-  name:'彭于晏',
-  photo: TX,
-  account:'1230001',
-  level:7,
-  balance: 5000,
-  classRecord:[{
-    classTime: '2017.3.25 08:00 ~ 10:00',
-    className: '团体瑜伽课',
-    coachName: '于春雷',
-    state: 'finish',
-    comments: ''
-  },
-    {
-      classTime: '2017.3.25 08:00 ~ 10:00',
-      className: '团体瑜伽课',
-      coachName: '于春雷',
-      state: 'finish',
-      comments: '上课迟到一小时上课迟到一小时上课迟到一小时上课迟到一小时'
-    }],
-  consumeRecord:[
-    {
-      consume_time:'2017.3.26 12:00',
-      courseName:'团体瑜伽课',
-      price:'1888'
-    },
-    {
-      consume_time:'2018.3.26 12:00',
-      courseName:'腹肌完美塑形',
-      price:'1888'
-    }
-  ],
+  city: "",
+  country: "",
+  headimgurl: getSession('headimgurl'),
+  id: "",
+  money: '0',
+  nickName: getSession('name'),
+  phone: "",
+  province: "",
+  realname: "",
+  sex: "",
+  status: "",
+  usertype: getSession('usertype'),
+  vipclass: "",
+
+  page_number:1,
+
+  classRecord:[],
+
+  consumeRecord:[],
   reservationRecord:[
     {
       courseName:'腹肌完美塑形',
@@ -61,7 +50,7 @@ const init = {
       }]
     }
   ],
-  course: [
+  myCourse: [
     {
       classimg: yujia,
       classname: '团体瑜伽课30节 ',
@@ -82,14 +71,66 @@ export default {
   namespace : 'user',
   state : {},
   effects : {
-
+    *getConsumeRecord({ payload }, { put, call, select }) {
+      let _payload = {
+        techerid:null,
+        studentid: getSession('id'),
+        studentname:null,
+        techername:null,
+        starttime:null,
+        endtime:null,
+        classid:-1,
+        classname:null,
+        pageNo:1,
+        pageSize:1000,
+      };
+      const { contents } = yield call(getConsumeRecord,{ payload:{ ..._payload } });
+      yield put({type:'setMyCourse',payload:{ myCourse: contents }});
+    },
+    *getMembersById({ payload }, { put, call, select }){
+      const user = yield call(getMembersById, { payload: { id:getSession('id') } });
+      yield put({type:'setUser',payload:{ user }});
+    },
+    *getClassRecord({ payload }, { put, call, select }) {
+      let { page_number } = yield select(state => state.user);
+      let _payload = {
+        //0预约，1结课，2撤销预约
+        isover:null,
+        starttime:null,
+        endtime:null,
+        classtime:-1,
+        classtecherid:null,
+        classstudentid:getSession('id'),
+        classname:null,
+        classstudent:null,
+        classtecher:null,
+        classdefineid:-1,
+        shoplogid:-1,
+        pageNo: 1,
+        pageSize: 2*page_number,
+      };
+      const { contents } = yield call(getClassRecord,{ payload:{ ..._payload } });
+      yield put({type:'setClassRecord',payload:{ classRecord: contents }});
+    },
   },
   reducers : {
     init(state){
       return init;
     },
-    setUser(state,{ user }){
-      return {...state,user }
+    setUser(state,{ payload:{ user } }){
+      return {...state, ...user }
+    },
+    setMyCourse(state, { payload:{ myCourse }}){
+      return {...state, myCourse }
+    },
+    setPageNumber(state,{ payload:{ page_number }}){
+      return {...state, page_number}
+    },
+    setClassRecord(state,{ payload:{ classRecord }}){
+      return {...state, classRecord}
+    },
+    setConsumeRecord(state,{ payload:{ consumeRecord }}){
+      return {...state, consumeRecord}
     },
     setBookingCourse(state, { payload:{ id } }){
       let bookingCourse = {}
@@ -99,22 +140,22 @@ export default {
         }
       })
       return {...state, bookingCourse }
-    }
+    },
   },
   subscriptions : {
     setup({dispatch, history}) {
       return history.listen(({pathname,query}) => {
         if(pathname === '/myCourse' ){
           dispatch({type:'init'})
-          // if(query.id){
-          //   dispatch({type:'setBookingCourse',payload:{ id: query.id}})
-          // }
+          dispatch({type:'getConsumeRecord'})
         }
         if(pathname === '/personalCenter' ){
           dispatch({type:'init'})
-          // if(query.id){
-          //   dispatch({type:'setBookingCourse',payload:{ id: query.id}})
-          // }
+          dispatch({type:'getMembersById'})
+        }
+        if(pathname === '/classRecord'){
+          dispatch({type:'init'})
+          dispatch({type:'getClassRecord'})
         }
       });
     }

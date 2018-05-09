@@ -1,82 +1,69 @@
 import React from 'react'
 import { connect } from 'dva';
-import { Select, Row, Col, Icon } from 'antd';
-import TX from '../../assets/touxiang.jpg'
 import styles from './index.less'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
-import yujia from '../../assets/yujia.jpg'
+import { Select,Icon } from 'antd';
 
 const Option = Select.Option;
 
 function BuyCourse({dispatch,buyCourse}) {
-  const course = {
-    url: yujia,
-    name: '团体瑜伽课30节 ',
-    oldPrice: 2000,
-    vipPrice: 1888,
-  };
-  const menu = {
-    icon:'bank',
-    title:`购买课程 —— 订单详情`
-  };
-  const user = {
-    name:'彭于晏',
-    photo: TX
-  };
-  const coachList = [{
-      label: '波波维奇',
-      value: '1',
-    },
-    {
-      label: '麦克海尔',
-      value: '2',
-    }
-  ];
-  const handleChange = (value) => {
-    console.log(value)
-  };
+  const { course } = buyCourse;
+  const coaches = course.classtecher.split(',')
 
+  const menu = {
+    icon:'buyCourse',
+    title:`购买课程 —— ${course.classname}`
+  };
+  const handleChange = (techerid) => {
+    dispatch({type:'buyCourse/setTeacherId',payload:{techerid}})
+  };
+  const handleSubmit = () => {
+    dispatch({type:'buyCourse/buyClass'})
+  }
   return (
     <div>
-      <Header dispatch={dispatch} user={user}/>
+      <Header />
       <MenuBar menu={menu}/>
       <div className={styles.courseLogo}>
-        <img src={course.url}/>
+        <img src={course.classimg[0].resource_url}/>
       </div>
       <div className={styles.orderDetail}>
-        <Row>
-          <Col span={8}>课程名称：</Col>
-          <Col span={16}>团体瑜伽课</Col>
-        </Row>
-        <Row>
-          <Col span={8}>课程教练：</Col>
-          <Col span={16}>
-            <Select defaultValue="lucy" style={{ width: '70%' }} onChange={handleChange}>
-              <Option value="jack">波波维奇</Option>
-              <Option value="lucy">麦克海尔</Option>
-            </Select>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={8}>课程时长：</Col>
-          <Col span={16}>60 小时</Col>
-        </Row>
-        <Row>
-          <Col span={8}>课程类型：</Col>
-          <Col span={16}>团体课（20人）</Col>
-        </Row>
-        <Row>
-          <Col span={8}>授课时间：</Col>
-          <Col span={16}>2017.3.1 ~ 2017.4.1</Col>
-        </Row>
-        <div className={styles.coursePrice}>
-          <span>VIP ￥ 1188</span>
-          <span>原价 ￥ 2000</span>
+        <div className={styles.recordHeader}>
+          <div className={styles.headerLeft}>
+            <span>合计</span>
+          </div>
+          <div className={styles.headerRight}>
+            <span>{course.classmoney} 元</span>
+          </div>
+        </div>
+        <div className={styles.recordBody}>
+          <div className={styles.bodyItem} >
+            <span>课程名称</span>
+            <span>{course.classname}</span>
+          </div>
+          <div className={styles.bodyItem} >
+            <span>课程时长</span>
+            <span>{course.classsize} 小时</span>
+          </div>
+          <div className={styles.bodyItem} >
+            <span>课程类型</span>
+            <span>{course.type === '1'?'私教':'团课'}</span>
+          </div>
+          <div className={styles.selectTeacher} >
+            <div className={styles.itemLeft}>选择教练</div>
+            <div className={styles.itemRight}>
+              <Select placeholder="请选择" style={{width:'80%'}} onChange = {handleChange}>
+                {
+                  coaches.map((coach,index) => <Option key={index} value={coach.split(':')[0]}>{coach.split(':')[1]}</Option>)
+                }
+              </Select>
+            </div>
+          </div>
         </div>
       </div>
-      <div className={styles.buyButton}>
-        <span>提交订单</span>
+      <div className={styles.recordFooter}>
+        <a onClick={handleSubmit}><Icon type='upload' style={{fontSize:'.9em'}}/>&nbsp;提交订单</a>
       </div>
     </div>
   )

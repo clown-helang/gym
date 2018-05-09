@@ -1,33 +1,53 @@
 import { routerRedux } from 'dva/router';
-import { getBytes, getSession } from '../../utils';
+import { getSession } from '../../utils';
+import { buyClass } from '../../services/gymServices';
+import { Modal } from 'antd'
 
 const appLocale = window.appLocale;
 
+const init = {
+  course: {},
+  techerid:null
+}
+
 export default {
   namespace : 'buyCourse',
-  state : {
-    coach:'',
+  state : {},
+  effects : {
+    *buyClass({ payload },{ put, call, select }){
+      const { techerid,course } = yield select(state => state.buyCourse);
+      const result = yield call(buyClass,{ payload:{ studentid:getSession('id'), techerid, classdefineid:course.id } });
+      if(result.state === 'success'){
+        Modal.info({
+          title: '课程购买成功',
+        })
+      }
+      yield put(routerRedux.push({pathname:'/myCourse'}));
+    }
   },
-  effects : {},
   reducers : {
-    init(state,{ payload:{ user, token, path } }){
-      return {...state, user, token, path };
+    init(state){
+      return init;
     },
-    setUser(state,{ user }){
-      return {...state,user }
+    setCourse(state,{ payload:{ course } }){
+      return {...state, course }
+    },
+    setCoachList(state,{ payload:{coaches} }){
+      return {...state, coaches }
+    },
+    setTeacherId(state,{ payload:{techerid} }){
+      return {...state, techerid }
     },
   },
   subscriptions : {
     setup({dispatch, history}) {
-      return history.listen(({pathname}) => {
-        // const token = getSession("token");
-        // const user = getSession("user");
-        // if ( (!token) && pathname !== '/login') {
-        //   dispatch(routerRedux.push("/login"));
-        // } else{
-        //   const path = pathname.split('/');
-        //   dispatch({type:'init', payload:{user, token,path: path.filter(item => item !== '') }});
-        // }
+      return history.listen(({pathname, query}) => {
+        if ( pathname === '/buyCourse') {
+          dispatch({ type: "init"})
+          if(query.course){
+            dispatch({ type: "setCourse", payload:{course:JSON.parse(query.course)}})
+          }
+        }
       });
     }
   }

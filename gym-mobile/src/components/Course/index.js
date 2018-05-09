@@ -3,8 +3,8 @@ import styles from './index.less'
 import { routerRedux } from 'dva/router'
 
 function Course({dispatch, course, type}) {
-  const redirect = (path,id) => {
-    dispatch(routerRedux.push({ pathname: path, query:{id} }));
+  const redirect = (path) => {
+    dispatch(routerRedux.push({ pathname: path, query:{course:JSON.stringify(course)} }));
   }
   return (
     <div className={styles.course}>
@@ -18,7 +18,7 @@ function Course({dispatch, course, type}) {
           type === 'myCourse'
           ? <p>
               <span className={styles.status}>{course.status}</span>
-              <a className={styles.operation} onClick={()=>redirect('/courseBooking',course.id)}>{course.operation}</a>
+              <a className={styles.operation} onClick={()=>redirect('/courseBooking')}>{course.operation}</a>
             </p>
           : <p>
               <span className={styles.truePrice}>VIP价：{course.classmoney} 元</span>

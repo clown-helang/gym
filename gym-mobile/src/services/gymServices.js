@@ -1,7 +1,6 @@
 import request from '../utils/request';
 import { baseURL } from '../utils/config';
 import api from '../utils/api';
-import md5 from 'md5';
 import { getBytes } from '../utils';
 
 
@@ -117,3 +116,46 @@ export async function getCourseById ({ payload }) {
     params: payload,
   })
 }
+export async function setClassOver ({ payload }) {
+  return request({
+    url: baseURL + api.setClassOver,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function getCourseByTeacherId ({ payload }) {
+  return request({
+    url: baseURL + api.getCourseByTeacherId,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function cancelAppointClass ({ payload }) {
+  return request({
+    url: baseURL + api.cancelAppointClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function teacherComment ({ payload }) {
+  return request({
+    url: baseURL + api.cancelAppointClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function studentComment ({ payload }) {
+  return request({
+    url: baseURL + api.cancelAppointClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function buyClass ({ payload }) {
+  return request({
+    url: baseURL + api.buyClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+

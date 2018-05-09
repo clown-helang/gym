@@ -96,20 +96,22 @@ function CoachDetail({dispatch,coachDetail}) {
       </div>
       <div className={styles.coachIntroduce}>
         {
-          coach.introduce.map((item,index)=>{
-            return (
-              <div key={index} className={styles.introduceSection}>
-                <p>{item.description}</p>
-                <img src={item.url}/>
-              </div>
-            )
-          })
+          !(!(coach.introduce))
+          ? coach.introduce.map((item,index)=>{
+              return (
+                <div key={index} className={styles.introduceSection}>
+                  <p>{item.description}</p>
+                  <img src={item.url}/>
+                </div>
+              )
+            })
+          : '这个人什么介绍都没有...'
         }
       </div>
     </div>
   )
 }
-function mapStateToProps({ coachDetail }) {
-  return { coachDetail };
+function mapStateToProps({ courseList }) {
+  return { courseList };
 }
 export default connect(mapStateToProps)(CoachDetail);

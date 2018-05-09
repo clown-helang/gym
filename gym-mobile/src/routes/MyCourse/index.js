@@ -10,14 +10,14 @@ function MyCourse({dispatch,user}) {
     icon:'myCourse',
     title:'我的课表'
   };
-  const { course } = user;
+  const { myCourse } = user;
   return (
     <div>
       <Header dispatch={dispatch} />
       <MenuBar menu={menu}/>
       <div className={styles.courses}>
         {
-          course.map((item,index) => <Course type="myCourse" key={index} course={item} dispatch={dispatch}/>)
+          myCourse.map((item,index) => <Course type="myCourse" key={index} course={item} dispatch={dispatch}/>)
         }
       </div>
     </div>
