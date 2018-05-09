@@ -9,11 +9,15 @@ function Coach({dispatch, coach}) {
   return (
     <div className={styles.coach} onClick={()=>{redirect('/coachDetail')}}>
       <div className={styles.avatar}>
-        <img src={coach.url}/>
+        <img src={coach.topimg}/>
       </div>
       <div className={styles.coachIntroduce}>
-        <p>{coach.name}</p>
-        <p>{coach.description[0].description}</p>
+        <p>
+          {coach.realname}
+        </p>
+        <p>
+          {coach.introduce||'这个教练什么介绍都没有...'}
+        </p>
       </div>
     </div>
   )

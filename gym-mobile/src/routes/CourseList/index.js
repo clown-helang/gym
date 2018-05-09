@@ -9,34 +9,18 @@ import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
 
 function CourseList({dispatch,courseList}) {
-  const course = [
-    {
-      id:1,
-      url: yujia,
-      name: '極 ● 团体瑜伽课30节 ',
-      oldPrice: 2000,
-      vipPrice: 1888,
-    },
-    {
-      id:2,
-      url: fuji,
-      name: '極 ● 腹肌撕裂者初级 ',
-      oldPrice: 2000,
-      vipPrice: 1888,
-    }
-  ];
+
+  const {course} = courseList;
+
+  console.log(course);
   const menu = {
     icon: 'courseList',
     title:'课程列表'
   };
-  const user = {
-    name:'彭于晏',
-    photo: TX
-  };
 
   return (
     <div>
-      <Header dispatch={dispatch} user={user}/>
+      <Header />
       <MenuBar menu={menu}/>
       <div className={styles.courses}>
         {

@@ -8,11 +8,11 @@ function Course({dispatch, course, type}) {
   }
   return (
     <div className={styles.course}>
-      <img src={course.url}/>
+      <img src={course.classimg}/>
       <div className={styles.shadow}/>
       <div className={styles.courseIntroduce}>
         <p onClick = {()=>redirect('/courseDetail',course.id)}>
-          <span className={styles.courseName}>{course.name}</span>
+          <span className={styles.courseName}>{"極 ● "+course.classname}</span>
         </p>
         {
           type === 'myCourse'
@@ -21,11 +21,9 @@ function Course({dispatch, course, type}) {
               <a className={styles.operation} onClick={()=>redirect('/courseBooking',course.id)}>{course.operation}</a>
             </p>
           : <p>
-              <span className={styles.originalPrice}>原价：{course.oldPrice} 元</span>
-              <span className={styles.truePrice}>VIP价：{course.vipPrice} 元</span>
+              <span className={styles.truePrice}>VIP价：{course.classmoney} 元</span>
             </p>
         }
-
       </div>
     </div>
   )

@@ -24,7 +24,7 @@ function RouterConfig({ history, app }) {
           path: '/indexPage',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('../models/Index'));
+              registerModel(app, require('../models/indexPage'));
               cb(null, require('../routes/IndexPage'));
             }, 'IndexPage');
           },

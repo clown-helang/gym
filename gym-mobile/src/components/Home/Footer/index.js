@@ -17,7 +17,7 @@ function Footer({dispatch}) {
       <i className={`iconfont ${styles.icon}`} onClick={()=>{onClick('coachList')}}>&#xe68c;</i>
       <i className={`iconfont ${styles.icon}`} onClick={()=>{onClick('myCourse')}}>&#xe62b;</i>
       <i className={`iconfont ${styles.icon}`} onClick={()=>{onClick('personalCenter')}}>&#xe663;</i>
-      <a className={styles.home} onClick={()=>{onClick('index')}}><img src={logo}/></a>
+      <a className={styles.home} onClick={()=>{onClick('indexPage')}}><img src={logo}/></a>
     </div>
   )
 }

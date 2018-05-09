@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'dva';
 import styles from './index.less'
 import Course from '../../components/Course'
-import fuji from '../../assets/fuji2.jpg'
-import yujia from '../../assets/yujia.jpg'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
 
@@ -15,7 +13,7 @@ function MyCourse({dispatch,user}) {
   const { course } = user;
   return (
     <div>
-      <Header dispatch={dispatch} user={user}/>
+      <Header dispatch={dispatch} />
       <MenuBar menu={menu}/>
       <div className={styles.courses}>
         {

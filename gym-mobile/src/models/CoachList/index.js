@@ -1,34 +1,39 @@
-import { routerRedux } from 'dva/router';
-import { getBytes, getSession } from '../../utils';
-
+import { getCoaches } from '../../services/gymServices';
 const appLocale = window.appLocale;
+
+const init = {
+  coaches: []
+}
 
 export default {
   namespace : 'coachList',
-  state : {
-    user: getSession("user"),
-    token: getSession("token"),
-  },
-  effects : {},
-  reducers : {
-    init(state,{ payload:{ user, token, path } }){
-      return {...state, user, token, path };
+  state : {},
+  effects : {
+    *getCoaches({ payload }, { put, call, select }) {
+      let _payload = {
+        techername:null,
+        pageNo:1,
+        pageSize:1000,
+      };
+      const { total, contents } = yield call(getCoaches,{ payload:{ ..._payload } });
+      yield put({type:'setCoachList',payload:{ coaches:contents }});
     },
-    setUser(state,{ user }){
-      return {...state,user }
+  },
+  reducers : {
+    init(state){
+      return init;
+    },
+    setCoachList(state,{ payload:{coaches} }){
+      return {...state, coaches }
     },
   },
   subscriptions : {
     setup({dispatch, history}) {
       return history.listen(({pathname}) => {
-        // const token = getSession("token");
-        // const user = getSession("user");
-        // if ( (!token) && pathname !== '/login') {
-        //   dispatch(routerRedux.push("/login"));
-        // } else{
-        //   const path = pathname.split('/');
-        //   dispatch({type:'init', payload:{user, token,path: path.filter(item => item !== '') }});
-        // }
+        if(pathname === '/coachList'){
+          dispatch({type: 'init'});
+          dispatch({type: 'getCoaches'})
+        }
       });
     }
   }

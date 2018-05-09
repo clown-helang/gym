@@ -1,4 +1,3 @@
-import { getBytes, getSession } from '../../utils';
 import { getCourses } from '../../services/gymServices'
 import fuji from '../../assets/fuji2.jpg'
 import yujia from '../../assets/yujia.jpg'
@@ -22,14 +21,14 @@ const init = {
 }
 
 export default {
-  namespace : 'courseList',
+  namespace : 'indexPage',
   state : {},
   effects : {
     *getCourses({ payload }, { put, call, select }) {
       let _payload = {
         id:-1,
-        iscommend: null,
-        classname: null,
+        iscommend:'1',
+        classname:null,
         pageNo:1,
         pageSize:1000,
         isshop: null
@@ -48,8 +47,8 @@ export default {
   },
   subscriptions : {
     setup({dispatch, history}) {
-      return history.listen(({pathname}) => {
-        if(pathname === '/courseList'){
+      return history.listen(({pathname,query}) => {
+        if(pathname === '/indexPage'){
           dispatch({type: 'init'});
           dispatch({type: 'getCourses'})
         }
