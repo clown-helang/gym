@@ -20,9 +20,11 @@ export default {
       const { contents } = yield call(getCoaches,{ payload:{ ..._payload } });
       yield put({type:'setCoachList',payload:{ coaches:contents }});
     },
-    *getCourseByTeacherId({ payload:{id, techername} }, { put, call, select }){
-      const contents = yield call(getCourseByTeacherId,{ payload:{ id, techername } });
-      yield put({type:'courseList', payload:{ course:contents}});
+    *getCourseByTeacherId({ payload }, { put, call, select }){
+      const { id, realname } = yield select(state => state.coachList.coach)
+      const { contents } = yield call(getCourseByTeacherId,{ payload:{ id, techername: realname} });
+      console.log('contents---',contents)
+      yield put({type:'setCourseList', payload:{ courseList:contents}});
     }
   },
   reducers : {
@@ -36,6 +38,7 @@ export default {
       return {...state, courseList }
     },
     setCoach(state,{ payload:{ coach } }){
+      console.log(111,coach)
       return {...state, coach }
     }
   },
@@ -47,9 +50,10 @@ export default {
           dispatch({type: 'getCoaches'})
         }
         if(pathname === '/coachDetail'){
+          dispatch({type: 'init'});
           if(query.coach){
-            dispatch({type: 'setCoach',payload:{coach: query.coach}})
-            dispatch({type: 'getCourseByTeacherId',payload:{id: query.coach.id, techername:query.coach.realname}})
+            dispatch({type: 'setCoach',payload:{coach: JSON.parse(query.coach)}})
+            dispatch({type: 'getCourseByTeacherId'})
           }
         }
       });

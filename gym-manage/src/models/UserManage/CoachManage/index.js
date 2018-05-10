@@ -51,6 +51,7 @@ export default {
       const { total, contents } = yield call(getCoaches,{ payload:{ ..._payload } });
       yield put({type:'setData',payload:{ data:{ total, contents }, page_number, page_size }});
     },
+
   },
   reducers : {
     init(state,{ payload }){

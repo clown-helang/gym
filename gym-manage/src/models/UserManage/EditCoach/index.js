@@ -1,4 +1,4 @@
-import { getCoachById, getCourses } from '../../../services/gymServices';
+import { getCoachById, getCourses, editCoach } from '../../../services/gymServices';
 import { routerRedux } from 'dva/router';
 const messages = window.appLocale.messages;
 
@@ -56,6 +56,13 @@ export default {
       const { total, contents } = yield call(getCourses,{ payload:{ ..._payload } });
       yield put({type:'setData',payload:{ data:{ total, contents } }});
     },
+    *editCoach({ payload: { postData } }, { put, call, select }){
+      const token = yield select(state => state.home.token);
+      const { id } = yield select(state => state.editCoach);
+      console.log('postData--',postData)
+      yield call(editCoach, { payload: { token, id ,...postData } });
+      yield put(routerRedux.push({pathname:'/userManage/coachManage'}))
+    }
   },
   reducers : {
     init(state,{ payload }){

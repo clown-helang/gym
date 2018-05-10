@@ -117,3 +117,10 @@ export async function getCourseById ({ payload }) {
     params: payload,
   })
 }
+export async function editCoach ({ payload }) {
+  return request({
+    url: baseURL + api.editCoach,
+    method: 'POST',
+    params: payload,
+  })
+}

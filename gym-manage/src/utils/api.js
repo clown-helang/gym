@@ -27,4 +27,5 @@ export default {
   addNewCourse: '/gym/addnewclassdefine.do',
   getCourseById: '/gym/getclassdefineByid.do',
 
+  editCoach: '/gym/updatetecherintroduce.do'
 }

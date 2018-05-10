@@ -52,6 +52,30 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
     validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        let postData = {
+          topimg:[],
+          introduce:[]
+        }
+        if(values.topimg.length>0){
+          postData.topimg = JSON.stringify([{
+            resource_url: values.topimg[0].response.successful_files[0].resource_url,
+            original_name: values.topimg[0].name
+          }])
+        }
+        values.keys.map(item=>{
+          let _resource_url = '',_name= '';
+          if(values[`resource_url_${item.key}`].length>0){
+            _resource_url = values[`resource_url_${item.key}`][0].response.successful_files[0].resource_url;
+            _name = values[`resource_url_${item.key}`][0].name;
+          }
+          postData.introduce.push({
+            description: values[`description_${item.key}`],
+            resource_url: _resource_url,
+            original_name:_name
+          })
+        })
+        postData.introduce = JSON.stringify(postData.introduce)
+        dispatch({type:'editCoach/editCoach', payload:{ postData }})
       }
     });
   };
@@ -72,7 +96,7 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
     const keys = getFieldValue('keys');
     fieldValue['keys'] = keys.concat({
       key: ++uuid,
-      url: '',
+      resource_url: '',
       description: ''
     });
     setFieldsValue(fieldValue);
@@ -98,14 +122,13 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
             ? <Icon className={styles.button} type="minus-circle-o" onClick={() => remove(k)} />
             : ''
           }
-
         </FormItem>
         <FormItem {...(index===0?descriptionLayout:LayoutWithOutLabel)} label={index===0?formatMessage(messages.uploadPicture):''}>
-          <div style={{width:'100%',height:32}}>
-            {getFieldDecorator(`url_${k.key}`, {
+          <div style={{width:'75%'}}>
+            {getFieldDecorator(`resource_url_${k.key}`, {
               initialValue: k.resource_url!==''?[{resource_url:k.resource_url,original_name:k.original_name}]:'',
             })(
-              <UploadFile />
+              <UploadFile target='TeacherIntroduce'/>
             )}
           </div>
         </FormItem>
@@ -132,7 +155,7 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
               }
               return value;
             }
-          })(<Input />)}
+          })(<Input disabled={true}/>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.phone)}>
           {getFieldDecorator('phone', {
@@ -150,7 +173,7 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
               }
               return value;
             }
-          })(<Input />)}
+          })(<Input  disabled={true}/>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.type)}>
           {getFieldDecorator('usertype', {
@@ -168,9 +191,9 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
           </Select>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.uploadPhoto)}>
-          {getFieldDecorator('photo', {
+          {getFieldDecorator('topimg', {
             initialValue: editCoach.topimg,
-          })(<UploadFile />)}
+          })(<UploadFile target='TeacherPhoto'/>)}
         </FormItem>
 
         {formItems}
