@@ -33,11 +33,14 @@ const common = {
   'common.uploadPictureTip':'支持扩展名：.png .jpg',
   'common.yes':'是',
   'common.no':'否',
-  'common.publish':'发布',
-  'common.cancelPublish':'取消发布',
-  'common.thePublished':'已发布',
-  'common.toBeReleased':'待发布',
-  'uploadFailed':'上传失败'
+  'common.publish':'上架',
+  'common.cancelPublish':'下架',
+  'common.thePublished':'已上架',
+  'common.toBeReleased':'待上架',
+  'common.closed':'已下架',
+  'uploadFailed':'上传失败',
+  'common.time':'时间',
+  'common.date':'日期',
 };
 const Login = {
   "common.login.title": System["common.System.title"],
@@ -126,6 +129,7 @@ const userManage = {
 const courseManage = {
   'courseManage': '课程管理',
   'courseManage.name': '课程名称',
+  'courseManage.classSchedule': '团课课表管理',
   'courseManage.courseList': '课程列表',
   'courseManage.lengthOfTime': '课时（单位：小时）',
   'courseManage.classTime': '课时时长',
@@ -144,6 +148,10 @@ const courseManage = {
   'courseManage.courseDescription': '课程介绍',
   'courseManage.addCourseDescription': '添加课程介绍',
   'courseManage.selectCoach': '选择教练',
+  'courseManage.curriculum': '课程安排',
+  'courseManage.startTime': '开始时间',
+  'courseManage.endTime': '结束时间',
+  'courseManage.totalNumber': '总人数',
 };
 const statisticalManage = {
   'statisticalManage': '统计管理',

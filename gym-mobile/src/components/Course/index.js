@@ -5,7 +5,7 @@ import { routerRedux } from 'dva/router'
 function Course({dispatch, course, type}) {
   const redirect = (path) => {
     if(path==='/courseBooking'){
-      dispatch(routerRedux.push({ pathname: path, query:{classid:course.classid,id:course.id} }));
+      dispatch(routerRedux.push({ pathname: path, query:{classid:course.classid,id:course.id,techerid:course.techerid} }));
     } else{
       dispatch(routerRedux.push({ pathname: path, query:{course:JSON.stringify(course)} }));
     }

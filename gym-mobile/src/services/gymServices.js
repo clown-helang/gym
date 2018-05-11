@@ -166,3 +166,11 @@ export async function buyClass ({ payload }) {
   })
 }
 
+export async function getGroupClassSchedule ({ payload }) {
+  return request({
+    url: baseURL + api.getGroupClassSchedule,
+    method: 'POST',
+    params: payload,
+  })
+}
+

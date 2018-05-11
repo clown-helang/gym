@@ -34,7 +34,7 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
       title: formatMessage(messages.courseType),
       dataIndex: 'type',
       key: 'type',
-      width: '14%',
+      width: '13%',
       render: (text, record) => {
         return text === '1'?formatMessage(messages.groupClass):formatMessage(messages.personalClass);
       },
@@ -53,11 +53,13 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
     },
     {
       title: formatMessage(messages.courseState),
-      dataIndex: 'state',
-      key: 'state',
-      width: '14%',
+      dataIndex: 'isshop',
+      key: 'isshop',
+      width: '13%',
       render: (text, record) => {
-        return text === '0'? formatMessage(messages.toBeReleased): formatMessage(messages.thePublished);
+        return text === '0'||text === '2'
+          ? formatMessage(messages.toBeReleased)
+          : formatMessage(messages.thePublished)
       },
     },
     {
@@ -89,7 +91,6 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
       },
     },
   ];
-
   const rowKey = record => record.id;
   const edit = (id) => {
     dispatch(routerRedux.push({ pathname: '/courseManage/edit',query:{id}}))
@@ -104,14 +105,14 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
   };
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'memberManage/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'courseManage/getBIRLog', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'memberManage/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'courseManage/getBIRLog', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'memberManage/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'courseManage/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
   const tableProps = {
     columns,

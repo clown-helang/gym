@@ -36,5 +36,7 @@ export default {
   studentComment: '/gym/studentcomment.do',
   buyClass: '/gym/BuyClass.do',
 
+  getGroupClassSchedule: '/gym/getallclasstimetable.do',
+
 
 }

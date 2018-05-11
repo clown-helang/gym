@@ -130,6 +130,10 @@ const messages = defineMessages({
       id: 'common.detail',
       defaultMessage: '详情'
     },
+    classSchedule: {
+      id: 'courseManage.classSchedule',
+      defaultMessage: '课表管理'
+    },
   }
 });
 

@@ -1,6 +1,7 @@
-import { getConsumeRecord, getMembersById, getClassRecord, getCourseById,appointClass } from '../../services/gymServices'
+import { getConsumeRecord, getMembersById, getClassRecord, getCourseById,appointClass, getGroupClassSchedule } from '../../services/gymServices'
 import { getSession } from '../../utils';
-import { routerRedux } from 'dva/router'
+import { routerRedux } from 'dva/router';
+import moment from 'moment-timezone';
 
 const init = {
   city: "",
@@ -24,6 +25,7 @@ const init = {
   myCourse: [],
   course:{},
   classshoplogid:null,
+  groupClassSchedule:[],
 }
 
 export default {
@@ -72,11 +74,30 @@ export default {
       const { contents } = yield call(getClassRecord,{ payload:{ ..._payload } });
       yield put({type:'setClassRecord',payload:{ classRecord: contents }});
     },
-    *getCourseById({ payload:{id} }, { put, call, select }){
+    *getCourseById({ payload:{id,techerid} }, { put, call, select }){
       const course = yield call(getCourseById,{ payload:{ id } });
       course.classimg = JSON.parse(course.classimg)
       course.introduce = JSON.parse(course.introduce)
       yield put({type:'setCourseBooking',payload:{ course }});
+      console.log('course--',course)
+      if(parseInt(course.type)===1){
+        let _payload = {
+          classname: course.classname,
+          classdefineid: course.id,
+          techerid,
+          techername: null,
+          starttime: moment().format('YYYY-MM-DD HH:mm:ss').toString(),
+          endtime: moment().add(3,'d').format('YYYY-MM-DD').toString()+' 23:00:00',
+          classtime: null,
+          isover: null,
+          pageNo: 1,
+          pageSize: 1000
+        }
+        console.log(_payload)
+        const result = yield call(getGroupClassSchedule,{payload:{ ..._payload }});
+        //console.log('result---',result)
+        //yield put({type:'setGroupClassSchedule',payload:{ course }});
+      }
     },
     *appointClass({ payload:{classshoplogid, classtime, starttime, endtime}}, { put, call, select }){
       yield call(appointClass,{ payload:{ classshoplogid, classtime, starttime, endtime } });
@@ -107,7 +128,10 @@ export default {
     },
     setClassShopLogId(state, { payload:{ classshoplogid } }){
       return {...state, classshoplogid }
-    }
+    },
+    setGroupClassSchedule(state, { payload:{ groupClassSchedule } }){
+      return {...state, groupClassSchedule }
+    },
   },
   subscriptions : {
     setup({dispatch, history}) {
@@ -127,7 +151,7 @@ export default {
         if(pathname === '/courseBooking'){
           dispatch({type:'init'})
           if(query.classid){
-            dispatch({type:'getCourseById',payload:{ id:query.classid }})
+            dispatch({type:'getCourseById',payload:{ id:query.classid,techerid:query.techerid }})
           }
           if(query.id){
             dispatch({type:'setClassShopLogId',payload:{ classshoplogid:query.id }})

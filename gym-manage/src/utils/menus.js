@@ -25,7 +25,18 @@ export default [
     name: '课程管理',
     code: 'courseManage',
     icon:'profile',
-    path:'/#/courseManage',
+    child: [
+      {
+        name: '课程管理',
+        code: 'courseManage',
+        path:'/#/courseManage',
+      },
+      {
+        name: '团课课表管理',
+        code: 'courseManage',
+        path:'/#/classSchedule',
+      },
+    ]
   },
   {
     name: '统计管理',

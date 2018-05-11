@@ -55,19 +55,27 @@ const messages = defineMessages({
   },
   publish:{
     id: 'common.publish',
-    defaultMessage: '发布'
+    defaultMessage: '上架'
   },
   cancelPublish:{
     id: 'common.cancelPublish',
-    defaultMessage: '取消发布'
+    defaultMessage: '下架'
   },
   thePublished:{
     id: 'common.thePublished',
-    defaultMessage: '已发布'
+    defaultMessage: '已上架'
   },
   toBeReleased:{
     id: 'common.toBeReleased',
-    defaultMessage: '待发布'
+    defaultMessage: '待上架'
+  },
+  closed:{
+    id: 'common.closed',
+    defaultMessage: '待上架'
+  },
+  classSchedule:{
+    id: 'courseManage.classSchedule',
+    defaultMessage: '课表管理'
   },
 });
 

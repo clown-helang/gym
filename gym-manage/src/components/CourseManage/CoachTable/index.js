@@ -32,7 +32,6 @@ function CoachTable({ dispatch, addCourseManage, loading, intl: { formatMessage 
     },
   };
 
-
   const handleOk = () => {
     let _coachList = [];
     if(addCourseManage.data.contents){
