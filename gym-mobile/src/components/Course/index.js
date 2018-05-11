@@ -4,7 +4,11 @@ import { routerRedux } from 'dva/router'
 
 function Course({dispatch, course, type}) {
   const redirect = (path) => {
-    dispatch(routerRedux.push({ pathname: path, query:{course:JSON.stringify(course)} }));
+    if(path==='/courseBooking'){
+      dispatch(routerRedux.push({ pathname: path, query:{classid:course.classid,id:course.id} }));
+    } else{
+      dispatch(routerRedux.push({ pathname: path, query:{course:JSON.stringify(course)} }));
+    }
   }
   return (
     <div className={styles.course}>
@@ -16,10 +20,16 @@ function Course({dispatch, course, type}) {
         </p>
         {
           type === 'myCourse'
-          ? <p>
-              <span className={styles.status}>{course.status}</span>
-              <a className={styles.operation} onClick={()=>redirect('/courseBooking')}>{course.operation}</a>
-            </p>
+          ?
+            (course.allclasssize - course.endclasssize) > 0
+            ? <p>
+                <span className={styles.status}>有效</span>
+                <a className={styles.operation} onClick={()=>redirect('/courseBooking')}>预约</a>
+              </p>
+            : <p>
+                <span className={styles.status}>已上完</span>
+                <a className={styles.operation} onClick={()=>redirect('/courseBooking')}>再次购买</a>
+              </p>
           : <p>
               <span className={styles.truePrice}>VIP价：{course.classmoney} 元</span>
             </p>

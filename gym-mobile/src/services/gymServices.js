@@ -130,6 +130,13 @@ export async function getCourseByTeacherId ({ payload }) {
     params: payload,
   })
 }
+export async function appointClass ({ payload }) {
+  return request({
+    url: baseURL + api.appointClass,
+    method: 'POST',
+    params: payload,
+  })
+}
 export async function cancelAppointClass ({ payload }) {
   return request({
     url: baseURL + api.cancelAppointClass,
@@ -139,14 +146,14 @@ export async function cancelAppointClass ({ payload }) {
 }
 export async function teacherComment ({ payload }) {
   return request({
-    url: baseURL + api.cancelAppointClass,
+    url: baseURL + api.teacherComment,
     method: 'POST',
     params: payload,
   })
 }
 export async function studentComment ({ payload }) {
   return request({
-    url: baseURL + api.cancelAppointClass,
+    url: baseURL + api.studentComment,
     method: 'POST',
     params: payload,
   })

@@ -19,7 +19,7 @@ function CourseDetail({dispatch,courseList}) {
       <Header dispatch={dispatch} />
       <MenuBar menu={menu}/>
       <div className={styles.courseLogo}>
-        <img src={course.classimg}/>
+        <img src={course.classimg?course.classimg[0].resource_url:null}/>
       </div>
       <div className={styles.coursePrice}>
         <span>VIP价：{course.classmoney} 元</span>

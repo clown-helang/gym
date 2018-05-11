@@ -53,18 +53,18 @@ function ClassRecord({dispatch,user}) {
                     : ''
                   }
                 </PreviewBody>
-                <PreviewFooter>
-                  {
-                    item.isover === '0'
-                      ? <div>
-                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'2')}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
-                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'1')}><Icon type='check-circle-o'/> 结课确认</PreviewButton>
-                        </div>
-                      : item.isover === '1'&& item.studentsay === null
-                        ? <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>comments(item.id)}><Icon type='edit'/> 评论</PreviewButton>
-                        : ''
-                  }
-                </PreviewFooter>
+                {
+                  item.isover === '0'
+                    ? <PreviewFooter>
+                        <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'2')}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
+                        <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'1')}><Icon type='check-circle-o'/> 结课确认</PreviewButton>
+                      </PreviewFooter>
+                    : item.isover === '1'&& item.studentsay === null
+                      ? <PreviewFooter>
+                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>comments(item.id)}><Icon type='edit'/> 评论</PreviewButton>
+                        </PreviewFooter>
+                      : ''
+                }
               </Preview>
             )
           })

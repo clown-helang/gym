@@ -17,7 +17,7 @@ export default {
         classname: null,
         pageNo:1,
         pageSize:1000,
-        isshop: null
+        isshop: '1'
       };
       const { contents } = yield call(getCourses,{ payload:{ ..._payload } });
       yield put({type:'setCourseList', payload:{ courses:contents}});

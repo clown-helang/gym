@@ -30,8 +30,11 @@ export default {
   setClassOver: '/gym/OverClass.do',
   cancelAppointClass: '/gym/CancelClass.do',
   getCourseByTeacherId: '/gym/getclassdefinebytecher.do',
+  appointClass: '/gym/AppointClass.do',
 
   teacherComment: '/gym/techercomment.do',
   studentComment: '/gym/studentcomment.do',
-  buyClass: '/gym//BuyClass.do',
+  buyClass: '/gym/BuyClass.do',
+
+
 }

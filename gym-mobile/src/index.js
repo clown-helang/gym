@@ -1,5 +1,6 @@
 import dva from 'dva';
 import './index.less';
+import ReactDOM from 'react-dom';
 
 // 1. Initialize
 const app = dva();
@@ -14,4 +15,6 @@ app.model(require('./models/Home'));
 app.router(require('./router/router'));
 
 // 5. Start
-app.start('#root');
+const App = app.start();
+
+ReactDOM.render(<App/>, document.getElementById("root"));

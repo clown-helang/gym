@@ -36,7 +36,7 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
       key: 'type',
       width: '14%',
       render: (text, record) => {
-        return text === '1'?formatMessage(messages.personalClass):formatMessage(messages.groupClass);
+        return text === '1'?formatMessage(messages.groupClass):formatMessage(messages.personalClass);
       },
     },
     {

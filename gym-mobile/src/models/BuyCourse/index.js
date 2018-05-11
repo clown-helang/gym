@@ -16,12 +16,7 @@ export default {
   effects : {
     *buyClass({ payload },{ put, call, select }){
       const { techerid,course } = yield select(state => state.buyCourse);
-      const result = yield call(buyClass,{ payload:{ studentid:getSession('id'), techerid, classdefineid:course.id } });
-      if(result.state === 'success'){
-        Modal.info({
-          title: '课程购买成功',
-        })
-      }
+      yield call(buyClass,{ payload:{ studentid:getSession('id'), techerid, classdefineid:course.id } });
       yield put(routerRedux.push({pathname:'/myCourse'}));
     }
   },
@@ -30,7 +25,6 @@ export default {
       return init;
     },
     setCourse(state,{ payload:{ course } }){
-      console.log(6666,course)
       return {...state, course }
     },
     setCoachList(state,{ payload:{coaches} }){
@@ -46,7 +40,6 @@ export default {
         if ( pathname === '/buyCourse') {
           dispatch({ type: "init"})
           if(query.course){
-            console.log(5555)
             dispatch({ type: "setCourse", payload:{course:JSON.parse(query.course)}})
           }
         }

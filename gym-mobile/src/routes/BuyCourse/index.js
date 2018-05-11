@@ -48,7 +48,7 @@ function BuyCourse({dispatch,buyCourse}) {
           </div>
           <div className={styles.bodyItem} >
             <span>课程类型</span>
-            <span>{course.type === '1'?'私教':'团课'}</span>
+            <span>{course.type === '1'?'团课':'私教'}</span>
           </div>
           <div className={styles.selectTeacher} >
             <div className={styles.itemLeft}>选择教练</div>
