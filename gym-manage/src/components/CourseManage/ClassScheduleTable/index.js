@@ -16,18 +16,40 @@ function ClassScheduleTable({ dispatch, classSchedule, loading, intl: { formatMe
       key: 'date',
       width: '15%',
       render: (text, record) => {
-        return moment(record.starttime).format("YYYY-MM-DD")
+        return moment(record.data).format("YYYY-MM-DD dddd")
       },
     },
     {
       title: formatMessage(messages.curriculum),
       dataIndex: 'curriculum',
       key: 'curriculum',
-      width: '70%',
+      width: '85%',
       render: (text, record) => {
         return record.schedule.map((item,index)=>{
+          console.log(item)
+
           return (
-            <Card key={index} title={item.classname} style={{width:'25%',float:'left'}}>
+            <Card
+              key={index}
+              title={item.classname}
+              style={{width:'25%',float:'left',backgroundColor:item.isover !== '0'?'#eee':''}}
+              extra={
+                <span>
+                  {
+                    moment(record.data).isBefore(moment().add(7,'d'))
+                    ? moment(record.data).isAfter(moment().subtract(1, 'd')) && item.isover !== '0'
+                      ? item.isover === '3'
+                        ? '已撤销'
+                        : <a onClick={()=>cancelGroupClass(item.id)}>撤销</a>
+                      : ''
+                    : <span>
+                        <a onClick={()=>edit(item.id)}>编辑</a>&nbsp;
+                        <a onClick={()=>del(item.id)}>删除</a>
+                      </span>
+                  }
+                </span>
+              }
+            >
               <p>教练：{item.techername}</p>
               <p>时间：{item.starttime.split(' ')[1]+' ~ '+item.endtime.split(' ')[1]}</p>
               <p>可预约人数：{item.mixpeopelsize+'/'+item.takepeopelsize}</p>
@@ -36,39 +58,32 @@ function ClassScheduleTable({ dispatch, classSchedule, loading, intl: { formatMe
         })
       },
     },
-    {
-      title: formatMessage(messages.operation),
-      dataIndex: 'operation',
-      key: 'operation',
-      render: (text, record) => {
-        return <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
-      },
-    },
   ];
 
   const rowKey = record => record.id;
   const edit = (id) => {
     dispatch(routerRedux.push({ pathname: '/classSchedule/edit',query:{id}}))
   };
-
-  // const pageFunction = {
-  //   onChange(page, pageSize) {
-  //     dispatch({ type: 'classSchedule/getBIRLog', payload: { page_number: page, page_size: pageSize } });
-  //   },
-  //   onShowSizeChange(current, size) {
-  //     dispatch({ type: 'classSchedule/getBIRLog', payload: { page_number: current, page_size: size } });
-  //   },
-  // };
-  // const tableOnChange = (pagination, filters, sorter) => {
-  //   dispatch({ type: 'classSchedule/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
-  // };
+  const del = (Id) => {
+    console.log(Id)
+    confirm({
+      title: '确认要删除选中的课程安排吗?',
+      onOk() {
+        dispatch({type:'classSchedule/deleteGroupClass',payload:{Id}})
+      }
+    });
+  };
+  const cancelGroupClass = (classtimetableid) => {
+    confirm({
+      title: '确认要撤销选中的课程安排吗?',
+      onOk() {
+        dispatch({type:'classSchedule/cancelGroupClass',payload:{classtimetableid}})
+      }
+    });
+  }
   const tableProps = {
     columns,
     data: classSchedule.data,
-    // pageFunction,
-    // tableOnChange,
-    //page_size: classSchedule.page_size,
-    //currenPageNumber: classSchedule.page_number,
     rowKey,
     loading,
   };

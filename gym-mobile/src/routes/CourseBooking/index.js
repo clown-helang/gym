@@ -1,20 +1,9 @@
 import React,{ Component } from 'react'
 import { connect } from 'dva';
-import {
-  Form,
-  FormCell,
-  Cells,
-  Cell,
-  CellsTitle,
-  ButtonArea,
-  Button,
-  Radio,
-  CellHeader,
-  CellBody,
-  CellFooter,
-  Input,
-  Label,
-  Page } from 'react-weui'
+import { Form, FormCell, Cells, Cell, CellsTitle, ButtonArea, Button,
+  Radio, CellHeader, CellBody, CellFooter, Input, Label, Page, Preview,
+  PreviewHeader, PreviewItem, PreviewBody, PreviewFooter, PreviewButton} from 'react-weui'
+import { Spin, Icon } from 'antd'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
 import styles from './index.less'
@@ -35,7 +24,7 @@ class CourseBooking extends Component {
     const { date, start_time, end_time, class_duration } = this.state;
     const { classshoplogid } = this.props.user;
     let flag = 'available';
-    console.log(classshoplogid)
+    //console.log(classshoplogid)
     if(this.checkTimeInvalid(start_time,end_time)){
       flag = this.checkTime(`${date} ${start_time}`,`${date} ${end_time}`)
     } else{
@@ -77,7 +66,7 @@ class CourseBooking extends Component {
     this.setState(_state);
   }
   checkTimeInvalid = (start_time,end_time) => {
-    console.log(start_time,end_time)
+    //console.log(start_time,end_time)
     return moment().isBefore(`${this.state.date} ${start_time}`)&&moment(`${this.state.date} 22:01`).isAfter(`${this.state.date} ${end_time}`)&&moment(`${this.state.date} 07:59`).isBefore(`${this.state.date} ${start_time}`)
   }
   handleDateChange = (e) =>{
@@ -95,10 +84,11 @@ class CourseBooking extends Component {
     this.props.dispatch({type:'user/getClassRecord',payload:{..._payload}})
   }
   render(){
-    const { course, classRecord } = this.props.user;
-    const { date, start_time, end_time, class_duration, date_flag, flag } = this.state;
+    const { user:{course, classRecord, groupClassSchedule},loading } = this.props;
+    const { date, start_time, end_time, class_duration, flag } = this.state;
+    const submitLoading = loading.effects['user/appointClass']||false;
     let errorMessage = null,available_flag = !(flag === 'available');
-
+    console.log(groupClassSchedule)
     switch (flag){
       case "occupied":
         errorMessage = "当前选择时间段已被占用";break
@@ -109,9 +99,12 @@ class CourseBooking extends Component {
       icon:'courseBooking',
       title:`课程预约 -- ${course.classname}`
     };
-
+    const appointClass = (id) => {
+      console.log(id)
+    }
     return (
       <div>
+        <Spin spinning={submitLoading}>
         <Header/>
         <MenuBar menu={menu}/>
         <div className={styles.courseImage}>
@@ -119,53 +112,29 @@ class CourseBooking extends Component {
         </div>
         {
           course.type === '1'
-          ? <div className={styles.CourseBooking}>
-              <Form>
-                <FormCell>
-                  <CellHeader>
-                    <Label>报名人数</Label>
-                  </CellHeader>
-                  <CellBody>
-                    0/16
-                  </CellBody>
-                </FormCell>
-              </Form>
-
-              <br/>
-              <CellsTitle>选择时间</CellsTitle>
-              <Form>
-                <FormCell>
-                  <CellHeader>
-                    <Label>选择日期</Label>
-                  </CellHeader>
-                  <CellBody>
-                    <Input type="date" name="date" value = {date} onChange={this.handleChange}/>
-                  </CellBody>
-                </FormCell>
-                <FormCell>
-                  <CellHeader>
-                    <Label>开始时间</Label>
-                  </CellHeader>
-                  <CellBody>
-                    {start_time}
-                  </CellBody>
-                </FormCell>
-
-                <FormCell>
-                  <CellHeader>
-                    <Label>结束时间</Label>
-                  </CellHeader>
-                  <CellBody>
-                    {end_time}
-                  </CellBody>
-                </FormCell>
-
-                <br/>
-                <ButtonArea>
-                  <Button style={{backgroundColor:'#3ddfc7'}}> 提交预约 </Button>
-                </ButtonArea>
-              </Form>
-            </div>
+          ? groupClassSchedule.map((item, index)=>{
+              return (
+                <Preview style={{marginTop:5}} key={index}>
+                  <PreviewHeader>
+                    <PreviewItem label="课程名称" value={item.classname} />
+                  </PreviewHeader>
+                  <PreviewBody>
+                    <PreviewItem label="课程教练" value={`${item.techeridname}`}/>
+                    <PreviewItem label="开始时间" value={item.starttime}/>
+                    <PreviewItem label="结束时间" value={item.endtime}/>
+                    <PreviewItem label="预约人数" value={item.takepeopelsize+"/"+item.mixpeopelsize}/>
+                    {/*{*/}
+                      {/*item.isover === '1'*/}
+                      {/*? <PreviewItem label="状态" value="已预约"/>*/}
+                      {/*: ''*/}
+                    {/*}*/}
+                  </PreviewBody>
+                  <PreviewFooter>
+                    <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>appointClass(item.id)}><Icon type='check-circle-o'/> 预约</PreviewButton>
+                  </PreviewFooter>
+                </Preview>
+              )
+            })
           : <div className={styles.CourseBooking}>
               <CellsTitle>选择课时</CellsTitle>
               <Form radio>
@@ -244,11 +213,16 @@ class CourseBooking extends Component {
               </div>
             </div>
         }
+
+        </Spin>
       </div>
     )
   }
 }
-function mapStateToProps({ user }) {
-  return { user };
+function mapStateToProps(state) {
+  return {
+    user:state.user,
+    loading: state.loading
+  };
 }
 export default connect(mapStateToProps)(CourseBooking);

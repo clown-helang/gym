@@ -53,20 +53,30 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
       if (!err) {
         console.log('Received values of form: ', values);
         let postData = {
+          usertype:values.usertype,
           topimg:[],
           introduce:[]
         }
         if(values.topimg.length>0){
-          postData.topimg = JSON.stringify([{
-            resource_url: values.topimg[0].response.successful_files[0].resource_url,
-            original_name: values.topimg[0].name
-          }])
+          if(values.topimg[0].response){
+            postData.topimg = JSON.stringify([{
+              resource_url: values.topimg[0].response.successful_files[0].resource_url,
+              original_name: values.topimg[0].name
+            }])
+          } else{
+            postData.topimg = JSON.stringify(values.topimg)
+          }
         }
         values.keys.map(item=>{
           let _resource_url = '',_name= '';
           if(values[`resource_url_${item.key}`].length>0){
-            _resource_url = values[`resource_url_${item.key}`][0].response.successful_files[0].resource_url;
-            _name = values[`resource_url_${item.key}`][0].name;
+            if(values[`resource_url_${item.key}`][0].response){
+              _resource_url = values[`resource_url_${item.key}`][0].response.successful_files[0].resource_url;
+              _name = values[`resource_url_${item.key}`][0].name;
+            } else{
+              _resource_url = values[`resource_url_${item.key}`].resource_url;
+              _name = values[`resource_url_${item.key}`].name;
+            }
           }
           postData.introduce.push({
             description: values[`description_${item.key}`],

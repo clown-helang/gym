@@ -45,7 +45,7 @@ const LayoutWithOutLabel = {
 
 function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessage },form:{ getFieldDecorator, setFieldsValue, getFieldValue, validateFields }  }) {
   // const loadingState = loading.effects['reviewForm/editUsersRoles']||loading.effects['reviewForm/queryRoles']||loading.effects['reviewForm/queryUsersRoles']||false;
-  const { introduce } = addCourseManage;
+  const { introduce, model } = addCourseManage;
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -63,11 +63,16 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
           type: values.type,
           classimg:[]
         }
+
         if(values.classimg.length>0){
-          postData.classimg = JSON.stringify([{
-            resource_url: values.classimg[0].response.successful_files[0].resource_url,
-            original_name: values.classimg[0].name
-          }])
+          if(values.classimg[0].response){
+            postData.classimg = JSON.stringify([{
+              resource_url: values.classimg[0].response.successful_files[0].resource_url,
+              original_name: values.classimg[0].name
+            }])
+          } else{
+            postData.classimg = JSON.stringify(values.classimg)
+          }
         }
         if(coachList.contents){
           coachList.contents.map(item => {
@@ -77,8 +82,13 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
         values.keys.map(item=>{
           let _resource_url = '',_name= '';
           if(values[`resource_url_${item.key}`].length>0){
-            _resource_url = values[`resource_url_${item.key}`][0].response.successful_files[0].resource_url;
-            _name = values[`resource_url_${item.key}`][0].name;
+            if(values[`resource_url_${item.key}`][0].response){
+              _resource_url = values[`resource_url_${item.key}`][0].response.successful_files[0].resource_url;
+              _name = values[`resource_url_${item.key}`][0].name;
+            }else{
+              _resource_url = values[`resource_url_${item.key}`][0].resource_url;
+              _name = values[`resource_url_${item.key}`][0].name;
+            }
           }
           postData.introduce.push({
             description: values[`description_${item.key}`],
@@ -88,7 +98,11 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
         })
         postData.introduce = JSON.stringify(postData.introduce)
         console.log('postData--',postData)
-        dispatch({type:'addCourseManage/addNewCourse', payload:{ postData }})
+        if(model==='add'){
+          dispatch({type:'addCourseManage/addNewCourse', payload:{ postData }})
+        } else{
+          dispatch({type:'addCourseManage/editCourse', payload:{ postData }})
+        }
       }
     });
   };

@@ -4,7 +4,7 @@ import { connect } from 'dva';
 import { Button } from 'antd';
 import { injectIntl } from 'react-intl';
 import { routerRedux } from 'dva/router';
-import RangePickerBar from '../../../components/DefaultUI/RangePickerBar';
+import moment from 'moment-timezone';
 import ClassScheduleTable from '../../../components/CourseManage/ClassScheduleTable'
 import messages from './messages';
 import styles from './index.less';
@@ -13,8 +13,20 @@ function ClassScheduleManage({ dispatch, classSchedule, loading, intl: { formatM
   const add = () => {
     dispatch(routerRedux.push({ pathname: '/classSchedule/add' }));
   };
-  const search = (search_value) => {
-    dispatch({type:'classSchedule/getCourses',payload:{search_value}})
+  const search = (type) => {
+    const { starttime, endtime } = classSchedule;
+    if(type === 'lastWeek'){
+      dispatch({type:'classSchedule/setStartAndEndTime',payload:{
+        starttime: moment(starttime).subtract(7,'d').format('YYYY-MM-DD HH:mm:ss').toString(),
+        endtime: moment(endtime).subtract(7,'d').format('YYYY-MM-DD HH:mm:ss').toString()}})
+      dispatch({type:'classSchedule/getAllClassScheduleByTime'})
+    } else {
+      dispatch({type:'classSchedule/setStartAndEndTime',payload:{
+        starttime: moment(starttime).add(7,'d').format('YYYY-MM-DD HH:mm:ss').toString(),
+        endtime: moment(endtime).add(7,'d').format('YYYY-MM-DD HH:mm:ss').toString()}})
+      dispatch({type:'classSchedule/getAllClassScheduleByTime'})
+    }
+
   };
   const tableProps = { dispatch, classSchedule, loading:loading.models.classSchedule };
   return (
@@ -23,13 +35,12 @@ function ClassScheduleManage({ dispatch, classSchedule, loading, intl: { formatM
         {formatMessage(messages.add)}
       </Button>
       <div className="search-bar">
-        <RangePickerBar
-          valueName="timeRange"
-          title={formatMessage(messages.selectData)}
-          value={[classSchedule.starttime,classSchedule.endtime]}
-          modalName="classSchedule/setRangeTime"
-          dispatch={dispatch}
-        />
+        <Button type="primary" onClick={()=>search('lastWeek')} style={{marginRight:20}}>
+          {formatMessage(messages.lastWeek)}
+        </Button>
+        <Button type="primary" onClick={()=>search('nextweek')}>
+          {formatMessage(messages.nextweek)}
+        </Button>
       </div>
       <ClassScheduleTable {...tableProps}/>
     </div>

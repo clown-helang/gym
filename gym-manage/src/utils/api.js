@@ -25,7 +25,19 @@ export default {
 
 
   addNewCourse: '/gym/addnewclassdefine.do',
+  editCourse: '/gym/updateclassdefine.do',
   getCourseById: '/gym/getclassdefineByid.do',
 
-  editCoach: '/gym/updatetecherintroduce.do'
+  editCoach: '/gym/updatetecherintroduce.do',
+  gitAllGroupClass: '/gym/getclassdefinebytogetherclass.do',
+  addGroupClass: '/gym/addnewclasstimetable.do',
+  editGroupClass: '/gym/updateclasstimetable.do',
+  cancelGroupClass: '/gym/techerCanceltogetherClass.do',
+  deleteGroupClass: '/gym/deleteclasstimetable.do',
+  getGroupClassById: '/gym/foundclasstimetablebyid.do',
+
+  getAllClassScheduleByTime: '/gym/getclasstimetablebytime.do',
+
+
+
 }

@@ -1,24 +1,11 @@
-import { getCourses, getCourseById } from '../../../services/gymServices';
+import { gitAllGroupClass, addGroupClass, editGroupClass, getGroupClassById, getCourseById } from '../../../services/gymServices';
 import { routerRedux } from 'dva/router'
 
 const init = {
-  classname:'',
-  iscommend:'1',
-  isshop:'',
-  classmoney:'',
-  classtecher:'',
-  classsize:'',
-  introduce:[{
-    description:'',
-    resource_url:'',
-    original_name:''
-  }],
-  type:'1',
-
-  selectedRows: [],
-  data:{},
-
-  coachList:{},
+  courseList:[],
+  classname: '',
+  coachList:[],
+  selectTeacher: '',
   visible:false
 };
 
@@ -26,40 +13,56 @@ export default {
   namespace: 'addClassSchedule',
   state : {},
   effects : {
-    *getCourses({ payload }, { put, call, select }) {
+    *gitAllGroupClass({ payload }, { put, call, select }){
       const token = yield select(state => state.home.token);
-      let _payload = {
-        token,
-        id:-1,
-        iscommend:null,
-        classname:null,
-        pageNo:1,
-        pageSize: 1000,
-        isshop: null
-      };
-      const { total, contents } = yield call(getCourses,{ payload:{ ..._payload } });
-      yield put({type:'setData',payload:{ data:{ total, contents }, page_number, page_size }});
+      const { contents } = yield call(gitAllGroupClass,{ payload:{ token } });
+      yield put({type:'setData',payload:{ courseList:contents}});
     },
-
-
+    *addGroupClass({payload:{postData}}, { put, call, select }){
+      const token = yield select(state => state.home.token);
+      yield call(addGroupClass,{ payload:{ token,...postData } });
+      yield put(routerRedux.push({pathname:'/classSchedule'}));
+    },
+    *editGroupClass({payload:{postData}}, { put, call, select }){
+      const token = yield select(state => state.home.token);
+      const { id } = yield select(state => state.addClassSchedule);
+      yield call(editGroupClass,{ payload:{ token,id,...postData } });
+      yield put(routerRedux.push({pathname:'/classSchedule'}));
+    },
+    *getGroupClassById({payload:{id}}, { put, call, select }){
+      const token = yield select(state => state.home.token);
+      const editData = yield call(getGroupClassById,{ payload:{ token, id } });
+      const { classtecher } = yield call(getCourseById,{ payload:{ token, id:editData.classdefineid } });
+      editData.coachList = classtecher.split(',');
+      editData.selectTeacher = editData.techerid+':'+editData.techername
+      yield put({type:'setEditData',payload:{ editData }});
+    }
   },
   reducers : {
     init(state,{ payload }){
       return init;
     },
-    setData(state,{ payload:{data} }){
-      return {...state, data};
+    setData(state,{ payload:{courseList} }){
+      return {...state, courseList};
     },
+    setCoachList(state,{ payload:{coachList} }){
+      return {...state, coachList};
+    },
+    setEditData(state,{ payload:{editData} }){
+      return {...state, ...editData};
+    }
   },
   subscriptions : {
     setup({dispatch, history}){
       return history.listen(({pathname,query}) => {
         if (pathname === '/classSchedule/add') {
           dispatch({type:'init'});
-        } else if(pathname === '/courseManage/edit') {
+          dispatch({type:'gitAllGroupClass'});
+        } else if(pathname === '/classSchedule/edit') {
           dispatch({type:'init'});
+          dispatch({type:'gitAllGroupClass'});
           if(query.id){
-            dispatch({type:'getCourseById',payload:{id: query.id}});
+            dispatch({type:'getGroupClassById',payload:{id: query.id}});
           }
         }
       });

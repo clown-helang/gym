@@ -17,6 +17,14 @@ const messages = defineMessages({
     id: 'userManage.memberManage.selectData',
     defaultMessage: '选择日期'
   },
+  lastWeek:{
+    id: 'courseManage.lastWeek',
+    defaultMessage: '上一周'
+  },
+  nextweek:{
+    id: 'courseManage.nextweek',
+    defaultMessage: '下一周'
+  },
 });
 
 export default messages;

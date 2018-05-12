@@ -1,7 +1,8 @@
-import { addNewCourse, getCoaches, getCourseById } from '../../../services/gymServices';
+import { addNewCourse, getCoaches, getCourseById,editCourse } from '../../../services/gymServices';
 import { routerRedux } from 'dva/router'
 
 const init = {
+  id:'',
   classname:'',
   iscommend:'1',
   isshop:'',
@@ -19,7 +20,8 @@ const init = {
   data:{},
 
   coachList:{},
-  visible:false
+  visible:false,
+  model:'add'
 };
 
 export default {
@@ -40,6 +42,12 @@ export default {
     *addNewCourse({ payload:{postData} }, { put, call, select }) {
       const token = yield select(state => state.home.token);
       yield call(addNewCourse,{ payload:{ token,...postData } });
+      yield put(routerRedux.push({pathname:'/courseManage'}));
+    },
+    *editCourse({ payload:{postData} }, { put, call, select }) {
+      const token = yield select(state => state.home.token);
+      const { id } = yield select(state => state.addCourseManage);
+      yield call(editCourse,{ payload:{ token, id, ...postData } });
       yield put(routerRedux.push({pathname:'/courseManage'}));
     },
     *getCourseById({ payload:{id} }, { put, call, select }){
@@ -86,6 +94,9 @@ export default {
     setEditData(state,{ payload:{ editData }}){
       return {...state, ...editData}
     },
+    setModel(state,{ payload:{ model } }){
+      return {...state, model}
+    }
   },
   subscriptions : {
     setup({dispatch, history}){
@@ -94,6 +105,7 @@ export default {
           dispatch({type:'init'});
         } else if(pathname === '/courseManage/edit') {
           dispatch({type:'init'});
+          dispatch({type:'setModel',payload:{model:'edit'}});
           if(query.id){
             dispatch({type:'getCourseById',payload:{id: query.id}});
           }

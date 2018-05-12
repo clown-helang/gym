@@ -87,7 +87,7 @@ function RouterConfig({ history, app }) {
           path: '/personalCenter',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('../models/User'));
+              registerModel(app, require('../models/PersonalCenter'));
               cb(null, require('../routes/PersonalCenter'));
             }, 'PersonalCenter');
           },
@@ -96,7 +96,7 @@ function RouterConfig({ history, app }) {
           path: '/classRecord',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('../models/User'));
+              registerModel(app, require('../models/PersonalCenter'));
               cb(null, require('../routes/ClassRecord'));
             }, 'ClassRecord');
           },

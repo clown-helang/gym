@@ -124,3 +124,62 @@ export async function editCoach ({ payload }) {
     params: payload,
   })
 }
+export async function editCourse ({ payload }) {
+  return request({
+    url: baseURL + api.editCourse,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function gitAllGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.gitAllGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function addGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.addGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function getAllClassScheduleByTime ({ payload }) {
+  return request({
+    url: baseURL + api.getAllClassScheduleByTime,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function editGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.editGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function cancelGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.cancelGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function deleteGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.deleteGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function getGroupClassById ({ payload }) {
+  return request({
+    url: baseURL + api.getGroupClassById,
+    method: 'POST',
+    params: payload,
+  })
+}

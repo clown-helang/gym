@@ -38,5 +38,4 @@ export default {
 
   getGroupClassSchedule: '/gym/getallclasstimetable.do',
 
-
 }

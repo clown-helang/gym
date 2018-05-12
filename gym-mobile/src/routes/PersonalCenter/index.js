@@ -5,48 +5,48 @@ import { routerRedux } from 'dva/router'
 import Header from '../../components/Header'
 import { getSession } from '../../utils';
 
-function PersonalCenter({dispatch,user}) {
+function PersonalCenter({dispatch,personalCenter}) {
   const redirect = (path) => {
     dispatch(routerRedux.push({ pathname: path }));
   }
-  const userType = getSession('usertype')
+  //const userType = getSession('usertype')
 
   return (
     <div>
       <Header dispatch={dispatch} type = 'noUser'/>
       <div className={styles.personalInfor}>
         <div className={styles.left}>
-          <img src={user.headimgurl}/>
+          <img src={personalCenter.headimgurl}/>
         </div>
         <div className={styles.center}>
           {
-            user.usertype === '2'
-            ? <p>{user.name} <span className={styles.coachTag}>教练</span></p>
-            : <p>{user.nickName}</p>
+            personalCenter.usertype === '2'
+            ? <p>{personalCenter.name} <span className={styles.coachTag}>教练</span></p>
+            : <p>{personalCenter.nickName}</p>
           }
-          <p>电话：{user.phone}</p>
+          <p>电话：{personalCenter.phone}</p>
         </div>
         <div className={styles.right}>
           {
-            user.usertype !== '2'
+            personalCenter.usertype !== '2'
             ? <p>
                 <i className='iconfont' style={{color:'#3ddfc7',fontSize:24,marginRight:5,position:'relative',top:5}}>&#xe60d;</i>
-                <span>VIP {user.vipclass}</span>
+                <span>VIP {personalCenter.vipclass}</span>
               </p>
             : ''
           }
         </div>
       </div>
       {
-        user.usertype !== '2'
+        personalCenter.usertype !== '2'
         ? <div className={styles.strip} style={{marginBottom:20,marginTop:15}}>
             <i className={`iconfont ${styles.icon}`}>&#xe608;</i>
-            <span>账户余额：<span style={{color:'#3ddfc7',fontSize:20,position:'relative',top:2}}>{user.money}</span>元</span>
+            <span>账户余额：<span style={{color:'#3ddfc7',fontSize:20,position:'relative',top:2}}>{personalCenter.money}</span>元</span>
           </div>
         : ''
       }
       {
-        userType === '2'
+        personalCenter.usertype === '2'
         ? <div>
             <div className={styles.strip} onClick={()=>{redirect('/reservationRecord')}}>
               <i className={`iconfont ${styles.icon}`}>&#xe656;</i>
@@ -67,7 +67,7 @@ function PersonalCenter({dispatch,user}) {
     </div>
   )
 }
-function mapStateToProps({ user }) {
-  return { user };
+function mapStateToProps({ personalCenter }) {
+  return { personalCenter };
 }
 export default connect(mapStateToProps)(PersonalCenter);

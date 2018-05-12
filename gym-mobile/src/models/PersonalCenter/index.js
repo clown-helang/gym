@@ -1,7 +1,5 @@
-import { getConsumeRecord, getMembersById, getClassRecord, getCourseById,appointClass, getGroupClassSchedule } from '../../services/gymServices'
+import { getConsumeRecord, getMembersById, getClassRecord, setClassOver,cancelAppointClass,teacherComment,studentComment } from '../../services/gymServices'
 import { getSession } from '../../utils';
-import { routerRedux } from 'dva/router';
-import moment from 'moment-timezone';
 
 const init = {
   city: "",
@@ -26,10 +24,13 @@ const init = {
   course:{},
   classshoplogid:null,
   groupClassSchedule:[],
+  commentVisible:false,
+  classlogid: null,
+  comment: ''
 }
 
 export default {
-  namespace : 'user',
+  namespace : 'personalCenter',
   state : {},
   effects : {
     *getConsumeRecord({ payload }, { put, call, select }) {
@@ -53,7 +54,7 @@ export default {
       yield put({type:'setUser',payload:{ user }});
     },
     *getClassRecord({ payload }, { put, call, select }) {
-      let { page_number } = yield select(state => state.user);
+      let { page_number } = yield select(state => state.personalCenter);
       let _payload = {
         //0预约，1结课，2撤销预约
         isover: payload&&payload.isover ? payload.isover : null,
@@ -74,31 +75,23 @@ export default {
       const { contents } = yield call(getClassRecord,{ payload:{ ..._payload } });
       yield put({type:'setClassRecord',payload:{ classRecord: contents }});
     },
-    *getCourseById({ payload:{id,techerid} }, { put, call, select }){
-      const course = yield call(getCourseById,{ payload:{ id } });
-      course.classimg = JSON.parse(course.classimg)
-      course.introduce = JSON.parse(course.introduce)
-      yield put({type:'setCourseBooking',payload:{ course }});
-      if(parseInt(course.type)===1){
-        let _payload = {
-          classname: course.classname,
-          classdefineid: course.id,
-          techerid,
-          techername: null,
-          starttime: moment().format('YYYY-MM-DD HH:mm:ss').toString(),
-          endtime: moment().add(3,'d').format('YYYY-MM-DD').toString()+' 23:00:00',
-          classtime: -1,
-          isover: null,
-          pageNo: 1,
-          pageSize: 1000
-        }
-        const { contents } = yield call(getGroupClassSchedule,{payload:{ ..._payload }});
-        yield put({type:'setGroupClassSchedule',payload:{ groupClassSchedule:contents }});
-      }
+    *setClassOver({ payload:{classlogid} }, { put, call, select }){
+      yield call(setClassOver,{ payload:{ classlogid } });
+      yield put({type:'getClassRecord'});
     },
-    *appointClass({ payload:{classshoplogid, classtime, starttime, endtime}}, { put, call, select }){
-      yield call(appointClass,{ payload:{ classshoplogid, classtime, starttime, endtime } });
-      yield put(routerRedux.push({pathname:'/classRecord'}));
+    *cancelAppointClass({ payload:{classlogid} }, { put, call, select }){
+      yield call(cancelAppointClass,{ payload:{ classlogid } });
+      yield put({type:'getClassRecord'});
+    },
+    *classComment({ payload }, { put, call, select }){
+      let { comment,classlogid, usertype } = yield select(state => state.personalCenter);
+      if(usertype === '3'){
+        yield call(studentComment,{ payload:{ id:classlogid,studentsay:comment } });
+      } else{
+        yield call(teacherComment,{ payload:{ id:classlogid,studentsay:comment } });
+      }
+      yield put({type:'init'});
+      yield put({type:'getClassRecord'});
     }
   },
   reducers : {
@@ -123,11 +116,15 @@ export default {
     setCourseBooking(state, { payload:{ course } }){
       return {...state, course }
     },
-    setClassShopLogId(state, { payload:{ classshoplogid } }){
-      return {...state, classshoplogid }
-    },
     setGroupClassSchedule(state, { payload:{ groupClassSchedule } }){
       return {...state, groupClassSchedule }
+    },
+    setCommentVisible(state, { payload:{ commentVisible,classlogid } }){
+      return {...state, commentVisible,classlogid }
+    },
+    setComment(state, { payload:{ comment } }){
+      console.log(comment)
+      return {...state, comment }
     },
   },
   subscriptions : {
@@ -144,15 +141,6 @@ export default {
         if(pathname === '/classRecord'){
           dispatch({type:'init'})
           dispatch({type:'getClassRecord'})
-        }
-        if(pathname === '/courseBooking'){
-          dispatch({type:'init'})
-          if(query.classid){
-            dispatch({type:'getCourseById',payload:{ id:query.classid,techerid:query.techerid }})
-          }
-          if(query.id){
-            dispatch({type:'setClassShopLogId',payload:{ classshoplogid:query.id }})
-          }
         }
       });
     }

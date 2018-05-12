@@ -152,6 +152,8 @@ const courseManage = {
   'courseManage.startTime': '开始时间',
   'courseManage.endTime': '结束时间',
   'courseManage.totalNumber': '总人数',
+  'courseManage.lastWeek': '上一周',
+  'courseManage.nextweek': '下一周',
 };
 const statisticalManage = {
   'statisticalManage': '统计管理',

@@ -38,75 +38,62 @@ const LayoutWithOutLabel = {
 
 function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { formatMessage },form:{ getFieldDecorator, setFieldsValue, getFieldValue, validateFields }  }) {
   // const loadingState = loading.effects['reviewForm/editUsersRoles']||loading.effects['reviewForm/queryRoles']||loading.effects['reviewForm/queryUsersRoles']||false;
-  const { courseList } = addClassSchedule;
+  const { courseList, coachList } = addClassSchedule;
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
       if (!err) {
-        console.log('values---',values)
+        //console.log('values---',values)
         let postData = {
-          classname: values.classname,
-          iscommend: values.iscommend,
-          isshop: '2',
-          classmoney: values.classmoney,
-          classtecher:[],
-          classsize: values.classsize,
-          introduce: [],
-          type: values.type,
-          classimg:[]
+          classname: values.classname.split(':')[1],
+          classdefineid: values.classname.split(':')[0],
+          techerid: values.techername.split(":")[0],
+          techername: values.techername.split(":")[1],
+          mixpeopelsize:values.mixpeopelsize,
+          starttime:moment(values.starttime).format("YYYY-MM-DD HH:mm:ss").toString(),
+          endtime:moment(values.endtime).format("YYYY-MM-DD HH:mm:ss").toString(),
+          classtime: parseInt((moment(values.endtime).unix() - moment(values.starttime).unix())/3600),
+          isover:0
         }
-        if(values.classimg.length>0){
-          postData.classimg = JSON.stringify([{
-            resource_url: values.classimg[0].response.successful_files[0].resource_url,
-            original_name: values.classimg[0].name
-          }])
-        }
-        if(coachList.contents){
-          coachList.contents.map(item => {
-            postData.classtecher.push(`${item.id}:${item.realname}`)
-          })
-        }
-        values.keys.map(item=>{
-          let _resource_url = '',_name= '';
-          if(values[`resource_url_${item.key}`].length>0){
-            _resource_url = values[`resource_url_${item.key}`][0].response.successful_files[0].resource_url;
-            _name = values[`resource_url_${item.key}`][0].name;
-          }
-          postData.introduce.push({
-            description: values[`description_${item.key}`],
-            resource_url: _resource_url,
-            original_name:_name
-          })
-        })
-        postData.introduce = JSON.stringify(postData.introduce)
-        console.log('postData--',postData)
-        dispatch({type:'addCourseManage/addNewCourse', payload:{ postData }})
+        dispatch({type:'addClassSchedule/addGroupClass',payload:{ postData }})
       }
     });
   };
   const handleCancel = () => {
-    dispatch(routerRedux.push({ pathname: '/courseManage'}))
+    dispatch(routerRedux.push({ pathname: '/classSchedule'}))
   };
+  const handleCourseChange = (value) =>{
+    let _coachList = [];
+    courseList.map(item=>{
+      if(parseInt(item.id)===parseInt(value.split(':')[0])){
+        _coachList = item.classtecher.split(',')
+      }
+    })
+    dispatch({type:'addClassSchedule/setCoachList',payload:{ coachList:_coachList }})
+  }
   return (
     <div style={{marginTop:20,marginLeft:20}}>
       <Form onSubmit={handleSubmit}>
         <FormItem {...formItemLayout} label={formatMessage(messages.courseName)}>
           {getFieldDecorator('classname', {
-            initialValue: addClassSchedule.classname||'',
+            initialValue: addClassSchedule.classname||null,
             rules: [
               {
                 required: true,
                 message: formatMessage(messages.notNull).replace('***',formatMessage(messages.courseName))
               }
             ],
-          })(<Select>
-            <Option value='1'>团体瑜伽课</Option>
-            <Option value='2'>动感单车</Option>
+          })(<Select onChange={handleCourseChange}>
+            {
+              courseList.map((item, index)=>{
+                return <Option key={index} value={item.id+':'+item.classname}>{item.classname}</Option>
+              })
+            }
           </Select>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.selectCoach)}>
           {getFieldDecorator('techername', {
-            initialValue: addClassSchedule.type||'',
+            initialValue: addClassSchedule.selectTeacher||null,
             rules: [
               {
                 required: true,
@@ -114,13 +101,14 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
               }
             ],
           })(<Select>
-            <Option value='1'>安琪</Option>
-            <Option value='2'>何浪</Option>
+              {
+                coachList.map((item,index)=><Option key={index} value={item}>{item.split(":")[1]}</Option>)
+              }
           </Select>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.totalNumber)}>
           {getFieldDecorator('mixpeopelsize', {
-            initialValue: addClassSchedule.mixpeopelsize||'',
+            initialValue: addClassSchedule.mixpeopelsize||null,
             rules: [
               {
                 required: true,

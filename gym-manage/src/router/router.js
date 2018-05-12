@@ -121,6 +121,15 @@ function RouterConfig({ history, app }) {
           },
         },
         {
+          path: '/classSchedule/edit',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/CourseManage/AddClassSchedule'));
+              cb(null, require('../routes/CourseManage/AddClassSchedule'));
+            }, 'AddClassSchedule');
+          },
+        },
+        {
           path: '/statisticalManage/rechargeRecordQuery',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
