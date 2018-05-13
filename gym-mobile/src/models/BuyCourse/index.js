@@ -1,13 +1,20 @@
 import { routerRedux } from 'dva/router';
 import { getSession } from '../../utils';
-import { buyClass } from '../../services/gymServices';
+import { buyClass, getCourseById } from '../../services/gymServices';
 import { Modal } from 'antd'
-
-const appLocale = window.appLocale;
-
+const warning = Modal.warning;
 const init = {
-  course: {},
-  techerid:null
+  course: {
+    classimg:[],
+    classmoney:'',
+    classname:'',
+    introduce:[],
+    classtecher:'',
+    classsize:'',
+    type:'1',
+  },
+  techerid:null,
+  available_flag:false
 }
 
 export default {
@@ -16,8 +23,30 @@ export default {
   effects : {
     *buyClass({ payload },{ put, call, select }){
       const { techerid,course } = yield select(state => state.buyCourse);
-      yield call(buyClass,{ payload:{ studentid:getSession('id'), techerid, classdefineid:course.id } });
-      yield put(routerRedux.push({pathname:'/myCourse'}));
+      const result = yield call(buyClass,{ payload:{ studentid:getSession('id'), techerid, classdefineid:course.id } });
+      if(result.error_message){
+        if(result.code === '10522'){
+          warning({
+            title: '温馨提示',
+            content: '账户余额不足！',
+            okText: '确定',
+          });
+        } else{
+          warning({
+            title: '温馨提示',
+            content: '购买失败！',
+          });
+        }
+      } else {
+        yield put(routerRedux.push({pathname:'/myCourse'}));
+      }
+    },
+    *getCourseById({ payload:{ id } }, { put, call, select }){
+      const course = yield call(getCourseById,{ payload:{ id } });
+      course.classimg = JSON.parse(course.classimg);
+      course.introduce = JSON.parse(course.introduce);
+      console.log('course----',course)
+      yield put({type:'setCourse', payload:{ course }});
     }
   },
   reducers : {
@@ -33,15 +62,16 @@ export default {
     setTeacherId(state,{ payload:{techerid} }){
       return {...state, techerid }
     },
+    setAvailableFlag(state,{ payload:{available_flag} }){
+      return {...state, available_flag }
+    }
   },
   subscriptions : {
     setup({dispatch, history}) {
       return history.listen(({pathname, query}) => {
         if ( pathname === '/buyCourse') {
           dispatch({ type: "init"})
-          if(query.course){
-            dispatch({ type: "setCourse", payload:{course:JSON.parse(query.course)}})
-          }
+          dispatch({ type: "getCourseById", payload:{id: query.id}})
         }
       });
     }

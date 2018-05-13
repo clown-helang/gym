@@ -31,13 +31,15 @@ export default function request(arr) {
   let options = {
     method: arr.method,
     mode: 'cors',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Accept": "application/json;charset=utf-8",
-    }
+    },
   };
   if(arr.params.token){
-    options.headers.Authorization = 'Bearer '+arr.params.token;
+    // options.headers.Authorization = 'Bearer '+arr.params.token;
+    options.headers.Authorization = arr.params.token;
     delete arr.params.token;
   }
   let real_url = arr.url;

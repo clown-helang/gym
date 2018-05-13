@@ -36,7 +36,13 @@ export default {
   deleteGroupClass: '/gym/deleteclasstimetable.do',
   getGroupClassById: '/gym/foundclasstimetablebyid.do',
 
+
+
   getAllClassScheduleByTime: '/gym/getclasstimetablebytime.do',
+
+  setLoginPassword: '/gym/setlogpassword.do',
+  findSameLoginName: '/gym/findsameloginname.do',
+  Login: '/gym/loginuser.do',
 
 
 

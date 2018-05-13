@@ -8,7 +8,7 @@ import { Select,Icon } from 'antd';
 const Option = Select.Option;
 
 function BuyCourse({dispatch,buyCourse}) {
-  const { course } = buyCourse;
+  const { course, available_flag } = buyCourse;
   const coaches = course.classtecher.split(',')
 
   const menu = {
@@ -16,17 +16,24 @@ function BuyCourse({dispatch,buyCourse}) {
     title:`购买课程 —— ${course.classname}`
   };
   const handleChange = (techerid) => {
+    dispatch({type:'buyCourse/setAvailableFlag',payload:{available_flag:false}})
     dispatch({type:'buyCourse/setTeacherId',payload:{techerid}})
   };
   const handleSubmit = () => {
-    dispatch({type:'buyCourse/buyClass'})
+    const { techerid } = buyCourse;
+    if(!techerid){
+      dispatch({type:'buyCourse/setAvailableFlag',payload:{available_flag:true}})
+    } else{
+      dispatch({type:'buyCourse/setAvailableFlag',payload:{available_flag:false}})
+      dispatch({type:'buyCourse/buyClass'})
+    }
   }
   return (
     <div>
       <Header />
       <MenuBar menu={menu}/>
       <div className={styles.courseLogo}>
-        <img src={course.classimg[0].resource_url}/>
+        <img src={course.classimg&&course.classimg.length>0 ? course.classimg[0].resource_url : '' }/>
       </div>
       <div className={styles.orderDetail}>
         <div className={styles.recordHeader}>
@@ -59,6 +66,9 @@ function BuyCourse({dispatch,buyCourse}) {
                 }
               </Select>
             </div>
+            {
+              available_flag?<div><p style={{fontSize:'.5em',color:'red',textAlign:'right'}}>请选择教练</p></div>:''
+            }
           </div>
         </div>
       </div>

@@ -6,7 +6,8 @@ const init = {
   classname: '',
   coachList:[],
   selectTeacher: '',
-  visible:false
+  visible:false,
+  model:'add',
 };
 
 export default {
@@ -50,6 +51,9 @@ export default {
     },
     setEditData(state,{ payload:{editData} }){
       return {...state, ...editData};
+    },
+    setModel(state,{ payload:{ model } }){
+      return {...state, model};
     }
   },
   subscriptions : {
@@ -60,6 +64,7 @@ export default {
           dispatch({type:'gitAllGroupClass'});
         } else if(pathname === '/classSchedule/edit') {
           dispatch({type:'init'});
+          dispatch({type:'setModel',payload:{model:'edit'}});
           dispatch({type:'gitAllGroupClass'});
           if(query.id){
             dispatch({type:'getGroupClassById',payload:{id: query.id}});

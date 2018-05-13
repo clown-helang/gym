@@ -174,3 +174,61 @@ export async function getGroupClassSchedule ({ payload }) {
   })
 }
 
+export async function appointGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.appointGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function cancelAppointGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.cancelAppointGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function addRestTime ({ payload }) {
+  return request({
+    url: baseURL + api.addRestTime,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function addAskForLeave ({ payload }) {
+  return request({
+    url: baseURL + api.addAskForLeave,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function getTeacherDisableTime ({ payload }) {
+  return request({
+    url: baseURL + api.getTeacherDisableTime,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function teacherOverGroupClass ({ payload }) {
+  return request({
+    url: baseURL + api.teacherOverGroupClass,
+    method: 'POST',
+    params: payload,
+  })
+}
+export async function groupClassTeacherComment ({ payload }) {
+  return request({
+    url: baseURL + api.groupClassTeacherComment,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+
+
+
+
+

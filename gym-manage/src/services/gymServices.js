@@ -5,6 +5,31 @@ import md5 from 'md5';
 import { getBytes } from '../utils';
 
 
+export async function Login ({ payload }) {
+  return request({
+    url: baseURL + api.Login,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function setLoginPassword ({ payload }) {
+  return request({
+    url: baseURL + api.setLoginPassword,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function findSameLoginName ({ payload }) {
+  return request({
+    url: baseURL + api.findSameLoginName,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+
 export async function getMembers ({ payload }) {
   return request({
     url: baseURL + api.getMembers,

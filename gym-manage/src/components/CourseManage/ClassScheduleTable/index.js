@@ -37,7 +37,7 @@ function ClassScheduleTable({ dispatch, classSchedule, loading, intl: { formatMe
                 <span>
                   {
                     moment(record.data).isBefore(moment().add(7,'d'))
-                    ? moment(record.data).isAfter(moment().subtract(1, 'd')) && item.isover !== '0'
+                    ? moment(record.data).isAfter(moment().subtract(1, 'd')) && item.isover !== '1'
                       ? item.isover === '3'
                         ? '已撤销'
                         : <a onClick={()=>cancelGroupClass(item.id)}>撤销</a>
@@ -50,9 +50,9 @@ function ClassScheduleTable({ dispatch, classSchedule, loading, intl: { formatMe
                 </span>
               }
             >
-              <p>教练：{item.techername}</p>
+              <p>教练：{item.techeridname}</p>
               <p>时间：{item.starttime.split(' ')[1]+' ~ '+item.endtime.split(' ')[1]}</p>
-              <p>可预约人数：{item.mixpeopelsize+'/'+item.takepeopelsize}</p>
+              <p>可预约人数：{item.takepeopelsize+'/'+item.mixpeopelsize}</p>
             </Card>
           )
         })

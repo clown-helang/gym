@@ -1,0 +1,105 @@
+@course-height:100px;
+
+.course{
+  width: 100%;
+  height: @course-height;
+  overflow: hidden;
+  margin-bottom: 14px;
+  position: relative;
+  img{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top:0;
+  }
+  .shadow{
+    position: absolute;
+    left: 0;
+    top:0;
+    background-color: #000;
+    z-index: 222;
+    opacity: 0.5;
+    width: inherit;
+    height: inherit;
+  }
+  .courseIntroduce{
+    position: relative;
+    width: 100%;
+    height: inherit;
+    font-size: 14px;
+    color: white;
+    z-index: 333;
+    p{
+      padding: 0;
+      margin: 0;
+    }
+    .courseName{
+      display: inline-block;
+      font-size: 20px;
+      margin-left: 10%;
+      margin-top: 36px;
+    }
+    .originalPrice{
+      text-decoration-line: line-through;
+      display: inline-block;
+      margin: 0 10%;
+    }
+    .truePrice{
+      display: inline-block;
+      font-weight: 600;
+      font-size: 14px;
+      font-family: "Adobe 黑体 Std R";
+      color: #3ddfc7;
+      float: right;
+      margin-right: 10px;
+    }
+    .status{
+      display: inline-block;
+      width: 50%;
+      margin-left: 10%;
+    }
+    .operation{
+      display: inline-block;
+      width: 70px;
+      height: 1.6rem;
+      font-size: 12px;
+      position: relative;
+      bottom: 5px;
+      border-radius: 2px;
+      background-color: #3ddfc7;
+      color: black;
+      text-align: center;
+      line-height:  1.6rem;
+      float: right;
+      margin-right: 10px;
+      font-family: "Adobe 黑体 Std R";
+    }
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 375px) {
+  .course{
+    img{
+      width: auto;
+      height: 100%;
+    }
+  }
+}
+@media screen and (max-width: 320px) {
+  .course{
+    height: 90px;
+    img{
+      width: auto;
+      height: 100%;
+    }
+    .courseIntroduce{
+      font-size: 12px;
+      .courseName{
+        font-size: 16px;
+        margin-top: 30px;
+        margin-left: 8%;
+      }
+    }
+  }
+}
+

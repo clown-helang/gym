@@ -2,26 +2,26 @@ import React from 'react';
 import styles from './index.less'
 import { routerRedux } from 'dva/router'
 
-function Course({dispatch, course, type}) {
+function MyCourseList({dispatch, shopLog, type}) {
   const redirect = (path) => {
     if(path==='/courseBooking'){
-      dispatch(routerRedux.push({ pathname: path, query:{classid:course.classid,id:course.id,techerid:course.techerid} }));
+      dispatch(routerRedux.push({ pathname: path, query:{classid:shopLog.classid,id:shopLog.id,techerid:shopLog.techerid} }));
     } else{
-      dispatch(routerRedux.push({ pathname: path, query:{id:course.id} }));
+      dispatch(routerRedux.push({ pathname: path, query:{id:shopLog.classid} }));
     }
   }
   return (
     <div className={styles.course}>
-      <img src={course.classimg&&course.classimg.length>0?course.classimg[0].resource_url:''}/>
+      <img src={shopLog.classimg&&shopLog.classimg.length>0?shopLog.classimg[0].resource_url:''}/>
       <div className={styles.shadow}/>
       <div className={styles.courseIntroduce}>
-        <p onClick = {()=>redirect('/courseDetail',course.id)}>
-          <span className={styles.courseName}>{"極 ● "+course.classname}</span>
+        <p onClick = {()=>redirect('/courseDetail')}>
+          <span className={styles.courseName}>{"極 ● "+shopLog.classname}</span>
         </p>
         {
           type === 'myCourse'
           ?
-            (course.allclasssize - course.endclasssize) > 0
+            (shopLog.allclasssize - shopLog.endclasssize) > 0
             ? <p>
                 <span className={styles.status}>有效</span>
                 <a className={styles.operation} onClick={()=>redirect('/courseBooking')}>预约</a>
@@ -31,7 +31,7 @@ function Course({dispatch, course, type}) {
                 <a className={styles.operation} onClick={()=>redirect('/courseBooking')}>再次购买</a>
               </p>
           : <p>
-              <span className={styles.truePrice}>VIP价：{course.classmoney} 元</span>
+              <span className={styles.truePrice}>VIP价：{shopLog.classmoney} 元</span>
             </p>
         }
       </div>
@@ -39,4 +39,4 @@ function Course({dispatch, course, type}) {
   )
 }
 
-export default Course;
+export default MyCourseList;

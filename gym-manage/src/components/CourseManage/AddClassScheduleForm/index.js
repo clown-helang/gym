@@ -38,7 +38,7 @@ const LayoutWithOutLabel = {
 
 function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { formatMessage },form:{ getFieldDecorator, setFieldsValue, getFieldValue, validateFields }  }) {
   // const loadingState = loading.effects['reviewForm/editUsersRoles']||loading.effects['reviewForm/queryRoles']||loading.effects['reviewForm/queryUsersRoles']||false;
-  const { courseList, coachList } = addClassSchedule;
+  const { courseList, coachList, model } = addClassSchedule;
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -55,7 +55,12 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
           classtime: parseInt((moment(values.endtime).unix() - moment(values.starttime).unix())/3600),
           isover:0
         }
-        dispatch({type:'addClassSchedule/addGroupClass',payload:{ postData }})
+        console.log('postData---',postData)
+        if(model === 'add'){
+          dispatch({type:'addClassSchedule/addGroupClass',payload:{ postData }})
+        } else{
+          dispatch({type:'addClassSchedule/editGroupClass',payload:{ postData }})
+        }
       }
     });
   };
@@ -76,7 +81,7 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
       <Form onSubmit={handleSubmit}>
         <FormItem {...formItemLayout} label={formatMessage(messages.courseName)}>
           {getFieldDecorator('classname', {
-            initialValue: addClassSchedule.classname||null,
+            initialValue: addClassSchedule.classdefineid?addClassSchedule.classdefineid+':'+addClassSchedule.classname:null,
             rules: [
               {
                 required: true,
@@ -118,9 +123,13 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
           })(<InputNumber style={{width:'50%'}}/>)}
           <span className="ant-form-text">人</span>
         </FormItem>
+        {
+          console.log(addClassSchedule)
+        }
+
         <FormItem {...formItemLayout} label={formatMessage(messages.startTime)}>
           {getFieldDecorator('starttime', {
-            initialValue: addClassSchedule.starttime||null,
+            initialValue: addClassSchedule.starttime?moment(addClassSchedule.starttime):null,
             rules: [
               {
                 required: true,
@@ -132,7 +141,7 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
 
         <FormItem {...formItemLayout} label={formatMessage(messages.endTime)}>
           {getFieldDecorator('endtime', {
-            initialValue: addClassSchedule.endtime||null,
+            initialValue: addClassSchedule.endtime?moment(addClassSchedule.endtime):null,
             rules: [
               {
                 required: true,

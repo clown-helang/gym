@@ -23,6 +23,9 @@ function ClassRecord({dispatch,personalCenter}) {
     ? dispatch({type:'personalCenter/setClassOver',payload:{ classlogid }})
     : dispatch({type:'personalCenter/cancelAppointClass',payload:{ classlogid }})
   }
+  const cancelGroupClass = (course) =>{
+    dispatch({type:'personalCenter/cancelAppointGroupClass',payload:{ classtimetableid:course.classtimetableid,classlogid:course.id }})
+  }
   const comments = (classlogid) =>{
     console.log('comments',classlogid)
     dispatch({type:'personalCenter/setCommentVisible',payload:{ commentVisible:true,classlogid }})
@@ -83,10 +86,14 @@ function ClassRecord({dispatch,personalCenter}) {
                       <PreviewButton style={{color:'#3ddfc7'}} onClick={submitComment}><Icon type='check-circle-o'/> 提交评论</PreviewButton>
                     </PreviewFooter>
                   : item.isover === '0'
-                    ? <PreviewFooter>
-                      <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'2')}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
-                      <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'1')}><Icon type='check-circle-o'/> 结课确认</PreviewButton>
-                    </PreviewFooter>
+                    ? parseInt(item.classtimetableid) === 0
+                      ? <PreviewFooter>
+                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'2')}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
+                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'1')}><Icon type='check-circle-o'/> 结课确认</PreviewButton>
+                        </PreviewFooter>
+                      : <PreviewFooter>
+                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>cancelGroupClass(item)}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
+                        </PreviewFooter>
                     : item.isover === '1'&& item.studentsay === null
                       ? <PreviewFooter>
                         <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>comments(item.id)}><Icon type='edit'/> 评论</PreviewButton>

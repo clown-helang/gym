@@ -9,8 +9,6 @@ function PersonalCenter({dispatch,personalCenter}) {
   const redirect = (path) => {
     dispatch(routerRedux.push({ pathname: path }));
   }
-  //const userType = getSession('usertype')
-
   return (
     <div>
       <Header dispatch={dispatch} type = 'noUser'/>
@@ -20,15 +18,15 @@ function PersonalCenter({dispatch,personalCenter}) {
         </div>
         <div className={styles.center}>
           {
-            personalCenter.usertype === '2'
-            ? <p>{personalCenter.name} <span className={styles.coachTag}>教练</span></p>
+            parseInt(personalCenter.usertype) === 2
+            ? <p>{personalCenter.nickName} <span className={styles.coachTag}>教练</span></p>
             : <p>{personalCenter.nickName}</p>
           }
           <p>电话：{personalCenter.phone}</p>
         </div>
         <div className={styles.right}>
           {
-            personalCenter.usertype !== '2'
+            parseInt(personalCenter.usertype) !== 2
             ? <p>
                 <i className='iconfont' style={{color:'#3ddfc7',fontSize:24,marginRight:5,position:'relative',top:5}}>&#xe60d;</i>
                 <span>VIP {personalCenter.vipclass}</span>
@@ -38,7 +36,7 @@ function PersonalCenter({dispatch,personalCenter}) {
         </div>
       </div>
       {
-        personalCenter.usertype !== '2'
+        parseInt(personalCenter.usertype) !== 2
         ? <div className={styles.strip} style={{marginBottom:20,marginTop:15}}>
             <i className={`iconfont ${styles.icon}`}>&#xe608;</i>
             <span>账户余额：<span style={{color:'#3ddfc7',fontSize:20,position:'relative',top:2}}>{personalCenter.money}</span>元</span>
@@ -46,7 +44,7 @@ function PersonalCenter({dispatch,personalCenter}) {
         : ''
       }
       {
-        personalCenter.usertype === '2'
+        parseInt(personalCenter.usertype)  === 2
         ? <div>
             <div className={styles.strip} onClick={()=>{redirect('/reservationRecord')}}>
               <i className={`iconfont ${styles.icon}`}>&#xe656;</i>

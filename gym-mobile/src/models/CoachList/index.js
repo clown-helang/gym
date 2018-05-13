@@ -1,4 +1,4 @@
-import { getCoaches, getCourseByTeacherId } from '../../services/gymServices';
+import { getCoaches, getCourseByTeacherId, getCoachById } from '../../services/gymServices';
 const appLocale = window.appLocale;
 
 const init = {
@@ -20,10 +20,14 @@ export default {
       const { contents } = yield call(getCoaches,{ payload:{ ..._payload } });
       yield put({type:'setCoachList',payload:{ coaches:contents }});
     },
+    *getCoachById({ payload:{id} }, { put, call, select }){
+      const coach = yield call(getCoachById,{ payload:{ id } });
+      yield put({type:'setCoach', payload:{ coach}});
+      yield put({type:'getCourseByTeacherId'});
+    },
     *getCourseByTeacherId({ payload }, { put, call, select }){
       const { id, realname } = yield select(state => state.coachList.coach)
       const { contents } = yield call(getCourseByTeacherId,{ payload:{ id, techername: realname} });
-      console.log('contents---',contents)
       yield put({type:'setCourseList', payload:{ courseList:contents}});
     }
   },
@@ -38,7 +42,6 @@ export default {
       return {...state, courseList }
     },
     setCoach(state,{ payload:{ coach } }){
-      console.log(111,coach)
       return {...state, coach }
     }
   },
@@ -51,10 +54,8 @@ export default {
         }
         if(pathname === '/coachDetail'){
           dispatch({type: 'init'});
-          if(query.coach){
-            dispatch({type: 'setCoach',payload:{coach: JSON.parse(query.coach)}})
-            dispatch({type: 'getCourseByTeacherId'})
-          }
+          console.log(query.id)
+          dispatch({type: 'getCoachById',payload:{id:query.id}})
         }
       });
     }

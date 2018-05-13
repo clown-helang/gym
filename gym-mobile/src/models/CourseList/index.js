@@ -1,9 +1,15 @@
-import { getCourses, getCoaches } from '../../services/gymServices'
+import { getCourses, getCourseById } from '../../services/gymServices'
 
 const init = {
   courses: [],
   coaches:[],
-  course:{}
+  course:{
+    classimg:[],
+    classmoney:'',
+    classname:'',
+    introduce:[],
+  },
+  classname:'',
 }
 
 export default {
@@ -22,15 +28,12 @@ export default {
       const { contents } = yield call(getCourses,{ payload:{ ..._payload } });
       yield put({type:'setCourseList', payload:{ courses:contents}});
     },
-    *getCoaches({ payload }, { put, call, select }) {
-      let _payload = {
-        techername:null,
-        pageNo:1,
-        pageSize:1000,
-      };
-      const { contents } = yield call(getCoaches,{ payload:{ ..._payload } });
-      yield put({type:'setCoachList',payload:{ coaches:contents }});
-    },
+    *getCourseById({ payload:{ id } }, { put, call, select }){
+      const course = yield call(getCourseById,{ payload:{ id } });
+      course.classimg = JSON.parse(course.classimg);
+      course.introduce = JSON.parse(course.introduce);
+      yield put({type:'setCourse', payload:{ course }});
+    }
   },
   reducers : {
     init(state){
@@ -54,8 +57,9 @@ export default {
           dispatch({type: 'getCourses'})
         }
         if(pathname === '/courseDetail'){
-          if(query.course){
-            dispatch({type: 'setCourse',payload:{course:JSON.parse(query.course)}})
+          dispatch({type: 'init'});
+          if(query.id){
+            dispatch({type: 'getCourseById',payload:{id:query.id}});
           }
         }
       });

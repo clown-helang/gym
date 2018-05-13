@@ -29,6 +29,7 @@ export default {
     },
     *deleteGroupClass({ payload:{Id} }, { put, call, select }){
       const token = yield select(state => state.home.token);
+      console.log(5555,Id)
       yield call(deleteGroupClass,{ payload:{ token, Id } });
       yield put({type:'getAllClassScheduleByTime'});
     },

@@ -15,6 +15,7 @@ export default {
         setSession('name',data.nickName)
         setSession('headimgurl',data.headimgurl)
         setSession('usertype',data.usertype)
+        setSession('realname',data.realname)
       }
     },
   },
@@ -23,7 +24,11 @@ export default {
     setup({dispatch, history}) {
       return history.listen(({pathname,query}) => {
         if(pathname === '/'){
-          dispatch({type:'getMembersById',payload:{id:'or9F0xJw5Xv_c8C6qcYEVjDSNDyg'}})
+          //dispatch({type:'getMembersById',payload:{id:'or9F0xJw5Xv_c8C6qcYEVjDSNDyg'}})
+          dispatch({type:'getMembersById',payload:{id:query.id}});
+          if(query.accesstoken){
+            setSession('token',query.accesstoken)
+          }
           dispatch(routerRedux.push('/indexPage'));
         }
       });

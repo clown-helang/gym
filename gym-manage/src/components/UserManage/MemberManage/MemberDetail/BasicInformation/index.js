@@ -16,14 +16,14 @@ function BasicInformation({ memberDetail, loading, intl: { formatMessage } }) {
     },
     {
       title: formatMessage(messages.coachName),
-      dataIndex: 'classtecher',
-      key: 'classtecher',
+      dataIndex: 'techername',
+      key: 'techername',
       width: '17%',
     },
     {
       title: formatMessage(messages.lengthOfTime),
-      dataIndex: 'classsize',
-      key: 'classsize',
+      dataIndex: 'allclasssize',
+      key: 'allclasssize',
       width: '17%',
     },
     {
@@ -37,17 +37,14 @@ function BasicInformation({ memberDetail, loading, intl: { formatMessage } }) {
     },
     {
       title: formatMessage(messages.payTime),
-      dataIndex: 'payTime',
-      key: 'payTime',
+      dataIndex: 'shoptime',
+      key: 'shoptime',
       width: '17%',
-      // render: (text, record) => {
-      //   return moment(record.payTime).format('YYYY-MM-DD HH:mm:ss');
-      // },
     },
     {
       title: formatMessage(messages.coursePrice),
-      dataIndex: 'classmoney',
-      key: 'classmoney',
+      dataIndex: 'money',
+      key: 'money',
     },
   ];
   const rowKey = record => record.id;

@@ -37,5 +37,14 @@ export default {
   buyClass: '/gym/BuyClass.do',
 
   getGroupClassSchedule: '/gym/getallclasstimetable.do',
+  appointGroupClass: '/gym/AppointtogetherClass.do',
+  cancelAppointGroupClass: '/gym/studentCanceltogetherClass.do',
+
+  addRestTime: '/gym/addresttime.do',
+  addAskForLeave: '/gym/addleavetime.do',
+
+  getTeacherDisableTime: '/gym/techerdisabletime.do',
+  teacherOverGroupClass: '/gym/techerOvertogetherClass.do',
+  groupClassTeacherComment: '/gym/classtimetabletechercomment.do',
 
 }

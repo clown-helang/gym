@@ -24,7 +24,6 @@ class CourseBooking extends Component {
     const { date, start_time, end_time, class_duration } = this.state;
     const { classshoplogid } = this.props.user;
     let flag = 'available';
-    //console.log(classshoplogid)
     if(this.checkTimeInvalid(start_time,end_time)){
       flag = this.checkTime(`${date} ${start_time}`,`${date} ${end_time}`)
     } else{
@@ -38,7 +37,7 @@ class CourseBooking extends Component {
   }
   checkTime = (start_time, end_time) =>{
     let flag = [];
-    this.props.user.classRecord.map(item=>{
+    this.props.user.disableTime.map(item=>{
       flag.push(moment(end_time).isBefore(moment(item.starttime).subtract(15,'m')) || moment(start_time).isAfter(moment(item.endtime).add(15,'m')))
     })
     return flag.filter(item => item === false).length===0?'available':'occupied';
@@ -66,7 +65,6 @@ class CourseBooking extends Component {
     this.setState(_state);
   }
   checkTimeInvalid = (start_time,end_time) => {
-    //console.log(start_time,end_time)
     return moment().isBefore(`${this.state.date} ${start_time}`)&&moment(`${this.state.date} 22:01`).isAfter(`${this.state.date} ${end_time}`)&&moment(`${this.state.date} 07:59`).isBefore(`${this.state.date} ${start_time}`)
   }
   handleDateChange = (e) =>{
@@ -75,20 +73,33 @@ class CourseBooking extends Component {
       starttime: e.target.value + ' 00:00:00',
       endtime:e.target.value + ' 23:59:59',
       classtecherid:this.props.user.course.classtecher.split(':')[0],
-      classdefineid:this.props.user.course.id
+      classdefineid:this.props.user.course.id,
+      pageSize:1000
     }
     this.setState({
       date: e.target.value,
       flag: moment().isBefore(moment(e.target.value).add(1,'d'))?'available':'invalid'
     });
     this.props.dispatch({type:'user/getClassRecord',payload:{..._payload}})
+    this.props.dispatch({type:'user/getTeacherDisableTime',payload:{
+      todaystart: moment(e.target.value).format('YYYY-MM-DD')+" 00:00:00",
+      techerid: this.props.user.course.classtecher.split(':')[0],
+    }})
+  }
+  appointGroupClass = (course) => {
+    let _payload = {
+      classtimetableid: course.id,
+      classtime:parseInt((moment(course.endtime).unix() - moment(course.starttime).unix())/3600),
+      starttime:course.starttime,
+      endtime:course.endtime
+    }
+    this.props.dispatch({type:'user/appointGroupClass',payload:{..._payload}})
   }
   render(){
     const { user:{course, classRecord, groupClassSchedule},loading } = this.props;
     const { date, start_time, end_time, class_duration, flag } = this.state;
     const submitLoading = loading.effects['user/appointClass']||false;
     let errorMessage = null,available_flag = !(flag === 'available');
-    console.log(groupClassSchedule)
     switch (flag){
       case "occupied":
         errorMessage = "当前选择时间段已被占用";break
@@ -99,9 +110,6 @@ class CourseBooking extends Component {
       icon:'courseBooking',
       title:`课程预约 -- ${course.classname}`
     };
-    const appointClass = (id) => {
-      console.log(id)
-    }
     return (
       <div>
         <Spin spinning={submitLoading}>
@@ -123,15 +131,19 @@ class CourseBooking extends Component {
                     <PreviewItem label="开始时间" value={item.starttime}/>
                     <PreviewItem label="结束时间" value={item.endtime}/>
                     <PreviewItem label="预约人数" value={item.takepeopelsize+"/"+item.mixpeopelsize}/>
-                    {/*{*/}
-                      {/*item.isover === '1'*/}
-                      {/*? <PreviewItem label="状态" value="已预约"/>*/}
-                      {/*: ''*/}
-                    {/*}*/}
+                    {
+                      item.canappoint === 'false'
+                      ? <PreviewItem label="状态" value="已预约"/>
+                      : ''
+                    }
                   </PreviewBody>
-                  <PreviewFooter>
-                    <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>appointClass(item.id)}><Icon type='check-circle-o'/> 预约</PreviewButton>
-                  </PreviewFooter>
+                  {
+                    item.canappoint === 'true'
+                    ? <PreviewFooter>
+                        <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>this.appointGroupClass(item)}><Icon type='check-circle-o'/> 预约</PreviewButton>
+                      </PreviewFooter>
+                    : ''
+                  }
                 </Preview>
               )
             })
@@ -195,12 +207,12 @@ class CourseBooking extends Component {
               }
               <div style={{marginBottom:50}}>
                 {
-                  classRecord.map(item=>{
+                  classRecord.map((item,index)=>{
                     return (
-                      <Cells>
+                      <Cells key={index}>
                         <Cell>
                           <CellBody>
-                            {item.starttime+' ~ '+item.endtime}
+                            {item.starttime.split(" ")[1]+' ~ '+item.endtime.split(" ")[1]}
                           </CellBody>
                           <CellFooter>
                             {item.classstudent}

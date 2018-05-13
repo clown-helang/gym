@@ -12,14 +12,14 @@ function CourseDetail({dispatch,courseList}) {
     title:`课程详情 —— ${course.classname}`
   };
   const redirect = (path) => {
-    dispatch(routerRedux.push({ pathname: path ,query:{course:JSON.stringify(course)}}));
+    dispatch(routerRedux.push({ pathname: path ,query:{id:course.id}}));
   }
   return (
     <div>
       <Header dispatch={dispatch} />
       <MenuBar menu={menu}/>
       <div className={styles.courseLogo}>
-        <img src={course.classimg?course.classimg[0].resource_url:null}/>
+        <img src={course.classimg&&course.classimg.length>0?course.classimg[0].resource_url:null}/>
       </div>
       <div className={styles.coursePrice}>
         <span>VIP价：{course.classmoney} 元</span>

@@ -19,8 +19,8 @@ function CoachDetail({dispatch,coachList}) {
     icon: 'coachDetail',
     title:`教练详情`
   };
-  const redirect = (path,course) => {
-    dispatch(routerRedux.push({ pathname: path ,query:{course:JSON.stringify(course)}}));
+  const redirect = (path,id) => {
+    dispatch(routerRedux.push({ pathname: path ,query:{ id }}));
   }
   return (
     <div>
@@ -28,7 +28,7 @@ function CoachDetail({dispatch,coachList}) {
       <MenuBar menu={menu}/>
       <div className={styles.coach}>
         <div className={styles.avatar}>
-          <img src={coach.url}/>
+          <img src={coach.topimg&&coach.topimg.length>0?coach.topimg[0].resource_url:null}/>
         </div>
         <div className={styles.coachBasicInfor}>
           <p>{coach.realname}</p>
@@ -38,11 +38,14 @@ function CoachDetail({dispatch,coachList}) {
       <div className={styles.professorCourse}>
         <p>教授课程</p>
         {
+          console.log('courseList---',courseList)
+        }
+        {
           courseList.map((item,index)=>{
             return (
               <div className={styles.course} key={index}>
                 <div className={styles.courseName}>{item.classname}</div>
-                <div className={styles.button} onClick={()=>redirect('/buyCourse',item)}>购买</div>
+                <div className={styles.button} onClick={()=>redirect('/buyCourse',item.id)}>购买</div>
               </div>
             )
           })

@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch';
-
+import { getSession } from './index.js'
 function checkStatus(response) {
   if (response.status == 200) {
     return response.json();
@@ -31,15 +31,17 @@ export default function request(arr) {
   let options = {
     method: arr.method,
     mode: 'cors',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Accept": "application/json;charset=utf-8",
+      "Authorization": getSession('token')
     }
   };
-  if(arr.params.token){
-    options.headers.Authorization = 'Bearer '+arr.params.token;
-    delete arr.params.token;
-  }
+  // if(arr.params.token){
+  //   options.headers.Authorization = 'Bearer '+arr.params.token;
+  //   delete arr.params.token;
+  // }
   let real_url = arr.url;
   if(arr.method=='POST'||arr.method=='PUT'){
       if(arr.body!=undefined&&arr.body){

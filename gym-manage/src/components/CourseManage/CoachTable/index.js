@@ -37,12 +37,13 @@ function CoachTable({ dispatch, addCourseManage, loading, intl: { formatMessage 
     if(addCourseManage.data.contents){
       addCourseManage.selectedRows.map(item=>{
         addCourseManage.data.contents.map(i=>{
-          if(parseInt(item) === parseInt(i.id)){
+          if(item.toString() === i.id.toString()){
             _coachList.push(i)
           }
         })
       })
     }
+    console.log('_coachList',_coachList)
     dispatch({type:"addCourseManage/setCoachList", payload:{ coachList: {total:_coachList.length,contents:_coachList} }})
     dispatch({type:"addCourseManage/setVisible", payload:{ visible: false }})
   };

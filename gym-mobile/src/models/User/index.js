@@ -1,4 +1,5 @@
-import { getConsumeRecord, getMembersById, getClassRecord, getCourseById,appointClass, getGroupClassSchedule } from '../../services/gymServices'
+import { getConsumeRecord, getMembersById, getClassRecord, getCourseById,appointClass,
+  getGroupClassSchedule, appointGroupClass, getTeacherDisableTime } from '../../services/gymServices'
 import { getSession } from '../../utils';
 import { routerRedux } from 'dva/router';
 import moment from 'moment-timezone';
@@ -26,6 +27,7 @@ const init = {
   course:{},
   classshoplogid:null,
   groupClassSchedule:[],
+  disableTime:[],
 }
 
 export default {
@@ -68,12 +70,12 @@ export default {
         classdefineid: payload&&payload.classdefineid ? payload.classdefineid : -1,
         shoplogid:-1,
         pageNo: 1,
-        pageSize: 2*page_number,
+        pageSize: payload&&payload.pageSize ? payload.pageSize :10*page_number,
       };
-
       const { contents } = yield call(getClassRecord,{ payload:{ ..._payload } });
       yield put({type:'setClassRecord',payload:{ classRecord: contents }});
     },
+
     *getCourseById({ payload:{id,techerid} }, { put, call, select }){
       const course = yield call(getCourseById,{ payload:{ id } });
       course.classimg = JSON.parse(course.classimg)
@@ -84,9 +86,10 @@ export default {
           classname: course.classname,
           classdefineid: course.id,
           techerid,
+          studentid:getSession('id'),
           techername: null,
           starttime: moment().format('YYYY-MM-DD HH:mm:ss').toString(),
-          endtime: moment().add(3,'d').format('YYYY-MM-DD').toString()+' 23:00:00',
+          endtime: moment().add(6,'d').format('YYYY-MM-DD').toString()+' 23:59:59',
           classtime: -1,
           isover: null,
           pageNo: 1,
@@ -99,6 +102,15 @@ export default {
     *appointClass({ payload:{classshoplogid, classtime, starttime, endtime}}, { put, call, select }){
       yield call(appointClass,{ payload:{ classshoplogid, classtime, starttime, endtime } });
       yield put(routerRedux.push({pathname:'/classRecord'}));
+    },
+    *appointGroupClass({ payload:{ classtimetableid, classtime,starttime,endtime } }, { put, call, select }){
+      let { classshoplogid } = yield select(state => state.user);
+      yield call(appointGroupClass,{ payload:{ classtimetableid, classtime, starttime,endtime, classshoplogid } });
+      yield put(routerRedux.push({pathname:'/classRecord'}));
+    },
+    *getTeacherDisableTime({ payload:{todaystart, techerid} }, { put, call, select }){
+      const disableTime = yield call(getTeacherDisableTime,{ payload:{ todaystart, techerid } });
+      yield put({type:'setDisableTime',payload:{ disableTime }});
     }
   },
   reducers : {
@@ -129,6 +141,9 @@ export default {
     setGroupClassSchedule(state, { payload:{ groupClassSchedule } }){
       return {...state, groupClassSchedule }
     },
+    setDisableTime(state, { payload:{ disableTime } }){
+      return {...state, disableTime }
+    },
   },
   subscriptions : {
     setup({dispatch, history}) {
@@ -137,18 +152,21 @@ export default {
           dispatch({type:'init'})
           dispatch({type:'getConsumeRecord'})
         }
-        if(pathname === '/personalCenter' ){
-          dispatch({type:'init'})
-          dispatch({type:'getMembersById'})
-        }
-        if(pathname === '/classRecord'){
-          dispatch({type:'init'})
-          dispatch({type:'getClassRecord'})
-        }
         if(pathname === '/courseBooking'){
           dispatch({type:'init'})
+          dispatch({type:'getTeacherDisableTime',payload:{
+            todaystart: moment().format('YYYY-MM-DD')+" 00:00:00",
+            techerid: query.techerid,
+          }})
           if(query.classid){
             dispatch({type:'getCourseById',payload:{ id:query.classid,techerid:query.techerid }})
+            dispatch({type:'getClassRecord',payload:{
+              starttime: moment().format('YYYY-MM-DD')+" 00:00:00",
+              endtime: moment().format('YYYY-MM-DD')+" 23:59:59",
+              classtecherid:query.techerid,
+              classdefineid:query.classid,
+              pageSize:1000
+            }})
           }
           if(query.id){
             dispatch({type:'setClassShopLogId',payload:{ classshoplogid:query.id }})

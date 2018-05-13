@@ -102,19 +102,10 @@ function RouterConfig({ history, app }) {
           },
         },
         {
-          path: '/consumeRecord',
-          getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-              registerModel(app, require('../models/User'));
-              cb(null, require('../routes/ConsumeRecord'));
-            }, 'ConsumeRecord');
-          },
-        },
-        {
           path: '/reservationRecord',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('../models/User'));
+              registerModel(app, require('../models/PersonalCenter'));
               cb(null, require('../routes/ReservationRecord'));
             }, 'ReservationRecord');
           },
@@ -123,7 +114,7 @@ function RouterConfig({ history, app }) {
           path: '/setBreaks',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {
-              registerModel(app, require('../models/User'));
+              registerModel(app, require('../models/PersonalCenter'));
               cb(null, require('../routes/SetBreaks'));
             }, 'SetBreaks');
           },

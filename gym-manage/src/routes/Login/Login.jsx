@@ -55,7 +55,7 @@ class Login extends React.Component{
               <div className={styles.login_form}>
                 <Form layout='horizontal'>
                   <FormItem>
-                    {getFieldDecorator('account', {
+                    {getFieldDecorator('loginname', {
                       rules: [
                         {
                           required: true,
