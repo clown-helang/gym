@@ -208,3 +208,20 @@ export async function getGroupClassById ({ payload }) {
     params: payload,
   })
 }
+
+export async function addAdministrator ({ payload }) {
+  return request({
+    url: baseURL + api.addAdministrator,
+    method: 'POST',
+    params: payload,
+  })
+}
+
+export async function changePasswd ({ payload }) {
+  return request({
+    url: baseURL + api.changePassword,
+    method: 'POST',
+    params: payload,
+  })
+}
+

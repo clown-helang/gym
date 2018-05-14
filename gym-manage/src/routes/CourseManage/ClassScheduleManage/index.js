@@ -31,17 +31,15 @@ function ClassScheduleManage({ dispatch, classSchedule, loading, intl: { formatM
   const tableProps = { dispatch, classSchedule, loading:loading.models.classSchedule };
   return (
     <div className={styles.content}>
-      <Button type="primary" onClick={add} style={{marginTop:10}}>
-        {formatMessage(messages.add)}
+      {/*<Button type="primary" onClick={add} style={{marginTop:10}}>*/}
+        {/*{formatMessage(messages.add)}*/}
+      {/*</Button>*/}
+      <Button type="primary" onClick={()=>search('lastWeek')} style={{marginTop:15,marginRight:20,marginBottom:20}}>
+        {formatMessage(messages.lastWeek)}
       </Button>
-      <div className="search-bar">
-        <Button type="primary" onClick={()=>search('lastWeek')} style={{marginRight:20}}>
-          {formatMessage(messages.lastWeek)}
-        </Button>
-        <Button type="primary" onClick={()=>search('nextweek')}>
-          {formatMessage(messages.nextweek)}
-        </Button>
-      </div>
+      <Button type="primary" onClick={()=>search('nextweek')}>
+        {formatMessage(messages.nextweek)}
+      </Button>
       <ClassScheduleTable {...tableProps}/>
     </div>
   );

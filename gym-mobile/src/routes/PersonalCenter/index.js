@@ -19,8 +19,8 @@ function PersonalCenter({dispatch,personalCenter}) {
         <div className={styles.center}>
           {
             parseInt(personalCenter.usertype) === 2
-            ? <p>{personalCenter.nickName} <span className={styles.coachTag}>教练</span></p>
-            : <p>{personalCenter.nickName}</p>
+            ? <p>{personalCenter.realname} <span className={styles.coachTag}>教练</span></p>
+            : <p>{personalCenter.realname}</p>
           }
           <p>电话：{personalCenter.phone}</p>
         </div>
@@ -44,16 +44,28 @@ function PersonalCenter({dispatch,personalCenter}) {
         : ''
       }
       {
+        parseInt(personalCenter.usertype) !== 2
+          ? <div className={styles.strip} onClick={()=>{redirect('/editPersonalInfor')}}>
+              <i className={`iconfont ${styles.icon}`}>&#xe608;</i>
+              <span>编辑个人信息</span>
+            </div>
+          : ''
+      }
+      {/*<div>*/}
+        {/*<div className={styles.strip} onClick={()=>{redirect('/reservationRecord')}}>*/}
+          {/*<i className={`iconfont ${styles.icon}`}>&#xe656;</i>*/}
+          {/*<span>预约记录</span>*/}
+        {/*</div>*/}
+        {/*<div className={styles.strip} style={{marginTop:20}} onClick={()=>{redirect('/setBreaks')}}>*/}
+          {/*<i className={`iconfont ${styles.icon}`}>&#xe693;</i>*/}
+          {/*<span>设置休息时间</span>*/}
+        {/*</div>*/}
+      {/*</div>*/}
+      {
         parseInt(personalCenter.usertype)  === 2
-        ? <div>
-            <div className={styles.strip} onClick={()=>{redirect('/reservationRecord')}}>
-              <i className={`iconfont ${styles.icon}`}>&#xe656;</i>
-              <span>预约记录</span>
-            </div>
-            <div className={styles.strip} style={{marginTop:20}} onClick={()=>{redirect('/setBreaks')}}>
-              <i className={`iconfont ${styles.icon}`}>&#xe693;</i>
-              <span>设置休息时间</span>
-            </div>
+        ? <div style={{textAlign:'center',marginTop:'40%',color:'#aaa'}}>
+            <p>广阔天地大有作为</p>
+            <p>敬请期待更多内容</p>
           </div>
         : <div>
             <div className={styles.strip} onClick={()=>{redirect('/classRecord')}}>
@@ -62,6 +74,7 @@ function PersonalCenter({dispatch,personalCenter}) {
             </div>
           </div>
       }
+
     </div>
   )
 }

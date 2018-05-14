@@ -31,7 +31,11 @@ function Course({dispatch, course, type}) {
                 <a className={styles.operation} onClick={()=>redirect('/courseBooking')}>再次购买</a>
               </p>
           : <p>
-              <span className={styles.truePrice}>VIP价：{course.classmoney} 元</span>
+              <span className={styles.truePrice}>
+                <span style={{width:45,display:'inline-block'}}>价格：</span>
+                <span style={{width:50,display:'inline-block'}}>{course.classmoney}</span>
+                <span style={{width:30,display:'inline-block'}}>元</span>
+              </span>
             </p>
         }
       </div>

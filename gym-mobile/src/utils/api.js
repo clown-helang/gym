@@ -46,5 +46,6 @@ export default {
   getTeacherDisableTime: '/gym/techerdisabletime.do',
   teacherOverGroupClass: '/gym/techerOvertogetherClass.do',
   groupClassTeacherComment: '/gym/classtimetabletechercomment.do',
+  changeUserInfor: '/gym/changeuserinfo.do',
 
 }

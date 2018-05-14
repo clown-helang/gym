@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { getSession, setSession } from '../../utils';
 import { getMembersById } from '../../services/gymServices'
-
+import { Modal } from 'antd'
 const appLocale = window.appLocale;
 
 export default {
@@ -17,6 +17,11 @@ export default {
         setSession('usertype',data.usertype)
         setSession('realname',data.realname)
       }
+      if(!data.realname){
+        yield put(routerRedux.push({pathname:'/editPersonalInfor'}));
+      } else{
+        yield put(routerRedux.push('/indexPage'));
+      }
     },
   },
   reducers : {},
@@ -29,7 +34,6 @@ export default {
           if(query.accesstoken){
             setSession('token',query.accesstoken)
           }
-          dispatch(routerRedux.push('/indexPage'));
         }
       });
     }

@@ -107,7 +107,7 @@ class IndexHeader extends Component{
     const dropdownMenu = (
       <Menu className={styles.dropMenu} onClick={this.dropDownClick}>
         <Menu.Item key="change_passwd">{formatMessage(messages['change_passwd'])}</Menu.Item>
-        <Menu.Item key="editUser">{formatMessage(messages['editUser'])}</Menu.Item>
+        {/*<Menu.Item key="editUser">{formatMessage(messages['editUser'])}</Menu.Item>*/}
         <Menu.Item key="logout">{formatMessage(messages['logout'])}</Menu.Item>
       </Menu>
     );

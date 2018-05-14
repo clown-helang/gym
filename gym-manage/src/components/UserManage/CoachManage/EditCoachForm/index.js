@@ -57,7 +57,7 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
           topimg:[],
           introduce:[]
         }
-        if(values.topimg.length>0){
+        if(values.topimg&&values.topimg.length>0){
           if(values.topimg[0].response){
             postData.topimg = JSON.stringify([{
               resource_url: values.topimg[0].response.successful_files[0].resource_url,
@@ -197,11 +197,17 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
           })(<Select style={{ width: '100%' }}>
             <Option value="3">{formatMessage(messages.member)}</Option>
             <Option value="2">{formatMessage(messages.coach)}</Option>
-            <Option value="1">{formatMessage(messages.admin)}</Option>
+            {/*<Option value="1">{formatMessage(messages.admin)}</Option>*/}
           </Select>)}
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.uploadPhoto)}>
           {getFieldDecorator('topimg', {
+            rules: [
+              {
+                required: true,
+                message: formatMessage(messages.notNull).replace('***',formatMessage(messages.uploadPhoto))
+              }
+            ],
             initialValue: editCoach.topimg,
           })(<UploadFile target='TeacherPhoto'/>)}
         </FormItem>

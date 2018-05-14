@@ -1,7 +1,7 @@
 import React from 'react';
 import { routerRedux } from 'dva/router'
 import { injectIntl } from 'react-intl';
-import { Form, Button, Select, DatePicker, InputNumber } from 'antd';
+import { Form, Button, Select, TimePicker , InputNumber } from 'antd';
 import { get_length, cut_str, trim, isTrue} from '../../../utils/index';
 import moment from 'moment-timezone'
 import messages from './messages';
@@ -38,7 +38,7 @@ const LayoutWithOutLabel = {
 
 function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { formatMessage },form:{ getFieldDecorator, setFieldsValue, getFieldValue, validateFields }  }) {
   // const loadingState = loading.effects['reviewForm/editUsersRoles']||loading.effects['reviewForm/queryRoles']||loading.effects['reviewForm/queryUsersRoles']||false;
-  const { courseList, coachList, model } = addClassSchedule;
+  const { courseList, coachList, model, date } = addClassSchedule;
   const handleSubmit = (e) => {
     e.preventDefault();
     validateFields((err, values) => {
@@ -50,8 +50,8 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
           techerid: values.techername.split(":")[0],
           techername: values.techername.split(":")[1],
           mixpeopelsize:values.mixpeopelsize,
-          starttime:moment(values.starttime).format("YYYY-MM-DD HH:mm:ss").toString(),
-          endtime:moment(values.endtime).format("YYYY-MM-DD HH:mm:ss").toString(),
+          starttime:date+' '+moment(values.starttime).format("HH:mm").toString()+":00",
+          endtime:date+' '+moment(values.endtime).format("HH:mm").toString()+":00",
           classtime: parseInt((moment(values.endtime).unix() - moment(values.starttime).unix())/3600),
           isover:0
         }
@@ -96,21 +96,6 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
             }
           </Select>)}
         </FormItem>
-        <FormItem {...formItemLayout} label={formatMessage(messages.selectCoach)}>
-          {getFieldDecorator('techername', {
-            initialValue: addClassSchedule.selectTeacher||null,
-            rules: [
-              {
-                required: true,
-                message: formatMessage(messages.notNull).replace('***','教练')
-              }
-            ],
-          })(<Select>
-              {
-                coachList.map((item,index)=><Option key={index} value={item}>{item.split(":")[1]}</Option>)
-              }
-          </Select>)}
-        </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.totalNumber)}>
           {getFieldDecorator('mixpeopelsize', {
             initialValue: addClassSchedule.mixpeopelsize||null,
@@ -123,10 +108,6 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
           })(<InputNumber style={{width:'50%'}}/>)}
           <span className="ant-form-text">人</span>
         </FormItem>
-        {
-          console.log(addClassSchedule)
-        }
-
         <FormItem {...formItemLayout} label={formatMessage(messages.startTime)}>
           {getFieldDecorator('starttime', {
             initialValue: addClassSchedule.starttime?moment(addClassSchedule.starttime):null,
@@ -136,7 +117,7 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
                 message: formatMessage(messages.notNull).replace('***',formatMessage(messages.totalNumber))
               }
             ],
-          })(<DatePicker style={{width:'100%'}} showTime format="YYYY-MM-DD HH:mm:ss" placeholder="选择时间"/>)}
+          })(<TimePicker style={{width:'100%'}} format="HH:mm" placeholder="选择时间"/>)}
         </FormItem>
 
         <FormItem {...formItemLayout} label={formatMessage(messages.endTime)}>
@@ -148,7 +129,23 @@ function AddClassScheduleForm({ dispatch, addClassSchedule, loading, intl: { for
                 message: formatMessage(messages.notNull).replace('***',formatMessage(messages.totalNumber))
               }
             ],
-          })(<DatePicker style={{width:'100%'}}  showTime format="YYYY-MM-DD HH:mm:ss" placeholder="选择时间"/>)}
+          })(<TimePicker  style={{width:'100%'}} format="HH:mm" placeholder="选择时间"/>)}
+        </FormItem>
+
+        <FormItem {...formItemLayout} label={formatMessage(messages.selectCoach)}>
+          {getFieldDecorator('techername', {
+            initialValue: addClassSchedule.selectTeacher||null,
+            rules: [
+              {
+                required: true,
+                message: formatMessage(messages.notNull).replace('***','教练')
+              }
+            ],
+          })(<Select>
+            {
+              coachList.map((item,index)=><Option key={index} value={item}>{item.split(":")[1]}</Option>)
+            }
+          </Select>)}
         </FormItem>
 
         <FormItem style={{marginTop:20}} wrapperCol={{ xs: { span: 24, offset: 0 }, sm: { span: 20, offset: 3 }, }}>

@@ -9,6 +9,10 @@ const messages = defineMessages({
     id: 'common.inputTip',
     defaultMessage: '请输入'
   },
+  add:{
+    id: 'common.add',
+    defaultMessage: '添加'
+  },
 });
 
 export default messages;

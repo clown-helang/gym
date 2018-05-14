@@ -9,6 +9,7 @@ import moment from 'moment-timezone';
 const confirm = Modal.confirm;
 
 function ClassScheduleTable({ dispatch, classSchedule, loading, intl: { formatMessage } }) {
+  const { starttime,endtime } = classSchedule;
   const columns = [
     {
       title: formatMessage(messages.date),
@@ -23,11 +24,9 @@ function ClassScheduleTable({ dispatch, classSchedule, loading, intl: { formatMe
       title: formatMessage(messages.curriculum),
       dataIndex: 'curriculum',
       key: 'curriculum',
-      width: '85%',
+      width: '70%',
       render: (text, record) => {
         return record.schedule.map((item,index)=>{
-          console.log(item)
-
           return (
             <Card
               key={index}
@@ -58,14 +57,26 @@ function ClassScheduleTable({ dispatch, classSchedule, loading, intl: { formatMe
         })
       },
     },
+    {
+      title: formatMessage(messages.operation),
+      dataIndex: 'operation',
+      key: 'operation',
+      render: (text, record) => {
+        return (
+          <a className="table-btns" onClick={() => add(moment(record.data).format("YYYY-MM-DD"))}>{formatMessage(messages.add)}</a>
+        );
+      },
+    },
   ];
 
   const rowKey = record => record.id;
+  const add = (date) => {
+    dispatch(routerRedux.push({ pathname: '/classSchedule/add',query:{date, starttime, endtime}}))
+  };
   const edit = (id) => {
-    dispatch(routerRedux.push({ pathname: '/classSchedule/edit',query:{id}}))
+    dispatch(routerRedux.push({ pathname: '/classSchedule/edit',query:{id, starttime, endtime}}))
   };
   const del = (Id) => {
-    console.log(Id)
     confirm({
       title: '确认要删除选中的课程安排吗?',
       onOk() {

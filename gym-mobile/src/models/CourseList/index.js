@@ -1,4 +1,5 @@
 import { getCourses, getCourseById } from '../../services/gymServices'
+import { getSession } from '../../utils'
 
 const init = {
   courses: [],
@@ -23,8 +24,14 @@ export default {
         classname: null,
         pageNo:1,
         pageSize:1000,
-        isshop: '1'
+        isshop: '1',
+        techerid:null,
+        techername:null
       };
+      if(getSession('usertype').toString()==="2"){
+        _payload.techerid = getSession('id');
+        _payload.techername = getSession('realname');
+      }
       const { contents } = yield call(getCourses,{ payload:{ ..._payload } });
       yield put({type:'setCourseList', payload:{ courses:contents}});
     },

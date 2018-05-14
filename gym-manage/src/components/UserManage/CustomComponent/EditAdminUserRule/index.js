@@ -17,7 +17,7 @@ const formHttpItemLayout = {
   },
 };
 
-function EditUserRule({ realname, phone, usertype, visible, loading, submitEdit, cancelEdit, form, intl: { formatMessage } }) {
+function EditAdminUserRule({ realname, phone, usertype, visible, loading, submitEdit, cancelEdit, form, intl: { formatMessage } }) {
   const { validateFields, getFieldDecorator } = form;
 
   const handleSubmit = (e) => {
@@ -57,7 +57,7 @@ function EditUserRule({ realname, phone, usertype, visible, loading, submitEdit,
                 })( <Select style={{ width: '100%' }}>
                   <Option value="3">{formatMessage(messages.member)}</Option>
                   <Option value="2">{formatMessage(messages.coach)}</Option>
-                  {/*<Option value="1">{formatMessage(messages.admin)}</Option>*/}
+                  <Option value="1">{formatMessage(messages.admin)}</Option>
                 </Select>)}
               </FormItem>
             </Form>
@@ -68,4 +68,4 @@ function EditUserRule({ realname, phone, usertype, visible, loading, submitEdit,
   );
 }
 
-export default Form.create()(injectIntl(EditUserRule));
+export default Form.create()(injectIntl(EditAdminUserRule));

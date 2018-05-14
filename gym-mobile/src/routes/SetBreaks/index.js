@@ -183,7 +183,7 @@ class SetBreaks extends Component  {
                   <Cells key={index}>
                     <Cell>
                       <CellBody>
-                        已设置时间区间:
+                        时间:
                       </CellBody>
                       <CellFooter>
                         {item.starttime.split(' ')[1]+' ~ '+item.endtime.split(' ')[1]}

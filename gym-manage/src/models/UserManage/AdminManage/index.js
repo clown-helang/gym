@@ -1,4 +1,6 @@
-import { getAdmins, changeUserType, getMembersById } from '../../../services/gymServices';
+import { getAdmins, changeUserType, getMembersById, addAdministrator } from '../../../services/gymServices';
+import { getBytes } from '../../../utils';
+import md5 from 'md5';
 
 const init = {
   search_value: '',
@@ -9,6 +11,14 @@ const init = {
   data: {},
   visible: false,
   editData:{},
+
+  addAdminDTO:{
+    loginname:'',
+    realname:'',
+    phone:''
+  }, //添加管理员
+
+  addVisible:false
 };
 
 export default {
@@ -57,6 +67,12 @@ export default {
       yield call(changeUserType, { payload: { token, id, type } });
       yield put({type:'getAdmins'});
     },
+    *addAdministrator({ payload:{ postData } }, { put, call, select }){
+      const token = yield select(state => state.home.token);
+      yield call(addAdministrator, { payload: { token, ...postData, status:1,usertype:1,password:md5(getBytes('123456'))} });
+      yield put({type:'setAddVisible',payload:{ addVisible: false }});
+      yield put({type:'getAdmins'});
+    },
   },
   reducers : {
     init(state,{ payload }){
@@ -77,6 +93,15 @@ export default {
     setEditData(state,{ payload:{ editData }}){
       return {...state, editData};
     },
+    setAddAdminDTO(state,{ payload:{ editData }}){
+      return {...state, editData};
+    },
+    setAddVisible(state,{ payload:{addVisible} }){
+      return {...state, addVisible};
+    },
+    initAddData(state,{payload}){
+      return {...state, addAdminDTO:{loginname:'', realname:'', phone:''}};
+    }
   },
   subscriptions : {
     setup({dispatch, history}){

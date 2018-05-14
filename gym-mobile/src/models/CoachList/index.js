@@ -22,6 +22,9 @@ export default {
     },
     *getCoachById({ payload:{id} }, { put, call, select }){
       const coach = yield call(getCoachById,{ payload:{ id } });
+      if(typeof coach.topimg === 'string'){
+        coach.topimg = JSON.parse(coach.topimg)
+      }
       yield put({type:'setCoach', payload:{ coach}});
       yield put({type:'getCourseByTeacherId'});
     },

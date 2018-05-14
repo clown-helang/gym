@@ -1,7 +1,9 @@
 import React,{ Component } from 'react';
 import PropTypes from 'prop-types';
+import { getSession, isTrue } from '../../utils'
 import { connect } from 'dva';
 import Footer from '../../components/Home/Footer'
+import CoachFooter from '../../components/Home/CoachFooter'
 import styles from './index.less';
 import footerBg from '../../assets/footer.png';
 import 'react-weui/build/packages/react-weui.css';
@@ -22,7 +24,12 @@ class Home extends Component{
           {children||''}
         </div>
         <div className={styles.footer} style={{backgroundImage: `url(${footerBg})`}}>
-          <Footer dispatch={dispatch} />
+          {
+            isTrue(getSession('usertype'))&&getSession('usertype').toString() === '2'
+            ? <CoachFooter dispatch={dispatch} />
+            : <Footer dispatch={dispatch} />
+          }
+
         </div>
       </div>
     )

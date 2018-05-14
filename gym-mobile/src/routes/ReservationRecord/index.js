@@ -24,10 +24,6 @@ function ReservationRecord({dispatch,personalCenter}) {
     icon:'reservationRecord',
     title:'预约记录'
   };
-  const onChange = (value) =>{
-    console.log(value)
-
-  };
   const handleDateChange = (e) =>{
     dispatch({type:'personalCenter/setDate',payload:{date: e.target.value}})
     dispatch({type:'personalCenter/getTeacherClassRecord',payload:{
@@ -61,11 +57,11 @@ function ReservationRecord({dispatch,personalCenter}) {
   }
   const classOver = (course) => {
     let flag = moment(course.endtime).isBefore(moment());
-    console.log(flag)
+    console.log(flag,course,course.classtimetableid)
     if(!flag){
       warning()
     } else {
-      dispatch({type:'personalCenter/teacherOverGroupClass',payload:{classtimetableid:course.classtimetableid}})
+      dispatch({type:'personalCenter/teacherOverGroupClass',payload:{classtimetableid:course.id}})
     }
   }
   return (

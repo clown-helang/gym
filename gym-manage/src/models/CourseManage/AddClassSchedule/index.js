@@ -7,7 +7,9 @@ const init = {
   coachList:[],
   selectTeacher: '',
   visible:false,
+  date:null,
   model:'add',
+  scheduleDate:{},
 };
 
 export default {
@@ -21,14 +23,15 @@ export default {
     },
     *addGroupClass({payload:{postData}}, { put, call, select }){
       const token = yield select(state => state.home.token);
+      const { scheduleDate } = yield select(state => state.addClassSchedule);
       yield call(addGroupClass,{ payload:{ token,...postData } });
-      yield put(routerRedux.push({pathname:'/classSchedule'}));
+      yield put(routerRedux.push({pathname:'/classSchedule',query:{...scheduleDate}}));
     },
     *editGroupClass({payload:{postData}}, { put, call, select }){
       const token = yield select(state => state.home.token);
-      const { id } = yield select(state => state.addClassSchedule);
+      const { id,scheduleDate } = yield select(state => state.addClassSchedule);
       yield call(editGroupClass,{ payload:{ token,id,...postData } });
-      yield put(routerRedux.push({pathname:'/classSchedule'}));
+      yield put(routerRedux.push({pathname:'/classSchedule',query:{...scheduleDate}}));
     },
     *getGroupClassById({payload:{id}}, { put, call, select }){
       const token = yield select(state => state.home.token);
@@ -36,7 +39,9 @@ export default {
       const { classtecher } = yield call(getCourseById,{ payload:{ token, id:editData.classdefineid } });
       editData.coachList = classtecher.split(',');
       editData.selectTeacher = editData.techerid+':'+editData.techername
+      console.log(editData.starttime.split(' ')[0])
       yield put({type:'setEditData',payload:{ editData }});
+      yield put({type:'setDate',payload:{ date:editData.starttime.split(' ')[0] }});
     }
   },
   reducers : {
@@ -54,21 +59,28 @@ export default {
     },
     setModel(state,{ payload:{ model } }){
       return {...state, model};
-    }
+    },
+    setDate(state,{ payload:{ date } }){
+      return {...state, date};
+    },
+    setScheduleDate(state,{ payload:{ scheduleDate } }){
+      return {...state, scheduleDate};
+    },
   },
   subscriptions : {
     setup({dispatch, history}){
       return history.listen(({pathname,query}) => {
         if (pathname === '/classSchedule/add') {
           dispatch({type:'init'});
+          dispatch({type:'setDate',payload:{ date:query.date }});
+          dispatch({type:'setScheduleDate',payload:{ scheduleDate:{starttime:query.starttime,endtime:query.endtime} }});
           dispatch({type:'gitAllGroupClass'});
         } else if(pathname === '/classSchedule/edit') {
           dispatch({type:'init'});
           dispatch({type:'setModel',payload:{model:'edit'}});
+          dispatch({type:'setScheduleDate',payload:{ scheduleDate:{starttime:query.starttime,endtime:query.endtime} }});
           dispatch({type:'gitAllGroupClass'});
-          if(query.id){
-            dispatch({type:'getGroupClassById',payload:{id: query.id}});
-          }
+          dispatch({type:'getGroupClassById',payload:{id: query.id}});
         }
       });
     }

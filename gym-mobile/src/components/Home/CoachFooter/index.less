@@ -1,0 +1,59 @@
+.footer{
+  .icon{
+    font-size: 26px;
+    color: white;
+    line-height: 50px;
+    position: absolute;
+    &:nth-child(1){
+      left: 6%;
+    }
+    &:nth-child(2){
+      left: 23%;
+      font-size: 30px;
+    }
+    &:nth-child(3){
+      right: 23%;
+      font-size: 28px;
+    }
+    &:nth-child(4){
+      right: 6%;
+    }
+  }
+  text-align: center;
+  .home{
+    display: inline-block;
+    border-radius: 60px;
+    height: 60px;
+    width: 60px;
+    img{
+      padding: 0;
+      margin: 0;
+      width: 65px;
+      height: 65px;
+      position: relative;
+      left: -4px;
+      top:-13px;
+    }
+  }
+  @media screen and (max-width: 370px) {
+    .icon {
+      font-size: 22px;
+      line-height: 45px;
+      &:nth-child(2){
+        font-size: 24px;
+      }
+      &:nth-child(3){
+        font-size: 24px;
+      }
+    }
+    .home{
+      img{
+        width: 55px;
+        height: 55px;
+        top:-10px;
+        left: 1px;
+      }
+    }
+  }
+}
+

@@ -3,6 +3,7 @@ export default [
     name: '用户管理',
     code: 'userManage',
     icon: 'team',
+    owner: 'ORDINARY',
     child: [
       {
       name: '会员管理',
@@ -25,6 +26,7 @@ export default [
     name: '课程管理',
     code: 'courseManage',
     icon:'profile',
+    owner: 'ORDINARY',
     child: [
       {
         name: '课程管理',
@@ -42,6 +44,7 @@ export default [
     name: '统计管理',
     code: 'statisticalManage',
     icon:'line-chart',
+    owner: 'SUPER',
     child: [
       {
         name: '充值记录查询',

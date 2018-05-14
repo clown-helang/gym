@@ -12,9 +12,6 @@ import MenuBar from '../../components/MenuBar'
 import { routerRedux } from 'dva/router'
 function CoachDetail({dispatch,coachList}) {
   const { coach,courseList } = coachList;
-
-  console.log('222',coach)
-  console.log('333',courseList)
   const menu = {
     icon: 'coachDetail',
     title:`教练详情`
@@ -28,7 +25,10 @@ function CoachDetail({dispatch,coachList}) {
       <MenuBar menu={menu}/>
       <div className={styles.coach}>
         <div className={styles.avatar}>
-          <img src={coach.topimg&&coach.topimg.length>0?coach.topimg[0].resource_url:null}/>
+          {
+            console.log('coach.topimg---',coach.topimg)
+          }
+          <img src={coach.topimg&&coach.topimg.length>0? coach.topimg[0].resource_url: null}/>
         </div>
         <div className={styles.coachBasicInfor}>
           <p>{coach.realname}</p>
@@ -37,9 +37,6 @@ function CoachDetail({dispatch,coachList}) {
       </div>
       <div className={styles.professorCourse}>
         <p>教授课程</p>
-        {
-          console.log('courseList---',courseList)
-        }
         {
           courseList.map((item,index)=>{
             return (

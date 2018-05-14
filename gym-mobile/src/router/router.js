@@ -30,6 +30,15 @@ function RouterConfig({ history, app }) {
           },
         },
         {
+          path: '/editPersonalInfor',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/EditPersonalInfor'));
+              cb(null, require('../routes/EditPersonalInfor'));
+            }, 'EditPersonalInfor');
+          },
+        },
+        {
           path: '/courseList',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {

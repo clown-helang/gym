@@ -5,7 +5,7 @@ import barBg from '../../assets/barBg.png'
 import { getSession, setSession } from '../../utils';
 
 function Header({ type }) {
-  const name = getSession('name')
+  const name = getSession('realname')
   const headImgUrl = getSession('headimgurl')
   return (
     <div>

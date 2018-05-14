@@ -33,7 +33,9 @@ export default {
         classname:null,
         pageNo:page_number,
         pageSize:page_size,
-        isshop: null
+        isshop: null,
+        techerid:null,
+        techername:null
       };
       if (!(!search_value)) {
         if (search_value.indexOf('%') > -1 || search_value.indexOf('#') > -1) {

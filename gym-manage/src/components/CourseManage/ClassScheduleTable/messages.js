@@ -30,6 +30,10 @@ const messages = defineMessages({
     id: 'common.edit',
     defaultMessage: '编辑'
   },
+  add:{
+    id: 'common.add',
+    defaultMessage: '添加'
+  },
 });
 
 export default messages;

@@ -3,11 +3,44 @@ import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
 import { injectIntl } from 'react-intl';
 import TableUI from '../../../DefaultUI/TableUI';
+import { getSession } from '../../../../utils'
 import { Divider } from 'antd'
 import messages from './messages';
 
 function AdminManageTable({ dispatch, adminManage, loading, intl: { formatMessage } }) {
   const columns = [
+    {
+      title: formatMessage(messages.account),
+      dataIndex: 'loginname',
+      key: 'loginname',
+      width: '33%',
+    },
+    {
+      title: formatMessage(messages.name),
+      dataIndex: 'realname',
+      key: 'realname',
+      width: '33%',
+    },
+    {
+      title: formatMessage(messages.phone),
+      dataIndex: 'phone',
+      key: 'phone',
+      width: '33%',
+    },
+    // {
+    //   title: formatMessage(messages.operation),
+    //   dataIndex: 'operation',
+    //   key: 'operation',
+    //   render: (text, record) => {
+    //     return (
+    //       <span>
+    //         <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
+    //       </span>
+    //     );
+    //   },
+    // },
+  ];
+  const columnsForSuper = [
     {
       title: formatMessage(messages.account),
       dataIndex: 'loginname',
@@ -39,6 +72,7 @@ function AdminManageTable({ dispatch, adminManage, loading, intl: { formatMessag
       },
     },
   ];
+
   const edit = (id) => {
     dispatch({type:'adminManage/getMembersById',payload:{ id }});
     dispatch({type:'adminManage/setVisible',payload:{ visible: true }})
@@ -59,7 +93,7 @@ function AdminManageTable({ dispatch, adminManage, loading, intl: { formatMessag
   };
 
   const tableProps = {
-    columns,
+    columns:getSession('usertype') === '110'?columnsForSuper:columns,
     data: adminManage.data,
     page_size: adminManage.page_size,
     rowKey,

@@ -29,7 +29,6 @@ export default {
     },
     *deleteGroupClass({ payload:{Id} }, { put, call, select }){
       const token = yield select(state => state.home.token);
-      console.log(5555,Id)
       yield call(deleteGroupClass,{ payload:{ token, Id } });
       yield put({type:'getAllClassScheduleByTime'});
     },
@@ -56,6 +55,9 @@ export default {
       return history.listen(({pathname,query}) => {
         if(pathname === '/classSchedule'){
           dispatch({type:'init'});
+          if(query.starttime&&query.endtime){
+            dispatch({type:'setStartAndEndTime',payload:{starttime:query.starttime, endtime:query.endtime}});
+          }
           dispatch({type:'getAllClassScheduleByTime'});
         }
       });

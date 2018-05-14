@@ -226,6 +226,13 @@ export async function groupClassTeacherComment ({ payload }) {
     params: payload,
   })
 }
+export async function changeUserInfor ({ payload }) {
+  return request({
+    url: baseURL + api.changeUserInfor,
+    method: 'POST',
+    params: payload,
+  })
+}
 
 
 

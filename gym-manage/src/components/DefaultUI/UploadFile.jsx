@@ -16,8 +16,8 @@ class UploadFiles extends Component{
     }
   }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.value){
-      const value = nextProps.value.successful_files||nextProps.value;
+    if(nextProps.value&&(typeof nextProps.value) === 'object'){
+      let value = nextProps.value.successful_files?nextProps.value.successful_files:nextProps.value;
       let _fileList =this.state.fileList;
       if(value!==undefined&&this.props.value!==value&&value!==''){
         value.map(item=>{

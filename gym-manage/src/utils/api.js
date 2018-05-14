@@ -44,6 +44,9 @@ export default {
   findSameLoginName: '/gym/findsameloginname.do',
   Login: '/gym/loginuser.do',
 
+  addAdministrator: '/gym/addadministrator.do',
+  changePassword: '/gym/changepassword.do',
+
 
 
 }

@@ -17,11 +17,23 @@ function ChangePasswd({visible, setVisible, setLoadingState, loading, form: { se
     validateFieldsAndScroll((errors, values) => {
       if (!errors) {
         setLoadingState(true);
-        const token = getSession('token');
-        const payload={token,original_password:md5(getBytes(values.original_password)),new_password:md5(getBytes(values.new_password))};
+        const payload={
+          id: getSession('user_id'),
+          token: getSession('token'),
+          oldpassword: md5(getBytes(values.original_password)),
+          newpassword: md5(getBytes(values.new_password))
+        };
         changePasswd({payload}).then((body) => {
           setLoadingState(false);
-          if(body===204){
+          console.log('body---',body)
+          if(body.code&&body.code.toString() === '10333'){
+            Modal.warning({
+              title: appLocale.messages["10333"],
+              onOk: () => {
+              }
+            });
+          }
+          if(body.state&&body.state==="success"){
             Modal.success({
               title: appLocale.messages["common.changePasswd.changePwdSuccess"],
               onOk: () => {

@@ -101,7 +101,10 @@ class IndexSider extends React.Component{
     }
   };
   render() {
-    const { menus, intl:{formatMessage} } = this.props;
+    let { menus, intl:{formatMessage} } = this.props;
+    if(getSession('usertype')!== '110'){
+      menus = menus.filter(item=>item.owner!=='SUPER')
+    }
     return (
       <Sider
         collapsed={this.state.collapsed}

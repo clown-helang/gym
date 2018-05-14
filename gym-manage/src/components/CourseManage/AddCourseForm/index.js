@@ -188,7 +188,7 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
         <FormItem {...(index===0?descriptionLayout:LayoutWithOutLabel)} label={index===0?formatMessage(messages.uploadPicture):''}>
           <div style={{width:'75%'}}>
             {getFieldDecorator(`resource_url_${k.key}`, {
-              initialValue: k.resource_url!==''?[{resource_url:k.resource_url,original_name:k.original_name}]:'',
+              initialValue: k.resource_url!==''? [{resource_url:k.resource_url,original_name:k.original_name}]: '',
             })(<UploadFile target="ClassIntroduce"/>)}
           </div>
         </FormItem>

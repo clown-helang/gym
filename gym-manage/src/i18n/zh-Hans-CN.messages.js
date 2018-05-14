@@ -68,6 +68,7 @@ const Login = {
 const errorResult = {
   "noPermissions": "您没有当前操作请求的权限！",
   //10 帐号权限管理
+  "10333": "旧密码输入不正确",
   "10400": "请求参数错误.",
   "10453": "帐号或密码错误",
   "10454": "用户不存在",
@@ -124,6 +125,7 @@ const userManage = {
   'userManage.adminManage':'管理员管理',
   'userManage.adminManage.name':'管理员姓名',
   'userManage.adminManage.account':'管理员账号',
+  'userManage.adminManage.addAdministrator':'添加管理员',
 
 };
 const courseManage = {

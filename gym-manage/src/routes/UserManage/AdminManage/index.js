@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { injectIntl } from 'react-intl';
-import { routerRedux } from 'dva/router';
 import AdminManageTable from '../../../components/UserManage/AdminManage/AdminManageTable'
-import EditUserRule from '../../../components/UserManage/CustomComponent/EditUserRule'
+import AddAdminModal from '../../../components/UserManage/AddAdminModal'
+import EditAdminUserRule from '../../../components/UserManage/CustomComponent/EditAdminUserRule'
 import SearchBar from '../../../components/DefaultUI/SearchBar';
+import { Button } from 'antd';
 import messages from './messages';
 import styles from './index.less';
 
 function CoachManage({ dispatch, adminManage, loading, intl: { formatMessage } }) {
   const add = () => {
-    dispatch(routerRedux.push({ pathname: '/basicInformation/zone_configuration/add' }));
+    dispatch({type:'adminManage/initAddData'})
+    dispatch({type:'adminManage/setAddVisible',payload:{addVisible:true}})
   };
   const search = (search_value) => {
     dispatch({type:'adminManage/getAdmins',payload:{search_value}})
@@ -23,12 +25,16 @@ function CoachManage({ dispatch, adminManage, loading, intl: { formatMessage } }
   const cancelEdit = () =>{
     dispatch({type:'adminManage/setVisible',payload:{visible:false}})
   };
-  const { editData:{realname, phone, usertype, account}, visible } = adminManage;
+  const { editData:{realname, phone, usertype, account}, visible, addVisible, addAdminDTO } = adminManage;
 
   const tableProps = { dispatch, adminManage, loading:loading.models.adminManage };
   const editProps = { realname, phone, usertype, visible, loading:false, submitEdit, cancelEdit};
+  const addProps = { addAdminDTO, loading:false, dispatch, addVisible};
   return (
     <div className={styles.content}>
+      <Button type="primary" onClick={add} style={{marginTop:10}}>
+        {formatMessage(messages.add)}
+      </Button>
       <div className="search-bar">
         <SearchBar
           valueName="search_value"
@@ -43,7 +49,10 @@ function CoachManage({ dispatch, adminManage, loading, intl: { formatMessage } }
       </div>
       <AdminManageTable {...tableProps}/>
       {
-        visible ? <EditUserRule {...editProps}/> : ''
+        visible ? <EditAdminUserRule {...editProps}/> : ''
+      }
+      {
+        addVisible ? <AddAdminModal {...addProps}/> : ''
       }
     </div>
   );

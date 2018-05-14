@@ -14,7 +14,6 @@ function CoachList({dispatch,coachList}) {
     icon:'coachList',
     title:'私教列表'
   };
-  console.log('coaches--',coaches)
   return (
     <div>
       <Header dispatch={dispatch}/>

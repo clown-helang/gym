@@ -104,7 +104,13 @@ function ClassRecord({dispatch,personalCenter}) {
             )
           })
         }
-
+          {
+            personalCenter.classRecord.length === 0
+              ? <div style={{textAlign:'center',marginTop:'40%',color:'#aaa',fontSize:'1.2em'}}>
+                  <p>您还没有预约记录，约起来吧</p>
+                </div>
+              : ''
+          }
         </Page>
       </InfiniteLoader>
     </div>

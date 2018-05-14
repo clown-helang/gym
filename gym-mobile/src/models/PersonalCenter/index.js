@@ -251,7 +251,6 @@ export default {
       return {...state, date }
     },
     setTeacherComment(state, { payload:{ teacherComment }}){
-      console.log(2222,teacherComment)
       return {...state, teacherComment }
     },
   },

@@ -75,7 +75,6 @@ export default {
       const { contents } = yield call(getClassRecord,{ payload:{ ..._payload } });
       yield put({type:'setClassRecord',payload:{ classRecord: contents }});
     },
-
     *getCourseById({ payload:{id,techerid} }, { put, call, select }){
       const course = yield call(getCourseById,{ payload:{ id } });
       course.classimg = JSON.parse(course.classimg)
