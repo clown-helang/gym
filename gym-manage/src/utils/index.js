@@ -44,12 +44,14 @@ function compareLength(rule, value, callback){
 function get_length(s){ //获取字符串长度 中文占一个 英文占0.5个
   if(s===undefined)return 0;
   var char_length = 0;
-  for (var i = 0; i < s.length; i++){
-    var son_char = s.charAt(i);
-    if(son_char == ' '){
-      char_length += 0.5;
-    }else{
-      encodeURI(son_char).length > 2 ? char_length += 1 : char_length += 0.5;
+  if(s&&s.length > 0){
+    for (var i = 0; i < s.length; i++){
+      var son_char = s.charAt(i);
+      if(son_char == ' '){
+        char_length += 0.5;
+      }else{
+        encodeURI(son_char).length > 2 ? char_length += 1 : char_length += 0.5;
+      }
     }
   }
   return char_length;

@@ -170,12 +170,12 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
         <FormItem {...formItemLayout} label={formatMessage(messages.phone)}>
           {getFieldDecorator('phone', {
             initialValue: editCoach.phone,
-            rules: [
-              {
-                required: true,
-                message: formatMessage(messages.notNull).replace('***',formatMessage(messages.phone))
-              }
-            ],
+            // rules: [
+            //   {
+            //     required: true,
+            //     message: formatMessage(messages.notNull).replace('***',formatMessage(messages.phone))
+            //   }
+            // ],
             normalize:(value, prevValue) => {
               const max_length = 6.5;
               if(get_length(value)>=max_length){

@@ -46,6 +46,7 @@ class Home extends Component{
       dispatch({type:'home/setUser',payload:{user}})
     };
     const headerProps = { user };
+
     return (
       <Layout>
         <IndexSider menus = {menus} collapsed = {this.state.collapsed}/>

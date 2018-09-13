@@ -9,6 +9,7 @@ export default {
   state : {},
   effects : {
     *getMembersById({ payload:{ id } }, { put, call, select }){
+      //console.log('拿到id',id)
       const data = yield call(getMembersById, { payload: { id } });
       if(data){
         setSession('id',data.id)
@@ -29,7 +30,7 @@ export default {
     setup({dispatch, history}) {
       return history.listen(({pathname,query}) => {
         if(pathname === '/'){
-          //dispatch({type:'getMembersById',payload:{id:'or9F0xJw5Xv_c8C6qcYEVjDSNDyg'}})
+          //dispatch({type:'getMembersById',payload:{id:'or9F0xJOaFFQafYX2t0ca33RMg4o'}})
           dispatch({type:'getMembersById',payload:{id:query.id}});
           if(query.accesstoken){
             setSession('token',query.accesstoken)

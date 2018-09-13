@@ -17,7 +17,7 @@ export default {
         Modal.warning({title:appLocale.messages.error,content:'账号或密码错误'});
       } else{
         setSession('token', result.token);
-        setSession('user', result.userinfo.realname);
+        setSession('user', result.userinfo.realname||'');
         setSession('usertype', result.userinfo.usertype);
         setSession('user_id', result.userinfo.id);
         setSession('activeHeadMenu', url);
