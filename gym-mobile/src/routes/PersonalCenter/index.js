@@ -43,14 +43,10 @@ function PersonalCenter({dispatch,personalCenter}) {
           </div>
         : ''
       }
-      {
-        parseInt(personalCenter.usertype) !== 2
-          ? <div className={styles.strip} onClick={()=>{redirect('/editPersonalInfor')}}>
-              <i className={`iconfont ${styles.icon}`}>&#xe608;</i>
-              <span>编辑个人信息</span>
-            </div>
-          : ''
-      }
+      <div className={styles.strip} onClick={()=>{redirect('/editPersonalInfor')}}>
+        <i className={`iconfont ${styles.icon}`}>&#xe608;</i>
+        <span>编辑个人信息</span>
+      </div>
       {/*<div>*/}
         {/*<div className={styles.strip} onClick={()=>{redirect('/reservationRecord')}}>*/}
           {/*<i className={`iconfont ${styles.icon}`}>&#xe656;</i>*/}

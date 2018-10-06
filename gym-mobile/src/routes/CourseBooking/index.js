@@ -115,9 +115,9 @@ class CourseBooking extends Component {
         <Spin spinning={submitLoading}>
         <Header/>
         <MenuBar menu={menu}/>
-        <div className={styles.courseImage}>
-          <img src={course.classimg?course.classimg[0].resource_url:null}/>
-        </div>
+        {/*<div className={styles.courseImage}>*/}
+          {/*<img src={course.classimg?course.classimg[0].resource_url:null}/>*/}
+        {/*</div>*/}
         {
           course.type === '1'
           ? groupClassSchedule.map((item, index)=>{
