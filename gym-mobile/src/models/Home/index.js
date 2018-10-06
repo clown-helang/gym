@@ -30,7 +30,10 @@ export default {
     setup({dispatch, history}) {
       return history.listen(({pathname,query}) => {
         if(pathname === '/'){
-          //dispatch({type:'getMembersById',payload:{id:'or9F0xJOaFFQafYX2t0ca33RMg4o'}})
+          /*----测试使用----*/
+          //dispatch({type:'getMembersById',payload:{id:'or9F0xJw5Xv_c8C6qcYEVjDSNDyg'}}) //何浪
+          //dispatch({type:'getMembersById',payload:{id:'or9F0xJOaFFQafYX2t0ca33RMg4o'}}) //安琪
+          /*----正式环境----*/
           dispatch({type:'getMembersById',payload:{id:query.id}});
           if(query.accesstoken){
             setSession('token',query.accesstoken)

@@ -23,6 +23,7 @@ class Home extends Component{
         <div className={styles.content}>
           {children||''}
         </div>
+        <div style={{width:'100%', height: 50, backgroundColor: '#f5f5f5'}}/>
         <div className={styles.footer} style={{backgroundImage: `url(${footerBg})`}}>
           {
             isTrue(getSession('usertype'))&&getSession('usertype').toString() === '2'

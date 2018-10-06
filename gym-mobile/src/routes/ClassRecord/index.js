@@ -7,6 +7,7 @@ import {
 } from 'react-weui';
 import Header from '../../components/Header';
 import MenuBar from '../../components/MenuBar';
+import moment from 'moment-timezone';
 
 function ClassRecord({dispatch,personalCenter}) {
   const menu = {
@@ -88,11 +89,23 @@ function ClassRecord({dispatch,personalCenter}) {
                   : item.isover === '0'
                     ? parseInt(item.classtimetableid) === 0
                       ? <PreviewFooter>
-                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'2')}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
-                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'1')}><Icon type='check-circle-o'/> 结课确认</PreviewButton>
+                        {
+                          !moment().add(2, 'hours').isAfter(item.starttime)
+                          ? <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'2')}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
+                          : ''
+                        }
+                        {
+                          moment().isAfter(item.endtime)
+                          ? <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>classOver(item.id,'1')}><Icon type='check-circle-o'/> 结课确认</PreviewButton>
+                          : ''
+                        }
                         </PreviewFooter>
                       : <PreviewFooter>
-                          <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>cancelGroupClass(item)}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
+                        {
+                          !moment().add(2, 'hours').isAfter(item.starttime)
+                          ? <PreviewButton style={{color:'#3ddfc7'}} onClick={()=>cancelGroupClass(item)}><Icon type='close-circle-o'/> 取消预约</PreviewButton>
+                          : ''
+                        }
                         </PreviewFooter>
                     : item.isover === '1'&& item.studentsay === null
                       ? <PreviewFooter>

@@ -1,10 +1,7 @@
 import React from 'react'
 import { connect } from 'dva';
-import TX from '../../assets/touxiang.jpg'
 import styles from './index.less'
 import Coach from '../../components/Coach'
-import pengyuyan from '../../assets/pengyuyan.jpg'
-import yuchunlei from '../../assets/yuchunlei.jpg'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
 

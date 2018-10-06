@@ -1,12 +1,6 @@
 import React from 'react'
 import { connect } from 'dva';
-import TX from '../../assets/touxiang.jpg'
 import styles from './index.less'
-import pengyuyan1 from '../../assets/pengyuyan1.jpg'
-import pengyuyan2 from '../../assets/pengyuyan2.jpg'
-import pengyuyan3 from '../../assets/pengyuyan3.jpg'
-import pengyuyan4 from '../../assets/pengyuyan4.jpg'
-import pengyuyan from '../../assets/pengyuyan.jpg'
 import Header from '../../components/Header'
 import MenuBar from '../../components/MenuBar'
 import { routerRedux } from 'dva/router'
@@ -18,7 +12,7 @@ function CoachDetail({dispatch,coachList}) {
   };
   const redirect = (path,id) => {
     dispatch(routerRedux.push({ pathname: path ,query:{ id }}));
-  }
+  };
   return (
     <div>
       <Header />

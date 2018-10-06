@@ -12,7 +12,7 @@ import styles from './index.less'
 function warning() {
   const modal = Modal.warning({
     title: '温馨提示',
-    content: '课程结束时间大于当前时间，不能强制结束',
+    content: '课程未结束不能结课',
   });
   setTimeout(() => modal.destroy(), 3000);
 }
