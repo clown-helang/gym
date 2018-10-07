@@ -85,11 +85,11 @@ class Login extends React.Component{
               </div>
             </Spin>
           </div>
-          <img src={require('../../assets/ott-login.png')} className={styles.login_bg} />
+          <img src={require('../../assets/login.jpg')} className={styles.login_bg} />
         </div>
         <div className={styles.login_footer} >
           <div className={styles.footer_title}>{window.appLocale.messages.company}</div>
-          <div className={styles.footer_copyright}>CopyRight© 2017 StarTimes All Right Reserved </div>
+          <div className={styles.footer_copyright}>CopyRight© 2018 FitnessClub All Right Reserved </div>
         </div>
       </div>
     )

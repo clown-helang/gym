@@ -61,7 +61,7 @@ const Login = {
   'common.login.password.confirmppasswd.label': '确认密码',
   'common.login.password.password_illegal': '密码长度不合法，请输入6~12位密码',
   'common.login.password.newpassword_illegal': '新密码不允许包含特殊字符',
-  'company':'北京四达时代软件技术股份有限公司',
+  'company':'極FitnessClub',
 };
 
 

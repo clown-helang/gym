@@ -202,12 +202,6 @@ function EditCoachForm({ dispatch, editCoach, loading, intl: { formatMessage },f
         </FormItem>
         <FormItem {...formItemLayout} label={formatMessage(messages.uploadPhoto)}>
           {getFieldDecorator('topimg', {
-            rules: [
-              {
-                required: true,
-                message: formatMessage(messages.notNull).replace('***',formatMessage(messages.uploadPhoto))
-              }
-            ],
             initialValue: editCoach.topimg,
           })(<UploadFile target='TeacherPhoto'/>)}
         </FormItem>

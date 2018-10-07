@@ -9,35 +9,35 @@ import messages from './messages';
 
 function MemberManageTable({ dispatch, memberManage, loading, intl: { formatMessage } }) {
   const columns = [
-    {
-      title: formatMessage(messages.account),
-      dataIndex: 'loginname',
-      key: 'loginname',
-      width: '17%',
-    },
+    // {
+    //   title: formatMessage(messages.account),
+    //   dataIndex: 'loginname',
+    //   key: 'loginname',
+    //   width: '17%',
+    // },
     {
       title: formatMessage(messages.name),
       dataIndex: 'realname',
       key: 'realname',
-      width: '17%',
+      width: '20%',
     },
     {
       title: formatMessage(messages.phone),
       dataIndex: 'phone',
       key: 'phone',
-      width: '17%',
+      width: '20%',
     },
     {
       title: formatMessage(messages.balance),
       dataIndex: 'money',
       key: 'money',
-      width: '17%',
+      width: '20%',
     },
     {
       title: formatMessage(messages.vipClass),
       dataIndex: 'vipclass',
       key: 'vipclass',
-      width: '17%',
+      width: '20%',
     },
     {
       title: formatMessage(messages.operation),
