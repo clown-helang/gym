@@ -74,14 +74,17 @@ export default {
     init(state,{ payload }){
       return init;
     },
+    setPageNumber(state,{ payload:{ page_number, page_size } }){
+      return {...state, page_number, page_size}
+    },
     setTeacherID(state,{ payload:{ classtecherid } }){
       return {...state, classtecherid}
     },
-    setClassRecord(state,{ payload:{ classRecord } }){
-      return {...state, classRecord};
+    setClassRecord(state,{ payload:{ classRecord, page_number, page_size } }){
+      return {...state, classRecord, page_number, page_size};
     },
-    setSalesRecord(state,{ payload:{ salesRecord } }){
-      return {...state, salesRecord};
+    setSalesRecord(state,{ payload:{ salesRecord, page_number, page_size } }){
+      return {...state, salesRecord, page_number, page_size};
     },
     setRangeTime(state,{ payload:{timeRange} }){
       return {...state, starttime:timeRange[0]?`${timeRange[0]} 00:00:00`:null , endtime:timeRange[1]? `${timeRange[1]} 23:59:59`: null};

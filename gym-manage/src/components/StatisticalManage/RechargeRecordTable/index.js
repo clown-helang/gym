@@ -44,14 +44,14 @@ function RechargeRecordTable({ dispatch, rechargeRecordQuery, loading, intl: { f
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'rechargeRecordQuery/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'rechargeRecordQuery/getRechargeRecord', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'rechargeRecordQuery/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'rechargeRecordQuery/getRechargeRecord', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'rechargeRecordQuery/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'rechargeRecordQuery/getRechargeRecord', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
 
   const tableProps = {

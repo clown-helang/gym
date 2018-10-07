@@ -10,13 +10,18 @@ import styles from './index.less';
 
 const TabPane = Tabs.TabPane;
 function CoachKPIDetail({ dispatch, coachKPIDetail, loading, intl: { formatMessage } }) {
+
+  const onClick = () => {
+    dispatch({type:'coachKPIDetail/setPageNumber', payload:{page_number:1, page_size: 10}})
+  };
+
   return (
     <div className={styles.content}>
       <Tabs defaultActiveKey="1">
-        <TabPane tab={<span><Icon type="idcard" />{formatMessage(messages.classRecord)}</span>} key="1">
+        <TabPane tab={<span onClick={onClick} ><Icon type="idcard" />{formatMessage(messages.classRecord)}</span>} key="1">
           <ClassRecord dispatch={dispatch} coachKPIDetail={coachKPIDetail} loading={loading.models.coachKPIDetail} />
         </TabPane>
-        <TabPane tab={<span><Icon type="calendar" />{formatMessage(messages.salesRecord)}</span>} key="2">
+        <TabPane tab={<span onClick={onClick} ><Icon type="calendar" />{formatMessage(messages.salesRecord)}</span>} key="2">
           <SalesRecord dispatch={dispatch} coachKPIDetail={coachKPIDetail} loading={loading.models.coachKPIDetail} />
         </TabPane>
       </Tabs>

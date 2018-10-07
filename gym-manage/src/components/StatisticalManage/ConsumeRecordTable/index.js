@@ -11,19 +11,25 @@ function ConsumeRecordTable({ dispatch, consumeRecordQuery, loading, intl: { for
       title: formatMessage(messages.memberName),
       dataIndex: 'studentname',
       key: 'studentname',
-      width: '25%',
+      width: '20%',
+    },
+    {
+      title: formatMessage(messages.courseName),
+      dataIndex: 'classname',
+      key: 'classname',
+      width: '20%',
     },
     {
       title: formatMessage(messages.consumeAmount),
       dataIndex: 'money',
       key: 'money',
-      width: '25%',
+      width: '20%',
     },
     {
       title: formatMessage(messages.salesMan),
       dataIndex: 'techername',
       key: 'techername',
-      width: '25%',
+      width: '20%',
     },
     {
       title: formatMessage(messages.consumeTime),
@@ -38,14 +44,14 @@ function ConsumeRecordTable({ dispatch, consumeRecordQuery, loading, intl: { for
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'consumeRecordQuery/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'consumeRecordQuery/getConsumeRecord', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'consumeRecordQuery/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'consumeRecordQuery/getConsumeRecord', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'consumeRecordQuery/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'consumeRecordQuery/getConsumeRecord', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
 
   const tableProps = {

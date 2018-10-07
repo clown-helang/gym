@@ -15,8 +15,8 @@ function ClassRecordTable({ dispatch, classRecordQuery, loading, intl: { formatM
     },
     {
       title: formatMessage(messages.courseType),
-      dataIndex: 'classdefineid',
-      key: 'classdefineid',
+      dataIndex: 'type',
+      key: 'type',
       width: '16%',
       render: (text, record) => {
         return text === '1'?formatMessage(messages.personalClass):formatMessage(messages.groupClass);
@@ -49,14 +49,14 @@ function ClassRecordTable({ dispatch, classRecordQuery, loading, intl: { formatM
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'classRecordQuery/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'classRecordQuery/getClassRecord', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'classRecordQuery/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'classRecordQuery/getClassRecord', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'classRecordQuery/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'classRecordQuery/getClassRecord', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
 
   const tableProps = {

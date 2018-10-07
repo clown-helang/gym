@@ -46,14 +46,14 @@ function ClassRecord({dispatch, coachKPIDetail, loading, intl: { formatMessage }
 
   const pageFunction = {
     onChange(page, pageSize) {
-      dispatch({ type: 'coachKPIDetail/getBIRLog', payload: { page_number: page, page_size: pageSize } });
+      dispatch({ type: 'coachKPIDetail/getClassRecord', payload: { page_number: page, page_size: pageSize } });
     },
     onShowSizeChange(current, size) {
-      dispatch({ type: 'coachKPIDetail/getBIRLog', payload: { page_number: current, page_size: size } });
+      dispatch({ type: 'coachKPIDetail/getClassRecord', payload: { page_number: current, page_size: size } });
     },
   };
   const tableOnChange = (pagination, filters, sorter) => {
-    dispatch({ type: 'coachKPIDetail/getBIRLog', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
+    dispatch({ type: 'coachKPIDetail/getClassRecord', payload: { sort_property: sorter.field, sort_direction: sorter.order } });
   };
   const search = () => {
     dispatch({ type: 'coachKPIDetail/getClassRecord' });
