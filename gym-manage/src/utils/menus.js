@@ -38,6 +38,11 @@ export default [
         code: 'courseManage',
         path:'/#/classSchedule',
       },
+      {
+        name: '会员课程管理',
+        code: 'userCourseManage',
+        path:'/#/userCourseManage',
+      },
     ]
   },
   {

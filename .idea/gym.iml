@@ -3,17 +3,13 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-manage/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-manage/dist/gym-manage" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-manage/mock" />
+      <excludeFolder url="file://$MODULE_DIR$/gym-manage/dist" />
       <excludeFolder url="file://$MODULE_DIR$/gym-manage/node_modules" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-manage/src/assets" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-mobile/dist/gym-mobile" />
-      <excludeFolder url="file://$MODULE_DIR$/gym-mobile/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/gym-mobile" />
+      <excludeFolder url="file://$MODULE_DIR$/gym-we" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
     </content>
-    <content url="file://$MODULE_DIR$/gym-manage/node_modules" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

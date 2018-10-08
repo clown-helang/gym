@@ -78,12 +78,16 @@ function CourseTable({ dispatch, courseManage, loading, intl: { formatMessage } 
         } else if(record.isshop === '1'){
           return (
             <div>
+              <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
+              <Divider type="vertical" />
               <a className="table-btns" onClick={() => changeCourseState(record.id,'0')}>{formatMessage(messages.cancelPublish)}</a>
             </div>
           );
         } else {
           return (
             <div>
+              <a className="table-btns" onClick={() => edit(record.id)}>{formatMessage(messages.edit)}</a>
+              <Divider type="vertical" />
               <a className="table-btns" onClick={() => changeCourseState(record.id,'1')}>{formatMessage(messages.publish)}</a>
             </div>
           );

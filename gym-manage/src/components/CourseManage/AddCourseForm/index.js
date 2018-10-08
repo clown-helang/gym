@@ -51,7 +51,12 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
     validateFields((err, values) => {
       if (!err) {
         const { coachList } = addCourseManage;
-        console.log('values---',values)
+        /*
+        * isshop: 课程状态
+        * - 2：待上架
+        * - 1：已上架
+        * - 0: 已下架
+        * */
         let postData = {
           classname: values.classname,
           iscommend: values.iscommend,
@@ -97,10 +102,10 @@ function AddCourseForm({ dispatch, addCourseManage, loading, intl: { formatMessa
           })
         })
         postData.introduce = JSON.stringify(postData.introduce)
-        console.log('postData--',postData)
         if(model==='add'){
           dispatch({type:'addCourseManage/addNewCourse', payload:{ postData }})
         } else{
+          postData.isshop = addCourseManage.isshop;
           dispatch({type:'addCourseManage/editCourse', payload:{ postData }})
         }
       }

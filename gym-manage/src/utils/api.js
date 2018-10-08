@@ -47,6 +47,6 @@ export default {
   addAdministrator: '/gym/addadministrator.do',
   changePassword: '/gym/changepassword.do',
 
-
+  changeshoplog: '/gym/changeshoplog.do',
 
 }

@@ -130,6 +130,15 @@ function RouterConfig({ history, app }) {
           },
         },
         {
+          path: '/userCourseManage',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/CourseManage/UserCourseManage'));
+              cb(null, require('../routes/CourseManage/UserCourseManage'));
+            }, 'UserCourseManage');
+          },
+        },
+        {
           path: '/statisticalManage/rechargeRecordQuery',
           getComponent(nextState, cb) {
             require.ensure([], (require) => {

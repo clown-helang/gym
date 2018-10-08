@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-timezone';
 import { injectIntl } from 'react-intl';
 import TableUI from '../../DefaultUI/TableUI';
 import messages from './messages';

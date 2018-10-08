@@ -156,6 +156,8 @@ const courseManage = {
   'courseManage.totalNumber': '总人数',
   'courseManage.lastWeek': '上一周',
   'courseManage.nextweek': '下一周',
+  'courseManage.userCourseManage': '会员课程管理',
+  'courseManage.restOfClass': '剩余课时',
 };
 const statisticalManage = {
   'statisticalManage': '统计管理',
@@ -174,7 +176,7 @@ const statisticalManage = {
   'statisticalManage.consumeAmount': '消费金额（单位：元）',
   'statisticalManage.consumeTime': '消费时间',
 
-  'statisticalManage.classRecordQuery':'上课记录查询'
+  'statisticalManage.classRecordQuery':'上课记录查询',
 };
 
 

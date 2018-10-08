@@ -225,3 +225,11 @@ export async function changePasswd ({ payload }) {
   })
 }
 
+
+export async function changeUserCourseCoach ({ payload }) {
+  return request({
+    url: baseURL + api.changeshoplog,
+    method: 'POST',
+    params: payload,
+  })
+}

@@ -134,6 +134,10 @@ const messages = defineMessages({
       id: 'courseManage.classSchedule',
       defaultMessage: '课表管理'
     },
+    userCourseManage:{
+      id: 'courseManage.userCourseManage',
+      defaultMessage: '会员课程管理'
+    }
   }
 });
 
