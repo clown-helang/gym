@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './index.less'
-import {Icon} from 'antd'
 
 function MenuBar({menu}) {
   const iconGenerator = (type) =>{

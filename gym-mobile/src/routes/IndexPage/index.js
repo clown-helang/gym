@@ -33,13 +33,13 @@ function IndexPage({dispatch,indexPage}) {
       <div className={styles.menuBar}>
         <div className={styles.menuBarLeft}/>
         <div className={styles.menuBarCenter}>
-          <div className={styles.groupClassList} onClick={()=>{redirect('/courseList')}}>
+          <div className={styles.groupClassList} onClick={()=>{redirect('/groupClassAppoint')}}>
             <i className={`iconfont ${styles.icon}`}>&#xe692;</i>
-            <a>课程列表</a>
+            <a>团课预约</a>
           </div>
           <div className={styles.personalClassList} onClick={()=>{redirect('/coachList')}}>
             <i className={`iconfont ${styles.icon}`}>&#xe68c;</i>
-            <a>私教列表</a>
+            <a>私教预约</a>
           </div>
         </div>
         <div className={styles.menuBarRight}/>

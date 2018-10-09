@@ -137,6 +137,15 @@ function RouterConfig({ history, app }) {
             }, 'CourseBooking');
           },
         },
+        {
+          path: '/groupClassAppoint',
+          getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+              registerModel(app, require('../models/GroupClassAppoint'));
+              cb(null, require('../routes/GroupClassAppoint'));
+            }, 'GroupClassAppoint');
+          },
+        },
       ]
     },
   ];
