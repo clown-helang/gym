@@ -234,6 +234,14 @@ export async function changeUserInfor ({ payload }) {
   })
 }
 
+export async function getAllClassScheduleByTime ({ payload }) {
+  return request({
+    url: baseURL + api.getAllClassScheduleByTime,
+    method: 'POST',
+    params: payload,
+  })
+}
+
 
 
 

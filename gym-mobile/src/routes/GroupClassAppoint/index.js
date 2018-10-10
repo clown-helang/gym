@@ -31,12 +31,32 @@ class GroupClassAppoint extends React.Component {
           day: moment().add(4,'days'),
           weekday: weekdays[moment().add(4,'days').weekday()]
         },
+        {
+          day: moment().add(5,'days'),
+          weekday: weekdays[moment().add(4,'days').weekday()]
+        },
+        {
+          day: moment().add(6,'days'),
+          weekday: weekdays[moment().add(4,'days').weekday()]
+        },
       ],
       active: moment(),
+      width: 0
     }
   }
+
+  componentDidMount(){
+    const clientWidth = document.body.clientWidth;
+    this.setState({
+      width: clientWidth/5
+    });
+  }
+
   changeActive = (active) => {
-    this.setState({active})
+    const { dispatch } = this.props;
+    this.setState({active});
+    dispatch({type:'groupClassAppoint/setCurrent', payload:{ current: active }});
+    dispatch({type:'groupClassAppoint/getAllClassScheduleByTime'});
   };
   render(){
     const { dispatch, groupClassAppoint:{ courses } } = this.props;
@@ -50,21 +70,23 @@ class GroupClassAppoint extends React.Component {
         <MenuBar menu={menu}/>
 
         <div className={styles.weekdays}>
-          {
-            this.state.dates.map((item,index)=>(
-              <div key={index} className={styles.item} onClick={()=>this.changeActive(item.day)}>
-                <div className={styles.weekday}>{item.weekday}</div>
-                <div className={`${styles.day} ${moment(this.state.active).format('dd') === moment(item.day).format('dd') ? styles.active : ''}`}>
-                  {moment(item.day).format('DD')}
+          <div className={styles.wapper} style={{width:this.state.width*7}}>
+            {
+              this.state.dates.map((item,index)=>(
+                <div key={index} className={styles.item} style={{width:this.state.width}} onClick={()=>this.changeActive(item.day)}>
+                  <div className={styles.weekday}>{item.weekday}</div>
+                  <div className={`${styles.day} ${moment(this.state.active).format('dd') === moment(item.day).format('dd') ? styles.active : ''}`}>
+                    {moment(item.day).format('DD')}
+                  </div>
+                  {
+                    index <= 2
+                      ? <div className={styles.star}/>
+                      : ''
+                  }
                 </div>
-                {
-                  index <= 2
-                  ? <div className={styles.star}/>
-                  : ''
-                }
-              </div>
-            ))
-          }
+              ))
+            }
+          </div>
         </div>
 
         <div className={styles.courses}>
@@ -84,19 +106,25 @@ class GroupClassAppoint extends React.Component {
                       </div>
                       <div className={styles.bottom}>
                         <div className={styles.left}>
-
+                          <img src={i.topimg[0].resource_url}/>
                         </div>
                         <div className={styles.center}>
                           <p>教练：{i.teacherName}</p>
                           <p>
                             <span>人数：<label style={{color:'#3ddfc7'}}>{i.takepeopelsize}</label>/{i.mixpeopelsize}</span>
-                            <span>截止：{i.endtime.split(' ')[1]}</span>
+                            <span>截止：{i.starttime.split(' ')[1]}</span>
                           </p>
                         </div>
                         <div className={styles.right}>
-                          <div className={styles.btn}>
-                            未报名
-                          </div>
+                          {
+                            moment(i.starttime).isAfter(moment())
+                            ? <div className={styles.btn}>
+                                未报名
+                              </div>
+                            : <div className={styles.btn} style={{backgroundColor:'#aaa'}}>
+                                已截止
+                              </div>
+                          }
                         </div>
                       </div>
                     </div>

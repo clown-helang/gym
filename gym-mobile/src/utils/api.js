@@ -48,4 +48,5 @@ export default {
   groupClassTeacherComment: '/gym/classtimetabletechercomment.do',
   changeUserInfor: '/gym/changeuserinfo.do',
 
+  getAllClassScheduleByTime: '/gym/getclasstimetablebytime.do',
 }

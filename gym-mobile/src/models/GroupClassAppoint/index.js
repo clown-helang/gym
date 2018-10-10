@@ -1,99 +1,41 @@
-import { getCourses, getCourseById } from '../../services/gymServices'
-import { getSession } from '../../utils'
+import { getAllClassScheduleByTime, getCoaches, appointGroupClass } from '../../services/gymServices';
+import moment from 'moment-timezone';
 
 const init = {
-  courses: [
-    {
-      "id": 2,
-      "data": "2018-10-10 00:00:00",
-      "schedule": [
-        {
-          "id": 5,
-          "classname": "瑜伽",
-          "classdefineid": 11,
-          "techerid": "or9F0xJOaFFQafYX2t0ca33RMg4o",
-          "techeridname": "å®‰ç\u0090ªÃ\u0081",
-          "mixpeopelsize": 20,
-          "takepeopelsize": 5,
-          "starttime": "2018-10-10 20:00:00",
-          "endtime": "2018-10-10 22:00:00",
-          "isover": "0",
-          "techersay": null,
-          teacherName: '安琪'
-        },
-        {
-          "id": 6,
-          "classname": "瑜伽",
-          "classdefineid": 11,
-          "techerid": "or9F0xJOaFFQafYX2t0ca33RMg4o",
-          "techeridname": "å®‰ç\u0090ªÃ\u0081",
-          "mixpeopelsize": 20,
-          "takepeopelsize": 10,
-          "starttime": "2018-10-12 20:00:00",
-          "endtime": "2018-10-12 22:00:00",
-          "isover": "0",
-          "techersay": null,
-          teacherName: '安琪'
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "data": "2018-10-11 00:00:00",
-      "schedule": []
-    },
-    {
-      "id": 4,
-      "data": "2018-10-12 00:00:00",
-      "schedule": [
-        {
-          "id": 6,
-          "classname": "瑜伽",
-          "classdefineid": 11,
-          "techerid": "or9F0xJOaFFQafYX2t0ca33RMg4o",
-          "techeridname": "å®‰ç\u0090ªÃ\u0081",
-          "mixpeopelsize": 20,
-          "takepeopelsize": 10,
-          "starttime": "2018-10-12 20:00:00",
-          "endtime": "2018-10-12 22:00:00",
-          "isover": "0",
-          "techersay": null,
-          teacherName: '安琪'
-        }
-      ]
-    },
-  ],
-
+  courses: [],
+  current: moment(),
 };
 
 export default {
   namespace : 'groupClassAppoint',
   state : {},
   effects : {
-    *getCourses({ payload }, { put, call, select }) {
-      let _payload = {
-        id:-1,
-        iscommend: null,
-        classname: null,
-        pageNo:1,
-        pageSize:1000,
-        isshop: '1',
-        techerid:null,
-        techername:null
-      };
-      if(getSession('usertype').toString()==="2"){
-        _payload.techerid = getSession('id');
-        _payload.techername = getSession('realname');
-      }
-      const { contents } = yield call(getCourses,{ payload:{ ..._payload } });
-      yield put({type:'setCourseList', payload:{ courses:contents}});
+    //缺少classshoplogid无法约课
+
+    *getAllClassScheduleByTime({ payload }, { put, call, select }){
+      const { current } = yield select(state => state.groupClassAppoint);
+      const { contents } = yield call(getAllClassScheduleByTime,{ payload:{
+          starttime: moment(current).format("YYYY-MM-DD")+" 00:00:00",
+          endtime: moment(current).add("2", "days").format("YYYY-MM-DD")+" 23:59:59"
+      } });
+      const coaches = yield call(getCoaches,{ payload:{techername: null, pageNo:1, pageSize: 1000}});
+      contents.map(content=>{
+        content.schedule.map(item=>{
+          coaches.contents.map(i=>{
+            if(item.techerid === i.id){
+              item.teacherName = i.realname;
+              item.topimg = i.topimg;
+            }
+          })
+        });
+      });
+      yield put({type:'setCourseList',payload:{ courses:contents }});
     },
-    *getCourseById({ payload:{ id } }, { put, call, select }){
-      const course = yield call(getCourseById,{ payload:{ id } });
-      course.classimg = JSON.parse(course.classimg);
-      course.introduce = JSON.parse(course.introduce);
-      yield put({type:'setCourse', payload:{ course }});
-    }
+    *appointGroupClass({ payload:{ classtimetableid, classtime,starttime,endtime } }, { put, call, select }){
+      // let { classshoplogid } = yield select(state => state.groupClassAppoint);
+      // yield call(appointGroupClass,{ payload:{ classtimetableid, classtime, starttime,endtime, classshoplogid } });
+      // yield put(routerRedux.push({pathname:'/classRecord'}));
+    },
   },
   reducers : {
     init(state){
@@ -102,19 +44,16 @@ export default {
     setCourseList(state,{ payload:{ courses } }){
       return { ...state, courses }
     },
-    setCoachList(state,{ payload:{coaches} }){
-      return {...state, coaches }
+    setCurrent(state,{ payload:{ current } }){
+      return { ...state, current }
     },
-    setCourse(state,{ payload:{course}} ){
-      return {...state, course }
-    }
   },
   subscriptions : {
     setup({dispatch, history}) {
       return history.listen(({pathname,query}) => {
         if(pathname === '/groupClassAppoint'){
           dispatch({type: 'init'});
-          //dispatch({type: 'getCourses'})
+          dispatch({type: 'getAllClassScheduleByTime'})
         }
       });
     }

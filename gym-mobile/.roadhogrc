@@ -22,6 +22,10 @@
     "/gym":{
       "target": "http://chinaji.club",
       "changeOrigin": true
+    },
+    "/image":{
+      "target": "http://chinaji.club",
+      "changeOrigin": true
     }
   }
 }
